@@ -80,3 +80,5 @@ class UserProvider extends Component<{}, State> {
     );
   }
 }
+
+export default UserProvider;

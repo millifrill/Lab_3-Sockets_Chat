@@ -2,6 +2,12 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": {
+    "/socket.io": {
+      "target": "ws://localhost:5000",
+      "ws": true
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@testing-library/jest-dom": "^5.12.0",

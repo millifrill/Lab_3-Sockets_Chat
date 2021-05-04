@@ -35,6 +35,12 @@ class UserProvider extends Component<{}, State> {
     rooms: [{ roomName: "DefaultRoom" }],
   };
 
+  componentDidMount() {
+    socket.on("connect", () => {
+      console.log("Client socket connected");
+    });
+  }
+
   handleSetUsername = (name: string) => {
     this.setState((prevState) => ({
       ...prevState,

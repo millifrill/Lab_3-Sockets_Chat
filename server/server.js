@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
 	socket.emit('User specific message', 'Welcome to the chat room!');
 
 	//setup event listners
-	socket.on('join-room', (data) => handleJoinRoom(sata, socket));
+	socket.on('join-room', (data) => handleJoinRoom(data, socket));
 	socket.on('disconnect', (reason) => handleDisconnected(reason, socket, io));
 });
 

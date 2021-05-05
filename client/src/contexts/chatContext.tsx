@@ -1,21 +1,21 @@
 import { Component, createContext } from "react";
-import { io } from "socket.io-client";
-const socket = io();
+import io from "socket.io-client";
 
 interface Room {
   name: string;
   password?: string;
-  users: String[];
 }
 
 interface State {
   userName: string;
   currentRoom: string;
   allRooms: Room[];
+  messages: string[];
 }
 
 interface Context extends State {
-  handleJoinRoom: (room: string, user?: string) => void;
+  handleSetUsername: (room: string, user: string) => void;
+  handleJoinRoom: (room: string) => void;
   handleCreateRoom: (room: Room, user: string, password?: string) => void;
   handleLogout: (user: string) => void;
   handleSendMessage: (room: string, user: string, message: string) => void;
@@ -25,6 +25,8 @@ export const ChatContext = createContext<Context>({
   userName: "",
   currentRoom: "",
   allRooms: [],
+  messages: [],
+  handleSetUsername: () => {},
   handleJoinRoom: () => {},
   handleCreateRoom: () => {},
   handleLogout: () => {},
@@ -32,56 +34,65 @@ export const ChatContext = createContext<Context>({
 });
 
 class ChatProvider extends Component<{}, State> {
+  socket = io("http://localhost:5000", { transports: ["websocket"] });
   state: State = {
     userName: "",
     currentRoom: "",
     allRooms: [],
+    messages: [],
   };
 
-  /* componentDidMount() {
-
-  }
-
-  this.socket.on("join-room", (room: Room) => {
-    this.setState((prevState) => ({
-        ...prevState,
-        currentRoom: room.name,
-      }));
-  })
-
-  this.socket.on("all-rooms", (rooms: Room[]) => {
-    this.setState((prevState) => ({
-        ...prevState,
-        allRooms: rooms,
-      }));
-  })
-
-  socket.on("send-message", () => {
-
-  })
-
-  socket.on("create-room", (room: Room) => {
+  incomingJoinRoom = (room: Room) => {
     this.setState((prevState) => ({
       ...prevState,
       currentRoom: room.name,
     }));
-  })
+  };
 
-  socket.on("disconnect", () => {
+  incomingConnectionEstablished = () => {
+    console.log("Connection established");
+  };
 
-  }) */
+  componentDidMount() {
+    this.socket.on("connect", this.incomingConnectionEstablished);
+    this.socket.on("join-room", this.incomingJoinRoom);
 
-  handleSaveUser = (user: string) => {
+    this.socket.on("all-rooms", (rooms: Room[]) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        allRooms: rooms,
+      }));
+    });
+
+    this.socket.on("send-message", () => {});
+
+    this.socket.on("create-room", (room: Room) => {
+      this.setState((prevState) => ({
+        ...prevState,
+        currentRoom: room.name,
+      }));
+    });
+
+    this.socket.on("disconnect", () => {
+      this.setState((prevState) => ({
+        ...prevState,
+        userName: "",
+        currentRoom: "",
+      }));
+    });
+  }
+
+  handleSetUsername = (name: string) => {
     this.setState((prevState) => ({
       ...prevState,
-      userName: user,
+      userName: name,
     }));
   };
 
   handleJoinRoom = async (room: string, password?: string) => {
     const { userName } = this.state;
     // Adds user to new room
-    socket.emit("join-room", {
+    this.socket.emit("join-room", {
       room: room,
       user: userName,
       password: password,
@@ -91,13 +102,13 @@ class ChatProvider extends Component<{}, State> {
   handleCreateRoom = async (room: Room) => {
     const { userName } = this.state;
     // Creates and adds user to new room
-    socket.emit("create-room", { room: room, user: userName });
+    this.socket.emit("create-room", { room: room, user: userName });
   };
 
   handleLogout = () => {
     const { userName } = this.state;
+    this.socket.emit("logout", { user: userName });
 
-    socket.emit("logout", { user: userName });
     // Resets user states
     this.setState((prevState) => ({
       ...prevState,
@@ -107,9 +118,10 @@ class ChatProvider extends Component<{}, State> {
   };
 
   handleSendMessage = (message: string) => {
-    const { allRooms, userName, currentRoom } = this.state;
+    const { userName } = this.state;
+
     // Sends message
-    socket.emit("send-message", {
+    this.socket.emit("send-message", {
       user: userName,
       message: message,
     });
@@ -122,6 +134,8 @@ class ChatProvider extends Component<{}, State> {
           userName: this.state.userName,
           currentRoom: this.state.currentRoom,
           allRooms: this.state.allRooms,
+          messages: this.state.messages,
+          handleSetUsername: this.handleSetUsername,
           handleJoinRoom: this.handleJoinRoom,
           handleCreateRoom: this.handleCreateRoom,
           handleSendMessage: this.handleSendMessage,

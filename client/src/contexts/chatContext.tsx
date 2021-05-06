@@ -1,168 +1,182 @@
-import { Component, createContext } from "react";
-import io from "socket.io-client";
+import { Component, createContext } from 'react';
+import { socket } from '../socket';
 
 interface Message {
-  sender: string;
-  message: string;
+	userName: string;
+	message: string;
 }
 
 interface Room {
-  name: string;
-  password?: string;
+	name: string;
 }
 
 interface State {
-  userName: string;
-  currentRoom: string;
-  allRooms: Room[];
-  messages: Message[];
+	userName: string;
+	currentRoom: string;
+	allRooms: Room[];
+	messages: Message[];
 }
 
 interface Context extends State {
-  handleSetUsername: (room: string, user: string) => void;
-  handleJoinRoom: (room: string) => void;
-  handleCreateRoom: (room: Room, user: string, password?: string) => void;
-  handleLogout: (user: string) => void;
-  handleSendMessage: (room: string, user: string, message: string) => void;
+	handleSetUsername: (user: string) => void;
+	handleJoinRoom: (room: string) => void;
+	handleCreateRoom: (room: Room, password?: string) => void;
+	handleLogout: (user: string) => void;
+	handleSendMessage: (message: string) => void;
 }
 
 export const ChatContext = createContext<Context>({
-  userName: "",
-  currentRoom: "",
-  allRooms: [],
-  messages: [],
-  handleSetUsername: () => {},
-  handleJoinRoom: () => {},
-  handleCreateRoom: () => {},
-  handleLogout: () => {},
-  handleSendMessage: () => {},
+	userName: '',
+	currentRoom: '',
+	allRooms: [],
+	messages: [],
+	handleSetUsername: () => {},
+	handleJoinRoom: () => {},
+	handleCreateRoom: () => {},
+	handleLogout: () => {},
+	handleSendMessage: () => {},
 });
 
 class ChatProvider extends Component<{}, State> {
-  socket = io("http://localhost:5000", { transports: ["websocket"] });
-  state: State = {
-    userName: "",
-    currentRoom: "",
-    allRooms: [],
-    messages: [],
-  };
+	/* socket = io('http://localhost:5000', { transports: ['websocket'] }); */
+	state: State = {
+		userName: '',
+		currentRoom: '',
+		allRooms: [],
+		messages: [],
+	};
 
-  incomingJoinRoom = (room: Room) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      currentRoom: room.name,
-      messages: [],
-    }));
-  };
+	incomingJoinRoom = (room: Room) => {
+		this.setState((prevState) => ({
+			...prevState,
+			currentRoom: room.name,
+			messages: [],
+		}));
+	};
 
-  incomingConnectionEstablished = () => {
-    console.log("Connection established");
-  };
+	incomingConnectionEstablished = () => {
+		console.log('Connection established');
+	};
 
-  incomingMessage = (message: Message) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      messages: [...prevState.messages, message],
-    }));
-  };
+	incomingMessage = (message: Message) => {
+		console.log('incoming message:', message);
+		this.setState((prevState) => ({
+			...prevState,
+			messages: [...prevState.messages, message],
+		}));
+	};
 
-  incomingRooms = (rooms: Room[]) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      allRooms: rooms,
-    }));
-  };
+	incomingRooms = (rooms: Room[]) => {
+		console.log('incoming rooms:', rooms);
+		this.setState((prevState) => ({
+			...prevState,
+			allRooms: rooms,
+		}));
+	};
 
-  incomingCreateRoom = (room: Room) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      currentRoom: room.name,
-      messages: [],
-    }));
-  };
+	incomingCreateRoom = (room: Room) => {
+		console.log('new room has been created');
+		this.setState((prevState) => ({
+			...prevState,
+			currentRoom: room.name,
+			messages: [],
+		}));
+	};
 
-  incomingDisconnect = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      userName: "",
-      currentRoom: "",
-    }));
-  };
+	incomingJoinSuccess = () => {
+		console.log('You have joined a new room');
+		// Current user has successfully joined a new room
+	};
 
-  componentDidMount() {
-    this.socket.on("connect", this.incomingConnectionEstablished);
-    this.socket.on("join-room", this.incomingJoinRoom);
-    this.socket.on("send-message", this.incomingMessage);
-    this.socket.on("all-rooms", this.incomingRooms);
-    this.socket.on("create-room", this.incomingCreateRoom);
-    this.socket.on("disconnect", this.incomingDisconnect);
-  }
+	incomingUserInRoom = (message: string) => {
+		console.log(message);
+		// Another user has joined the room
+	};
 
-  handleSetUsername = (name: string) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      userName: name,
-    }));
-  };
+	incomingWrongPassword = () => {
+		// Incorrect password
+	};
 
-  handleJoinRoom = async (room: string, password?: string) => {
-    const { userName } = this.state;
-    // Adds user to new room
-    this.socket.emit("join-room", {
-      room: room,
-      user: userName,
-      password: password,
-    });
-  };
+	incomingDisconnect = (reason: any) => {
+		console.log(reason);
+	};
 
-  handleCreateRoom = async (room: Room) => {
-    const { userName } = this.state;
-    // Creates and adds user to new room
-    this.socket.emit("create-room", { room: room, user: userName });
-  };
+	componentDidMount() {
+		socket.on('connect', this.incomingConnectionEstablished);
+		socket.on('disconnect', this.incomingDisconnect);
+		socket.on('join-room', this.incomingJoinRoom);
+		socket.on('send-message', this.incomingMessage);
+		socket.on('all-rooms', this.incomingRooms);
+		socket.on('new-user-in-room', this.incomingUserInRoom);
+		socket.on('create-room', this.incomingCreateRoom);
+		socket.on('disconnect', this.incomingDisconnect);
+		socket.on('join-success', this.incomingJoinSuccess);
+		socket.on('wrong-password', this.incomingWrongPassword);
+	}
 
-  handleLogout = () => {
-    const { userName } = this.state;
-    this.socket.emit("logout", { user: userName });
+	handleSetUsername = (name: string) => {
+		console.log('Your username is:', name);
+		this.setState((prevState) => ({
+			...prevState,
+			userName: name,
+		}));
+	};
 
-    // Resets user states
-    this.setState((prevState) => ({
-      ...prevState,
-      userName: "",
-      currentRoom: "",
-      messages: [],
-    }));
-  };
+	handleJoinRoom = async (room: string, password?: string) => {
+		const { currentRoom } = this.state;
+		// Adds user to new room
+		socket.emit('join-room', {
+			room: room,
+			currentRoom: currentRoom,
+			password: password,
+		});
+	};
 
-  handleSendMessage = (message: string) => {
-    const { userName } = this.state;
+	handleCreateRoom = async (room: Room, password?: string) => {
+		const { currentRoom } = this.state;
+		// Creates and adds user to new room
+		socket.emit('create-room', {
+			room: room,
+			currentRoom: currentRoom,
+			password: password,
+		});
+	};
 
-    // Sends message
-    this.socket.emit("send-message", {
-      user: userName,
-      message: message,
-    });
-  };
+	handleLogout = () => {
+		const { userName } = this.state;
+		socket.emit('logout', { user: userName });
+	};
 
-  render() {
-    return (
-      <ChatContext.Provider
-        value={{
-          userName: this.state.userName,
-          currentRoom: this.state.currentRoom,
-          allRooms: this.state.allRooms,
-          messages: this.state.messages,
-          handleSetUsername: this.handleSetUsername,
-          handleJoinRoom: this.handleJoinRoom,
-          handleCreateRoom: this.handleCreateRoom,
-          handleSendMessage: this.handleSendMessage,
-          handleLogout: this.handleLogout,
-        }}
-      >
-        {this.props.children}
-      </ChatContext.Provider>
-    );
-  }
+	handleSendMessage = (message: string) => {
+		const { userName, currentRoom } = this.state;
+
+		// Sends message
+		socket.emit('send-message', {
+			userName: userName,
+			message: message,
+			room: currentRoom,
+		});
+	};
+
+	render() {
+		return (
+			<ChatContext.Provider
+				value={{
+					userName: this.state.userName,
+					currentRoom: this.state.currentRoom,
+					allRooms: this.state.allRooms,
+					messages: this.state.messages,
+					handleSetUsername: this.handleSetUsername,
+					handleJoinRoom: this.handleJoinRoom,
+					handleCreateRoom: this.handleCreateRoom,
+					handleSendMessage: this.handleSendMessage,
+					handleLogout: this.handleLogout,
+				}}
+			>
+				{this.props.children}
+			</ChatContext.Provider>
+		);
+	}
 }
 
 export default ChatProvider;

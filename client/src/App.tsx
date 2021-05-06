@@ -10,7 +10,7 @@ function App() {
 			<ThemeProvider theme={colorTheme}>
 				<Router>
 					<Switch>
-						<Route path="/" component={loginPage}></Route>
+						<Route path='/loginPage' component={loginPage}></Route>
 						<Route></Route>
 					</Switch>
 				</Router>

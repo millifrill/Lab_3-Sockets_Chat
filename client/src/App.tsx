@@ -3,6 +3,7 @@ import { colorTheme } from './styling/colorTheme';
 import { ThemeProvider } from '@material-ui/core';
 import ChatProvider from './contexts/chatContext';
 import TestPage from './testPage';
+import loginPage from './routes/loginPage';
 
 function App() {
 	return (
@@ -11,6 +12,7 @@ function App() {
 				<Router>
 					<Switch>
 						<Route path='/' component={TestPage} />
+						<Route path='/' component={loginPage}></Route>
 						<Route></Route>
 					</Switch>
 				</Router>

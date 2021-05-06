@@ -1,21 +1,22 @@
 import { CSSProperties } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 export default function LoginPage () {
+    const logoImg = `../assets/logo.png`
+    const chatContext = useContext(ChatContext)
+    const {allRooms, handleCreateRoom, handleJoinRoom, handleSetUsername} = chatContext;
     const [userSettings, setUserSettings] = useState({
         userName: "",
         room: {
             name: "",
             password: "",
-            newRoom: false
+            isNewRoom: false
         }
-
     })
-    const chatContext = useContext(ChatContext)
-    const {allRooms} = chatContext;
 
     const handleUserNameChange = (value: string) => {
         setUserSettings((prevState) => ({
@@ -24,13 +25,13 @@ export default function LoginPage () {
         }))   
     }
 
-    const handleRoomChange = (roomName: string, isNewRoom: boolean, password?: string) => {
+    const handleRoomChange = (roomName: string, isNewRoom: boolean) => {
             setUserSettings((prevState) => ({
                 ...prevState,
                 room: {
                     ...prevState.room,
                     name: roomName,
-                    newRoom: isNewRoom,
+                    isNewRoom: isNewRoom,
                 }
             }))  
     }
@@ -45,22 +46,24 @@ export default function LoginPage () {
         }))
     }
 
-
-   const createOrJoinRoom = () => {
-       const {password, newRoom, name} = userSettings.room;
+   const connect = () => {
+       const {userName} = userSettings;
+       const {password, isNewRoom, name} = userSettings.room;
        const room = {name: name}
-       if (newRoom) {
-           chatContext.handleCreateRoom(room, password)
+       handleSetUsername(userName)
+       if (isNewRoom) {
+           handleCreateRoom(room, password)
         } else {
-            chatContext.handleJoinRoom(room, password)
+            handleJoinRoom(room, password)
        }
    }
 
     return (
         <div style={mainContent}>
             <p style={nameStyle}>Chattastic</p> 
+         <img src={logoImg} alt="" style={imgStyle}/>
                 <div style={formBox}>
-                <form >
+                <div >
                   <p style={text}>Please enter your name</p>
                     <TextField 
                     style={formStyle}
@@ -68,16 +71,26 @@ export default function LoginPage () {
                     placeholder="Enter name"
                     onChange={(e) => handleUserNameChange(e.target.value)}
                     variant="outlined"/>
+                    {allRooms.length ? 
+                    <>
                  <p style={text}>Choose a room to join</p>
-                    <TextField 
-                    style={formStyle}
-                    id="outlined-select"
-                    placeholder="Choose room"
-                    select
-                    variant="outlined"
-                    onChange= {(e) => handleRoomChange(e.target.value, false)}
-                    />
+                 <TextField 
+                 style={formStyle}
+                 id="outlined-select"
+                 placeholder="Choose room"
+                 select
+                 variant="outlined"
+                 onChange= {(e) => handleRoomChange(e.target.value, false)}
+                 >
+                    {allRooms.map((room) => (
+                        <MenuItem key={room.name} value={room.name}>
+                        {room.name}
+                        </MenuItem>
+                    ))}
+                    </TextField>
                 <p style={text}>Or</p>
+                </>
+            : null}
                 <p style={text}>Create a new chatroom</p>
                 <div style={formBox}>
                 <TextField 
@@ -97,9 +110,9 @@ export default function LoginPage () {
                     onChange={(e) => handlePasswordChange(e.target.value)}
                 />
                   <button 
-                    style={connectButton} onClick={createOrJoinRoom}>Connect</button>
+                    style={connectButton} onClick={connect}>Connect</button>
                 </div>
-                 </form>
+                 </div>
              </div>
         </div>
 
@@ -117,10 +130,19 @@ const mainContent: CSSProperties = {
 
 }   
 
+const imgStyle: CSSProperties = {
+    width: "10rem",
+    position: "relative",
+    marginTop: "-5rem",
+}
+
 const nameStyle: CSSProperties = {
     fontSize: "5rem",
-    // marginTop: "2rem",
+    marginTop: "-2rem",
     color: "#7361EF",
+    width: "100%",
+    heigth: "100%",
+    textAlign: "center",
 
  }
 
@@ -137,22 +159,26 @@ const formStyle: CSSProperties = {
     outline: "none",
     marginTop: "0.3rem",
     background: "white",
+    
 
 }
 
 const connectButton: CSSProperties = {
-    marginTop: "0.3rem",
-    width: "10rem",
-    height: "2rem",
+    marginTop: "0.5rem",
+    height: "3rem",
     borderRadius: 20,
     border: "none",
     background: "#7361EF",
     color: "white", 
+    fontSize: "1rem",
+    fontWeight: 600,
 }
 
 const text: CSSProperties = {
     color: "#1CA491",
     textAlign: "center",
-    margin: 0,
+    margin: "0.5rem",
+    fontWeight: 600,
  
 }
+

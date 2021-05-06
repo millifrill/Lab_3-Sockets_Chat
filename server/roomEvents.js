@@ -1,9 +1,5 @@
 const io = require('socket.io');
-
-// -----> CLIENT WAS CONNECTED LOGGAS UT FLERA GÅNGER
-// -----> SPARA RUM, LÖSENORD OCH ANVÄNDARE I RUMMEN I ARRAY?
-// -----> BÄST ATT ANVÄNDA PING-TIMEOUT FÖR ATT HÅLLA KOLL PÅ OM ANVÄNDAREN LÄMNAT RUMMET/STÄNGT NER SIN FLIK?
-const rooms = [{ room: '123', pass: 'abc' }];
+const rooms = [];
 
 /**
  * @param {*} data
@@ -55,13 +51,15 @@ async function handleCreateRoom(data, socket, io) {
 	}
 
 	const newRoom = {
-		name: room,
+		name: room.name,
 		password: password,
 	};
 
-	await socket.join(room);
+	await socket.join(room.name);
 	// Returns the room that has been joined to client
 	io.to(socket.id).emit('join-room', room);
+	// Respond to client that join was successful
+	io.to(socket.id).emit('join-success');
 	// Adds new room to room array
 	rooms.push(newRoom);
 	io.emit('all-rooms', getRooms(io));

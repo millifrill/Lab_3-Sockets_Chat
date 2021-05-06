@@ -11,8 +11,8 @@ function App() {
 			<ThemeProvider theme={colorTheme}>
 				<Router>
 					<Switch>
-						<Route path='/' component={TestPage} />
-						<Route path='/' component={loginPage}></Route>
+						<Route exact path='/' component={TestPage} />
+						<Route path='/loginPage' component={loginPage}></Route>
 						<Route></Route>
 					</Switch>
 				</Router>

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { colorTheme } from './styling/colorTheme';
 import { ThemeProvider } from '@material-ui/core';
 import ChatProvider from './contexts/chatContext';
-import loginPage from './routes/loginPage';
+import LoginPage from './routes/loginPage';
 
 function App() {
 	return (
@@ -10,7 +10,7 @@ function App() {
 			<ThemeProvider theme={colorTheme}>
 				<Router>
 					<Switch>
-						<Route path='/loginPage' component={loginPage}></Route>
+						<Route path='/' component={LoginPage}></Route>
 						<Route></Route>
 					</Switch>
 				</Router>

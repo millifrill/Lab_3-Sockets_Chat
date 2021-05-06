@@ -19,7 +19,7 @@ interface State {
 
 interface Context extends State {
 	handleSetUsername: (user: string) => void;
-	handleJoinRoom: (room: string) => void;
+	handleJoinRoom: (room: Room, password?: string) => void;
 	handleCreateRoom: (room: Room, password?: string) => void;
 	handleLogout: (user: string) => void;
 	handleSendMessage: (message: string) => void;
@@ -122,7 +122,7 @@ class ChatProvider extends Component<{}, State> {
 		}));
 	};
 
-	handleJoinRoom = async (room: string, password?: string) => {
+	handleJoinRoom = async (room: Room, password?: string) => {
 		const { currentRoom } = this.state;
 		// Adds user to new room
 		socket.emit('join-room', {

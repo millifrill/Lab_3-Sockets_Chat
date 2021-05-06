@@ -2,13 +2,12 @@ import { Component, createContext } from 'react';
 import io from 'socket.io-client';
 
 interface Message {
-	sender: string;
+	userName: string;
 	message: string;
 }
 
 interface Room {
 	name: string;
-	password?: string;
 }
 
 interface State {
@@ -81,21 +80,33 @@ class ChatProvider extends Component<{}, State> {
 		}));
 	};
 
-	incomingDisconnect = () => {
-		this.setState((prevState) => ({
-			...prevState,
-			userName: '',
-			currentRoom: '',
-		}));
+	incomingJoinSuccess = () => {
+		// Current user has successfully joined a new room
+	};
+
+	incomingUserInRoom = () => {
+		// Another user has joined the room
+	};
+
+	incomingWrongPassword = () => {
+		// Incorrect password
+	};
+
+	incomingDisconnect = (reason: any) => {
+		console.log(reason);
 	};
 
 	componentDidMount() {
 		this.socket.on('connect', this.incomingConnectionEstablished);
+		this.socket.on('disconnect', this.incomingDisconnect);
 		this.socket.on('join-room', this.incomingJoinRoom);
 		this.socket.on('send-message', this.incomingMessage);
 		this.socket.on('all-rooms', this.incomingRooms);
+		this.socket.on('new-user-in-room', this.incomingUserInRoom);
 		this.socket.on('create-room', this.incomingCreateRoom);
 		this.socket.on('disconnect', this.incomingDisconnect);
+		this.socket.on('join-success', this.incomingJoinSuccess);
+		this.socket.on('wrong-password', this.incomingWrongPassword);
 	}
 
 	handleSetUsername = (name: string) => {
@@ -106,41 +117,38 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	handleJoinRoom = async (room: string, password?: string) => {
-		const { userName } = this.state;
+		const { currentRoom } = this.state;
 		// Adds user to new room
 		this.socket.emit('join-room', {
 			room: room,
-			user: userName,
+			currentRoom: currentRoom,
 			password: password,
 		});
 	};
 
-	handleCreateRoom = async (room: Room) => {
-		const { userName } = this.state;
+	handleCreateRoom = async (room: Room, password: string) => {
+		const { currentRoom } = this.state;
 		// Creates and adds user to new room
-		this.socket.emit('create-room', { room: room, user: userName });
+		this.socket.emit('create-room', {
+			room: room,
+			currentRoom: currentRoom,
+			password: password,
+		});
 	};
 
 	handleLogout = () => {
 		const { userName } = this.state;
 		this.socket.emit('logout', { user: userName });
-
-		// Resets user states
-		this.setState((prevState) => ({
-			...prevState,
-			userName: '',
-			currentRoom: '',
-			messages: [],
-		}));
 	};
 
 	handleSendMessage = (message: string) => {
-		const { userName } = this.state;
+		const { userName, currentRoom } = this.state;
 
 		// Sends message
-		this.socket.emit("'send-message'", {
-			user: userName,
+		this.socket.emit('send-message', {
+			userName: userName,
 			message: message,
+			room: currentRoom,
 		});
 	};
 

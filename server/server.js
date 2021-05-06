@@ -8,20 +8,27 @@ app.use(express.static('public'));
 const server = http.createServer(app);
 const io = new Server(server);
 
-const { handleJoinRoom, handleDisconnect } = require('./roomEvents');
+const {
+	handleJoinRoom,
+	handleCreateRoom,
+	handleDisconnect,
+	handleSendMessage,
+	getRooms,
+} = require('./roomEvents');
 
 io.on('connection', (socket) => {
 	console.log('Client was connected', socket.id);
+	io.emit('all-rooms', getRooms(io));
 
-	// Send to all but socket
-	socket.broadcast.emit('a-user-connected', socket.id);
-
-	// Send to the user just connected
-	socket.emit('user-specific-message', 'Welcome to the chat room!');
-
-	//setup event listners
+	// Setup event listeners
 	socket.on('join-room', (data) => handleJoinRoom(data, socket));
-	socket.on('disconnect', (reason) => handleDisconnect(reason, socket, io));
+	socket.on('create-room', (data) => handleCreateRoom(data, io));
+	socket.on('send-message', (data) => handleSendMessage(data, socket, io));
+	socket.on('disconnect', (reason) => handleDisconnect(reason, io));
+
+	const rooms = getRooms(io);
+
+	console.log(rooms);
 });
 
 server.listen(5000, () => {

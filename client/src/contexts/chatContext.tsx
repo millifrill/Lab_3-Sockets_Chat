@@ -19,9 +19,9 @@ interface State {
 }
 
 interface Context extends State {
-  handleSetUsername: (room: string, user: string) => void;
-  handleJoinRoom: (room: string) => void;
-  handleCreateRoom: (room: Room, user: string, password?: string) => void;
+  handleSetUsername: (user: string) => void;
+  handleJoinRoom: (room: Room, password?: string) => void;
+  handleCreateRoom: (room: Room, password?: string) => void;
   handleLogout: (user: string) => void;
   handleSendMessage: (room: string, user: string, message: string) => void;
 }
@@ -105,7 +105,7 @@ class ChatProvider extends Component<{}, State> {
     }));
   };
 
-  handleJoinRoom = async (room: string, password?: string) => {
+  handleJoinRoom = async (room: Room, password?: string) => {
     const { userName } = this.state;
     // Adds user to new room
     this.socket.emit("join-room", {

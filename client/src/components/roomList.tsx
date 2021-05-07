@@ -1,4 +1,4 @@
-import UserProvider from '../contexts/userContext';
+import UserProvider from '../contexts/chatContext';
 import { createMuiTheme, makeStyles, styled, ThemeProvider } from '@material-ui/core';
 import { colorTheme } from '../styling/colorTheme';
 

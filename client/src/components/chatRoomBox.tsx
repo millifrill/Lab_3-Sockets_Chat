@@ -1,7 +1,7 @@
 import { createMuiTheme } from "@material-ui/core";
 import { makeStyles, styled, ThemeProvider } from "@material-ui/styles";
 import { useState } from "react";
-import UserProvider from "../contexts/userContext";
+import UserProvider from "../contexts/chatContext";
 import { colorTheme } from "../styling/colorTheme";
 
 export default function ChatRoomBox() {

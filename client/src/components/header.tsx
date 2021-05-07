@@ -1,6 +1,6 @@
 import { colorTheme } from '../styling/colorTheme';
 import image from '../chat-icon.png';
-import UserProvider from '../contexts/userContext';
+import UserProvider from '../contexts/chatContext';
 import { ThemeProvider, styled, makeStyles, createMuiTheme } from '@material-ui/core';
 
 

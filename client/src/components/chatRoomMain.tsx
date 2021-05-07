@@ -1,6 +1,5 @@
-import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
-import { colorTheme } from "../styling/colorTheme";
 import image from "../chat-icon.png";
 import MobileRoomList from "./mobileRoomList";
 import Header from "./header";

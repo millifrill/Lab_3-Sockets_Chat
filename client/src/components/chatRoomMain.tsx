@@ -23,10 +23,10 @@ function ChatRoom() {
   return (
     <div className={styled.relative}>
       {mobileRoomList && <MobileRoomList />}
-      <Header
+      {/* <Header
         setMobileRoomList={setMobileRoomList}
         mobileRoomList={mobileRoomList}
-      />
+      /> */}
       <div className={styled.header}>
         <img className={styled.image} src={image} alt="chat-pic" />
         <h4 className={styled.title}>Chattastic</h4>

@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 import { useState } from 'react';
+import SendIcon from '@material-ui/icons/Send';
 
 export default function ChatRoomBox() {
     const styled = useStyles();
@@ -27,8 +28,8 @@ export default function ChatRoomBox() {
                 onChange={handleNewMessageChange}
             />
             <button className={styled.buttonSend} onClick={sendMessages}>
-                Send
-			</button>
+                <SendIcon />
+            </button>
         </div>
     );
 }

@@ -1,16 +1,23 @@
 import image from '../chat-icon.png';
 import { makeStyles } from '@material-ui/core';
+import { ChatContext } from '../contexts/chatContext';
+import { useContext } from 'react';
+
+
 
 // Skapa logiken för att visa userName
 
 export default function Header() {
+	const chatContext = useContext(ChatContext);
+	const { userName } = chatContext
+
 	const styled = useStyles();
 
 	return (
 		<div className={styled.header}>
 			<img className={styled.image} src={image} alt='chat-pic' />
 			<h4 className={styled.title}>Chattastic</h4>
-			<p className={styled.userName}>User123</p>/
+			<p className={styled.userName}>{userName}</p>/
 		</div>
 	);
 }

@@ -124,10 +124,11 @@ class ChatProvider extends Component<{}, State> {
   };
 
   handleJoinRoom = async (room: Room, password?: string) => {
-    const { currentRoom } = this.state;
+    const { currentRoom, userName } = this.state;
     // Adds user to new room
     socket.emit("join-room", {
       room: room,
+      user: userName,
       currentRoom: currentRoom,
       password: password,
     });

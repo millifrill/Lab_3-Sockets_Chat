@@ -68,9 +68,9 @@ function handleDisconnect(reason, io) {
 }
 
 function getRooms(io) {
-  const sockets1 = io.of("/").adapter.rooms;
+  const sockets = io.of("/").adapter.rooms;
   const rooms = [];
-  for (socket of sockets1) {
+  for (socket of sockets) {
     if (socket[0] !== socket[1].values().next().value) {
       const name = socket[0];
       const hasPassword = checkIfRoomHasPassword(socket[0]);

@@ -1,10 +1,4 @@
-import {
-  createMuiTheme,
-  makeStyles,
-  styled,
-  ThemeProvider,
-} from "@material-ui/core";
-import { colorTheme } from "../styling/colorTheme";
+import { makeStyles } from "@material-ui/core";
 
 // Logiken för att man ska se vilket rum du är i
 // highligta lila när det är samma rum som inloggad user
@@ -13,32 +7,18 @@ export default function RoomList() {
   const styled = useStyles();
 
   return (
-    <ThemeProvider theme={colorTheme}>
-      <div className={styled.container}>
-        <div className={styled.chatrooms}>
-          <ol className={styled.olList}>
-            <dt className={styled.roomContainers}>
-              <p className={styled.roomName}>Room 1</p>
-            </dt>
-          </ol>
-          <button className={styled.buttonLogout}>Logout</button>
-        </div>
+    <div className={styled.container}>
+      <div className={styled.chatrooms}>
+        <ol className={styled.olList}>
+          <dt className={styled.roomContainers}>
+            <p className={styled.roomName}>Room 1</p>
+          </dt>
+        </ol>
+        <button className={styled.buttonLogout}>Logout</button>
       </div>
-    </ThemeProvider>
+    </div>
   );
 }
-
-const theme = createMuiTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   container: {

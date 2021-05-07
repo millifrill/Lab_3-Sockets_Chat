@@ -72,7 +72,8 @@ function handleDisconnect(reason, io) {
 
 function getRooms(io) {
 	const sockets = Object.values(io.sockets.sockets);
-	let rooms = [];
+	// let rooms = [];
+	const rooms = [];
 	for (const socket of sockets) {
 		const actualRooms = Object.keys(socket.rooms).filter(
 			(room) => room !== socket.id,

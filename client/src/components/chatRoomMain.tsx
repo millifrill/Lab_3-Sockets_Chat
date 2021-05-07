@@ -24,43 +24,41 @@ function ChatRoom() {
   return (
     <>
       {mobileRoomList && <MobileRoomList />}
-      <ThemeProvider theme={colorTheme}>
-        <Header
-          setMobileRoomList={setMobileRoomList}
-          mobileRoomList={mobileRoomList}
-        />
-        <div className={styled.header}>
-          <img className={styled.image} src={image} alt="chat-pic" />
-          <h4 className={styled.title}>Chattastic</h4>
-          <p className={styled.userName}>User123</p>
+      <Header
+        setMobileRoomList={setMobileRoomList}
+        mobileRoomList={mobileRoomList}
+      />
+      <div className={styled.header}>
+        <img className={styled.image} src={image} alt="chat-pic" />
+        <h4 className={styled.title}>Chattastic</h4>
+        <p className={styled.userName}>User123</p>
+      </div>
+      <div className={styled.container}>
+        <div className={styled.chatrooms}>
+          <ol className={styled.olList}>
+            <dt className={styled.roomContainers}>
+              <p className={styled.roomName}>Room 1</p>
+            </dt>
+          </ol>
+          <button className={styled.buttonLogout}>Logout</button>
         </div>
-        <div className={styled.container}>
-          <div className={styled.chatrooms}>
-            <ol className={styled.olList}>
-              <dt className={styled.roomContainers}>
-                <p className={styled.roomName}>Room 1</p>
-              </dt>
-            </ol>
-            <button className={styled.buttonLogout}>Logout</button>
-          </div>
 
-          <div className={styled.chatContainer}>
-            <ol>
-              <dt className={styled.messages}>Hejsan</dt>
-            </ol>
-            <textarea
-              className={styled.textarea}
-              placeholder="Write a message....."
-              value={NewMessage}
-              onChange={handleNewMessageChange}
-            />
-            <button className={styled.buttonSend} onClick={sendMessages}>
-              Send
-            </button>
-            {/* <FontAwesomeIcon icon={["fab", "apple"]} color="#5a0505" /> */}
-          </div>
+        <div className={styled.chatContainer}>
+          <ol>
+            <dt className={styled.messages}>Hejsan</dt>
+          </ol>
+          <textarea
+            className={styled.textarea}
+            placeholder="Write a message....."
+            value={NewMessage}
+            onChange={handleNewMessageChange}
+          />
+          <button className={styled.buttonSend} onClick={sendMessages}>
+            Send
+          </button>
+          {/* <FontAwesomeIcon icon={["fab", "apple"]} color="#5a0505" /> */}
         </div>
-      </ThemeProvider>
+      </div>
     </>
   );
 }

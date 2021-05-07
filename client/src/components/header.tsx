@@ -24,30 +24,16 @@ export default function Header(props: Props) {
   };
 
   return (
-    <ThemeProvider theme={colorTheme}>
-      <div className={styled.header}>
-        <img className={styled.image} src={image} alt="chat-pic" />
-        <h4 className={styled.title}>Chattastic</h4>
-        <p className={styled.userName}>User123</p>
-        <Hidden smUp>
-          <Menu onClick={handleClick} />
-        </Hidden>
-      </div>
-    </ThemeProvider>
+    <div className={styled.header}>
+      <img className={styled.image} src={image} alt="chat-pic" />
+      <h4 className={styled.title}>Chattastic</h4>
+      <p className={styled.userName}>User123</p>
+      <Hidden smUp>
+        <Menu onClick={handleClick} />
+      </Hidden>
+    </div>
   );
 }
-
-const theme = createMuiTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
-});
 
 const useStyles = makeStyles((theme) => ({
   header: {

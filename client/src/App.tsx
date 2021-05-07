@@ -1,24 +1,24 @@
-import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { colorTheme } from './styling/colorTheme';
 import { ThemeProvider } from '@material-ui/core';
-import UserProvider from './contexts/userContext';
-import ChatRoom from './components/chatRoomMain';
+import ChatRoomMain from './components/chatRoomMain';
+import ChatProvider from './contexts/chatContext';
+import LoginPage from './routes/loginPage';
 
 function App() {
 
 	// connect  socket.io here in useEffect()
 	return (
-		<UserProvider>
+		<ChatProvider>
 			<ThemeProvider theme={colorTheme}>
 				<Router>
 					<Switch>
-						<Route path="/" component={ChatRoom}></Route>
-						<Route ></Route>
+						<Route path="/chatroommain" component={ChatRoomMain}></Route>
+						<Route exact path='/' component={LoginPage}></Route>
 					</Switch>
 				</Router>
 			</ThemeProvider>
-		</UserProvider>
+		</ChatProvider>
 	);
 }
 

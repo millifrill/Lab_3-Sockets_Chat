@@ -1,9 +1,9 @@
 import { makeStyles, ThemeProvider } from '@material-ui/core';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { colorTheme } from '../styling/colorTheme';
 import image from '../chat-icon.png';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import MessageBubble from './messageBubble';
 // skapa hamburgarmeny vid mobile
 
 function ChatRoom() {
@@ -33,6 +33,7 @@ function ChatRoom() {
 					<button className={styled.buttonLogout}>Logout</button>
 				</div>
 				<div className={styled.chatContainer}>
+					<MessageBubble/>
 					{/* <ol>
 						<dt className={styled.messages}>Hejsan</dt>
 					</ol> */}

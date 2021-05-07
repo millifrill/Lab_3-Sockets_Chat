@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/styles";
 
-export default  function messageBubble () {
+export default  function MessageBubble () {
     const styled = useStyles();
 
     
     return (
        	<ol>
-			<dt className={styled.messageBubble}>Hejsan</dt>
+			<dt className={styled.messageBubble}></dt>
 		</ol>
         
     )
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
             height: '3em',
             width: '30%',
             padding: ' 5px',
+            color: 'white',
         },
     
 }))

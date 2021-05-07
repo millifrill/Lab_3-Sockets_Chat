@@ -33,9 +33,9 @@ function ChatRoom() {
 					<button className={styled.buttonLogout}>Logout</button>
 				</div>
 				<div className={styled.chatContainer}>
-					<ol>
+					{/* <ol>
 						<dt className={styled.messages}>Hejsan</dt>
-					</ol>
+					</ol> */}
 					<textarea
 						className={styled.textarea}
 						placeholder='Write a message.....'

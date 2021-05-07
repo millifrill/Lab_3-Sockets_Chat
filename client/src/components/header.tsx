@@ -1,11 +1,5 @@
-import { colorTheme } from '../styling/colorTheme';
 import image from '../chat-icon.png';
-import ChatProvider from '../contexts/chatContext';
-import {
-	ThemeProvider,
-	makeStyles,
-	// createMuiTheme,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 // Skapa logiken för att visa userName
 
@@ -13,15 +7,11 @@ export default function Header() {
 	const styled = useStyles();
 
 	return (
-		<ChatProvider>
-			<ThemeProvider theme={colorTheme}>
-				<div className={styled.header}>
-					<img className={styled.image} src={image} alt='chat-pic' />
-					<h4 className={styled.title}>Chattastic</h4>
-					<p className={styled.userName}>User123</p>/
-				</div>
-			</ThemeProvider>
-		</ChatProvider>
+		<div className={styled.header}>
+			<img className={styled.image} src={image} alt='chat-pic' />
+			<h4 className={styled.title}>Chattastic</h4>
+			<p className={styled.userName}>User123</p>/
+		</div>
 	);
 }
 
@@ -34,18 +24,15 @@ const useStyles = makeStyles((theme) => ({
 		border: '1px solid #F6F6F6',
 		display: 'flex',
 	},
-
 	title: {
 		textAlign: 'left',
 		marginLeft: '2rem',
 		fontSize: '1.3rem',
 	},
-
 	image: {
 		width: '65px',
 		marginLeft: '1.5rem',
 	},
-
 	userName: {
 		position: 'absolute',
 		left: '95%',

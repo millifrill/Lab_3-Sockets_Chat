@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme) => ({
 		overflow: 'hidden',
 		display: 'inline-block',
 	},
-
 	textarea: {
 		position: 'absolute',
 		bottom: '0',

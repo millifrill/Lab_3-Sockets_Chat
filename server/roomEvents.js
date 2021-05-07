@@ -6,14 +6,14 @@ const rooms = [];
  * @param {io.socket} socket
  */
 async function handleJoinRoom(io, data, socket) {
-  const { room, currentRoom, password } = data;
+  const { room, currentRoom, password, user } = data;
 
   // If user is currently in a room, leave room
   if (currentRoom) {
     await socket.leave(currentRoom);
   }
 
-  const newRoomToJoin = rooms.find((r) => r.name === room);
+  const newRoomToJoin = rooms.find((r) => r.name === room.name);
 
   if (newRoomToJoin.password) {
     if (newRoomToJoin.password !== password) {
@@ -22,13 +22,13 @@ async function handleJoinRoom(io, data, socket) {
     }
   }
   // Room has no password, or correct password was submitted
-  await socket.join(room);
+  await socket.join(room.name);
   // Returns the room that has been joined to client
   io.to(socket.id).emit("join-room", room);
   // Respond to client that join was successful
   io.to(socket.id).emit("join-success");
   // Broadcast message to all clients in the room
-  io.to(data.room).emit("new-user-in-room", `${data.name} has joined the chat`);
+  io.to(data.room).emit("new-user-in-room", `${user} has joined the chat`);
   // Broadcast rooms update to all clients
   io.emit("all-rooms", getRooms(io));
 }

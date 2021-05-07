@@ -13,13 +13,10 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 export default function PasswordModal() {
 	//   const logoImg = `../assets/logo.png`;
 	const classes = useStyles();
-
 	const [open, setOpen] = React.useState(false);
-
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};

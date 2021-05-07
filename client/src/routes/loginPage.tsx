@@ -13,6 +13,7 @@ export default function LoginPage() {
 		handleJoinRoom,
 		handleSetUsername,
 	} = chatContext;
+
 	const [userSettings, setUserSettings] = useState({
 		userName: '',
 		room: {

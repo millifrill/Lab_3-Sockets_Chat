@@ -34,7 +34,7 @@ export default function ChatRoomBox() {
                     <button className={styled.buttonSend} onClick={sendMessages}>
                         Send
                         </button>
-                    {/* <FontAwesomeIcon icon={["fab", "apple"]} color="#5a0505" /> */}
+
 
 
                 </div>

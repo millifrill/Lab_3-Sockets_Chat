@@ -22,7 +22,7 @@ function ChatRoom() {
   };
 
   return (
-    <>
+    <div className={styled.relative}>
       {mobileRoomList && <MobileRoomList />}
       <Header
         setMobileRoomList={setMobileRoomList}
@@ -59,7 +59,7 @@ function ChatRoom() {
           {/* <FontAwesomeIcon icon={["fab", "apple"]} color="#5a0505" /> */}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -69,7 +69,9 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     height: "100%",
   },
-
+  relative: {
+    position: "relative",
+  },
   chatContainer: {
     border: "1px solid #DCD9F2",
     margin: "auto",

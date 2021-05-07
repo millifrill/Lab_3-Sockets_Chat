@@ -1,11 +1,5 @@
-import { colorTheme } from "../styling/colorTheme";
 import image from "../chat-icon.png";
-import {
-  ThemeProvider,
-  makeStyles,
-  createMuiTheme,
-  Hidden,
-} from "@material-ui/core";
+import { makeStyles, Hidden } from "@material-ui/core";
 import { Menu } from "@material-ui/icons";
 import React from "react";
 

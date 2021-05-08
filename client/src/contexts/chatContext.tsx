@@ -1,12 +1,17 @@
 import { Component, createContext } from "react";
 import { socket } from "../socket";
 
+interface Errors {
+  wrongPassword: string;
+  roomNameAlreadyInUse: string;
+}
+
 interface Message {
   userName: string;
   message: string;
 }
 
-interface Room {
+export interface Room {
   name: string;
   hasPassword?: boolean;
 }
@@ -16,6 +21,7 @@ interface State {
   currentRoom: string;
   allRooms: Room[];
   messages: Message[];
+  errors: Errors;
 }
 
 interface Context extends State {
@@ -31,6 +37,10 @@ export const ChatContext = createContext<Context>({
   currentRoom: "",
   allRooms: [],
   messages: [],
+  errors: {
+    wrongPassword: "",
+    roomNameAlreadyInUse: "",
+  },
   handleSetUsername: () => {},
   handleJoinRoom: () => {},
   handleCreateRoom: () => {},
@@ -45,6 +55,10 @@ class ChatProvider extends Component<{}, State> {
     currentRoom: "",
     allRooms: [],
     messages: [],
+    errors: {
+      wrongPassword: "",
+      roomNameAlreadyInUse: "",
+    },
   };
 
   incomingJoinRoom = (room: Room) => {
@@ -94,8 +108,20 @@ class ChatProvider extends Component<{}, State> {
     // Another user has joined the room
   };
 
-  incomingWrongPassword = () => {
-    // Incorrect password
+  incomingError = (error: string) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      errors: { ...prevState.errors, [error]: error },
+    }));
+    console.log(this.state.errors);
+  };
+
+  incomingNoError = (noError: string) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      errors: { ...prevState.errors, [noError]: "" },
+    }));
+    console.log(this.state.errors);
   };
 
   incomingDisconnect = (reason: any) => {
@@ -112,7 +138,8 @@ class ChatProvider extends Component<{}, State> {
     socket.on("create-room", this.incomingCreateRoom);
     socket.on("disconnect", this.incomingDisconnect);
     socket.on("join-success", this.incomingJoinSuccess);
-    socket.on("wrong-password", this.incomingWrongPassword);
+    socket.on("no-error", this.incomingNoError);
+    socket.on("error", this.incomingError);
   }
 
   handleSetUsername = (name: string) => {
@@ -168,6 +195,7 @@ class ChatProvider extends Component<{}, State> {
           currentRoom: this.state.currentRoom,
           allRooms: this.state.allRooms,
           messages: this.state.messages,
+          errors: this.state.errors,
           handleSetUsername: this.handleSetUsername,
           handleJoinRoom: this.handleJoinRoom,
           handleCreateRoom: this.handleCreateRoom,

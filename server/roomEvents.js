@@ -17,12 +17,14 @@ async function handleJoinRoom(io, data, socket) {
 
   if (newRoomToJoin.password) {
     if (newRoomToJoin.password !== password) {
-      // Incorrect password, user cannot join
-      return await socket.emit("wrong-password");
+      // Set password error
+      return await socket.emit("error", "wrongPassword");
     }
   }
   // Room has no password, or correct password was submitted
   await socket.join(room.name);
+  // Remove password error
+  await socket.emit("no-error", "wrongPassword");
   // Returns the room that has been joined to client
   io.to(socket.id).emit("join-room", room);
   // Respond to client that join was successful
@@ -42,6 +44,13 @@ function handleSendMessage(data, io) {
 
 async function handleCreateRoom(data, socket, io) {
   const { room, password, currentRoom } = data;
+
+  const existingRoom = getRooms(io).find((r) => r.name === room.name);
+  if (existingRoom) {
+    // Set roomName error
+    return await socket.emit("error", "roomNameAlreadyInUse");
+  }
+
   // If user is currently in a room, leave room
   if (currentRoom) {
     await socket.leave(currentRoom);
@@ -53,6 +62,8 @@ async function handleCreateRoom(data, socket, io) {
   };
 
   await socket.join(room.name);
+  // Remove roomName error
+  await socket.emit("no-error", "roomNameAlreadyInUse");
   // Returns the room that has been joined to client
   io.to(socket.id).emit("join-room", room);
   // Respond to client that join was successful

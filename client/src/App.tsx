@@ -11,7 +11,7 @@ function App() {
       <ThemeProvider theme={colorTheme}>
         <Router>
           <Switch>
-            <Route path="/chatroom" component={ChatRoomMain}></Route>
+            <Route path="/chatroommain" component={ChatRoomMain}></Route>
             <Route exact path="/" component={LoginPage}></Route>
           </Switch>
         </Router>

@@ -1,11 +1,9 @@
 import image from '../chat-icon.png';
 import { Hidden, makeStyles } from '@material-ui/core';
 import { ChatContext } from '../contexts/chatContext';
-import { useContext } from 'react';
 import { Menu } from "@material-ui/icons";
-import React from "react";
+import React, { useContext } from "react";
 
-// Skapa logiken för att visa userName
 interface Props {
 	setMobileRoomList: React.Dispatch<React.SetStateAction<boolean>>;
 	mobileRoomList: boolean;
@@ -13,6 +11,8 @@ interface Props {
 
 export default function Header(props: Props) {
 	const styled = useStyles();
+	const chatContext = useContext(ChatContext);
+	const { userName } = chatContext
 	const { setMobileRoomList, mobileRoomList } = props;
 
 	const handleClick = () => {
@@ -23,7 +23,7 @@ export default function Header(props: Props) {
 		<div className={styled.header}>
 			<img className={styled.image} src={image} alt="chat-pic" />
 			<h4 className={styled.title}>Chattastic</h4>
-			<p className={styled.userName}>User123</p>
+			<p className={styled.userName}>{userName}</p>
 			<Hidden smUp>
 				<Menu onClick={handleClick} />
 			</Hidden>
@@ -65,3 +65,5 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
+
+

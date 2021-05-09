@@ -1,22 +1,31 @@
 import { makeStyles } from "@material-ui/core";
+import { AddCircle } from "@material-ui/icons";
+import React, { useContext } from "react";
+import { ChatContext } from "../contexts/chatContext";
 
-// Logiken för att man ska se vilket rum du är i
-// highligta lila när det är samma rum som inloggad user
+
 
 export default function RoomList() {
+  const chatContext = useContext(ChatContext);
+  const { allRooms } = chatContext;
   const styled = useStyles();
 
   return (
     <div className={styled.container}>
       <div className={styled.chatrooms}>
+        <div className={styled.chatroomHeader}>
+          <p>Rooms</p>
+          <AddCircle />
+        </div>
         <ol className={styled.olList}>
-          <dt className={styled.roomContainers}>
-            <p className={styled.roomName}>Room 1</p>
-          </dt>
+          <div className={styled.roomContainers} />
+          {allRooms.map((room) => (
+            <dt>{room.name}</dt>
+          ))}
         </ol>
         <button className={styled.buttonLogout}>Logout</button>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 
@@ -27,8 +36,19 @@ const useStyles = makeStyles((theme) => ({
   },
   chatrooms: {
     border: "1px solid #F6F6F6",
-    width: "28.9%",
+    width: "27.7%",
     height: "100%",
+  },
+
+  chatroomHeader: {
+    background: '#897AF2',
+    color: 'white',
+    display: 'block',
+
+    "& svg": {
+      color: "#ffff",
+      display: 'inline-block'
+    },
   },
 
   olList: {
@@ -36,8 +56,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "0",
   },
   roomContainers: {
-    border: "1px solid #F6F6F6",
-    height: "4em",
   },
 
   buttonLogout: {
@@ -57,4 +75,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "2px",
     fontWeight: "bold",
   },
+
+
+
 }));

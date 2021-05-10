@@ -1,47 +1,49 @@
 import { makeStyles } from "@material-ui/styles";
 
-export default  function MessageBubble () {
-    const styled = useStyles();
 
-    
+export default  function MessageBubble () {
+    const styled = useStyles();  
     return (
 
        	<div className={styled.messageBubble}>
-			<dt className={styled.incomingMessage}></dt>
-			<dt className={styled.sentMessage}></dt>
-		</div>
-
-        
+			<div className={styled.incomingMessage}></div>
+			<div className={styled.sentMessage}></div>
+		</div>     
         
     )
 }
 
 const useStyles = makeStyles((theme) => ({
     messageBubble: {
-        marginTop: '1rem',
+        width: '100%',
         display: 'flex',
-
+        justifyContent:'space-between',
+        // flexDirection: 'column',
     },
     
      incomingMessage: {
             border: '1px solid #E8E4FF',
             borderRadius: '0.6rem',
             backgroundColor: '#E8E4FF',
-            height: '3rem',
+            height: '3.5rem',
             width: '30%',
             padding: '0.3rem',
             color: 'white',
-            justifyContent: 'flex-start'
+            marginTop: '0.3rem',
+            // display: 'flex',
+            // justifyContent: 'flex-start'
         },
     sentMessage: {
             border: '1px solid #897AF2',
             borderRadius: '0.6rem',
             backgroundColor: '#897AF2',
-            height: '3rem',
+            height: '3.5rem',
             width: '30%',
             padding: '0.3rem',
             color: 'white',
-            justifyContent: 'flex-end'
+            marginTop: '1.5rem',
+            // display: 'flex',
+            // justifyContent: 'flex-end',
             
     }
     

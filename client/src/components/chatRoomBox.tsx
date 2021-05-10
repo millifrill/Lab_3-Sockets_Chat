@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'row',
 		border: '1px solid #DCD9F2',
 		// marginLeft: '26em',
-		width: '80%',
+		width: '100%',
 		height: '92vh',
 		position: 'relative',
 		overflow: 'hidden',

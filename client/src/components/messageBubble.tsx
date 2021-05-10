@@ -15,11 +15,11 @@ export default  function MessageBubble () {
 const useStyles = makeStyles((theme) => ({
     messageBubble: {
             border: '1px solid #897AF2',
-            borderRadius: '10px',
+            borderRadius: '0.6rem',
             backgroundColor: '#897AF2',
-            height: '3em',
+            height: '3rem',
             width: '30%',
-            padding: ' 5px',
+            padding: '0.3rem',
             color: 'white',
         },
     

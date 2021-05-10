@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { ChatContext } from "../contexts/chatContext";
 import ChatRoomBox from "./chatRoomBox";
 import Header from "./header";
 import MobileRoomList from "./mobileRoomList";
+import PasswordModal from "./passwordModal";
 import RoomList from "./roomList";
-import { ChatContext } from "../contexts/chatContext";
-import { useContext, useEffect } from "react";
-import { useHistory } from "react-router";
 
 export default function ChatRoom() {
   const history = useHistory();
@@ -14,6 +14,12 @@ export default function ChatRoom() {
   const { currentRoom } = chatContext;
   const styled = useStyles();
   const [mobileRoomList, setMobileRoomList] = useState(false);
+  const [passwordModal, setPasswordModal] = useState({
+    room: {
+      name: "",
+    },
+    isOpen: false,
+  });
 
   useEffect(() => {
     if (!currentRoom) {
@@ -23,13 +29,19 @@ export default function ChatRoom() {
 
   return (
     <div className={styled.relative}>
-      {mobileRoomList && <MobileRoomList />}
+      {mobileRoomList && <MobileRoomList setPasswordModal={setPasswordModal} />}
+      {passwordModal && (
+        <PasswordModal
+          setPasswordModal={setPasswordModal}
+          passwordModal={passwordModal}
+        />
+      )}
       <Header
         setMobileRoomList={setMobileRoomList}
         mobileRoomList={mobileRoomList}
       />
       <div className={styled.flex}>
-        <RoomList />
+        <RoomList setPasswordModal={setPasswordModal} />
         <ChatRoomBox />
       </div>
     </div>

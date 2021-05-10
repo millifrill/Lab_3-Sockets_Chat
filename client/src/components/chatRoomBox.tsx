@@ -1,4 +1,3 @@
-import { Message } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import { useState, useContext } from "react";
 import { ChatContext } from "../contexts/chatContext";
@@ -7,18 +6,20 @@ export default function ChatRoomBox() {
   const styled = useStyles();
   const chatContext = useContext(ChatContext);
   const { handleSendMessage } = chatContext
-  const [NewMessage, setNewMessage] = useState([]);
-  const [sendMessages, setSendMessages] = useState("")
+  const [NewMessage, setNewMessage] = useState({
+    message: []
+  }); // messages 
+  const [message, setSendMessages] = useState("") // sending messages
 
 
 
   const handleNewMessagesChange = (event: any) => {
-    setNewMessage(event.target.value);
+    setSendMessages(event.target.value);
   };
 
-  const sendMessages = (e) => {
+  const sendMessages = (e: any) => {
     e.preventDefault()
-    sendMessages("");
+    handleSendMessage(message);
 
   };
 
@@ -26,17 +27,16 @@ export default function ChatRoomBox() {
   return (
     <div className={styled.chatContainer}>
       <ol>
-        {Message.map((message) => (
-          
-        ))}
-        <li>
-
-        </li>
+        {/* {NewMessage.map((message) => {
+          <li>
+            {message}
+          </li>
+        })} */}
       </ol>
       <textarea
         className={styled.textarea}
         placeholder="Write a message....."
-        value={NewMessage}
+        value={message}
         onChange={handleNewMessagesChange}
       />
       <button className={styled.buttonSend} onClick={sendMessages}>
@@ -48,28 +48,40 @@ export default function ChatRoomBox() {
 
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
-    border: "1px solid #DCD9F2",
-    marginLeft: "26em",
-    width: "72%",
-    height: "43em",
-    position: "relative",
-    overflow: "hidden",
-    display: "inline-block",
+    display: 'flex',
+    flexDirection: 'row',
+    border: '1px solid #DCD9F2',
+    // marginLeft: '26em',
+    width: '80%',
+    height: '92vh',
+    position: 'relative',
+    overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   textarea: {
-    position: "absolute",
-    bottom: "0",
-    background: "#F6F6F6",
-    width: "99.5%",
-    height: "5rem",
-    textDecoration: "none",
-    border: "none",
-    outline: "none",
+    position: 'absolute',
+    bottom: '0',
+    background: '#F6F6F6',
+    width: '100%',
+    height: '5rem',
+    textDecoration: 'none',
+    border: 'none',
+    outline: 'none',
   },
   buttonSend: {
-    position: "absolute",
-    bottom: "0",
-    right: "0",
+    position: 'absolute',
+    background: '#897AF2',
+    borderRadius: '10px',
+    fontWeight: 'bold',
+
+    height: '2rem',
+    width: '4rem',
+    border: 'none',
+    color: '#ffff',
+    bottom: '2%',
+    right: '2%',
   },
 }));
 

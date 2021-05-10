@@ -13,7 +13,6 @@ export default function ChatRoomBox() {
     console.log("button");
   };
 
-  // logiken för bubblorna och meddelandet
 
 	return (
 		<div className={styled.chatContainer}>
@@ -37,8 +36,8 @@ export default function ChatRoomBox() {
 const useStyles = makeStyles((theme) => ({
   chatContainer: {
     border: "1px solid #DCD9F2",
-    margin: "auto",
-    width: "78%",
+    marginLeft: "26em",
+    width: "72%",
     height: "43em",
     position: "relative",
     overflow: "hidden",

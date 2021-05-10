@@ -6,7 +6,7 @@ interface Errors {
   roomNameAlreadyInUse: string;
 }
 
-interface Message {
+export interface Message {
   userName: string;
   message: string;
 }
@@ -41,11 +41,11 @@ export const ChatContext = createContext<Context>({
     wrongPassword: "",
     roomNameAlreadyInUse: "",
   },
-  handleSetUsername: () => {},
-  handleJoinRoom: () => {},
-  handleCreateRoom: () => {},
-  handleLogout: () => {},
-  handleSendMessage: () => {},
+  handleSetUsername: () => { },
+  handleJoinRoom: () => { },
+  handleCreateRoom: () => { },
+  handleLogout: () => { },
+  handleSendMessage: () => { },
 });
 
 class ChatProvider extends Component<{}, State> {

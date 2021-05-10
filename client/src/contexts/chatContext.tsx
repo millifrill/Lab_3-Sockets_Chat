@@ -6,7 +6,7 @@ interface Errors {
   roomNameAlreadyInUse: string;
 }
 
-interface Message {
+export interface Message {
   userName: string;
   message: string;
 }

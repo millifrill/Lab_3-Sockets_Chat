@@ -1,5 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { ChatContext } from "../contexts/chatContext";
 import ChatRoomBox from "./chatRoomBox";
 import Header from "./header";
 import MobileRoomList from "./mobileRoomList";
@@ -7,6 +9,9 @@ import PasswordModal from "./passwordModal";
 import RoomList from "./roomList";
 
 export default function ChatRoom() {
+  const history = useHistory();
+  const chatContext = useContext(ChatContext);
+  const { currentRoom } = chatContext;
   const styled = useStyles();
   const [mobileRoomList, setMobileRoomList] = useState(false);
   const [passwordModal, setPasswordModal] = useState({
@@ -15,6 +20,12 @@ export default function ChatRoom() {
     },
     isOpen: false,
   });
+
+  useEffect(() => {
+    if (!currentRoom) {
+      history.push("/");
+    }
+  }, [currentRoom, history]);
 
   return (
     <div className={styled.relative}>

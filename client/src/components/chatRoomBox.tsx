@@ -58,6 +58,7 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 const useStyles = makeStyles((theme) => ({
 	chatContainer: {
 
+
 		display: "flex",
 		flexDirection: "row",
 		border: "1px solid #DCD9F2",
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 		height: "92vh",
 		position: "relative",
 		overflow: "hidden",
+
 
 	},
 	textarea: {

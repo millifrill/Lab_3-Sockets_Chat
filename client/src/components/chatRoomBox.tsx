@@ -8,7 +8,8 @@ export default function ChatRoomBox() {
   const { handleSendMessage } = chatContext
   const [NewMessage, setNewMessage] = useState({
     message: []
-  }); // messages 
+  });
+
   const [message, setSendMessages] = useState("") // sending messages
 
 
@@ -51,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     border: "1px solid #DCD9F2",
-    // marginLeft: '26em',
     width: "80%",
     height: "92vh",
     position: "relative",

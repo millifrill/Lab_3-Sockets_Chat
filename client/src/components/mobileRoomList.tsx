@@ -2,6 +2,7 @@ import { Button, makeStyles } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 import { useContext } from 'react';
 import { ChatContext } from '../contexts/chatContext';
+import CreateRoomModal from './createRoomModal';
 
 export default function MobileRoomList() {
 	const chatContext = useContext(ChatContext);
@@ -12,6 +13,7 @@ export default function MobileRoomList() {
 			<div className={styled.listHeader}>
 				<p>Rooms</p>
 				<AddCircle />
+				{CreateRoomModal}
 			</div>
 			<div className={styled.roomList}>
 				<ol>

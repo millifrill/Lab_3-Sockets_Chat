@@ -16,15 +16,23 @@ export default function ChatRoom() {
 				setMobileRoomList={setMobileRoomList}
 				mobileRoomList={mobileRoomList}
 			/>
-			<RoomList />
-			<ChatRoomBox />
+			<div className={styled.flex}>
+				<RoomList />
+				<ChatRoomBox />
+			</div>
 		</div>
 	);
 }
 
 const useStyles = makeStyles((theme) => ({
 	relative: {
-		position: 'relative',
 		boxSizing: 'border-box',
+		display: 'flex',
+		flexDirection: 'column',
+	},
+	flex: {
+		boxSizing: 'border-box',
+		display: 'flex',
+		flexDirection: 'row',
 	},
 }));

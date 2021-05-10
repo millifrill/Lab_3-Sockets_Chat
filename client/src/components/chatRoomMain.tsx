@@ -1,16 +1,13 @@
-import { makeStyles } from "@material-ui/core";
-import React, { useState } from "react";
-import ChatRoomBox from "./chatRoomBox";
-import Header from "./header";
-import MobileRoomList from "./mobileRoomList";
-import RoomList from "./roomList";
+import { makeStyles } from '@material-ui/core';
+import { useState } from 'react';
+import ChatRoomBox from './chatRoomBox';
+import Header from './header';
+import MobileRoomList from './mobileRoomList';
+import RoomList from './roomList';
 
-
-function ChatRoom() {
+export default function ChatRoom() {
 	const styled = useStyles();
 	const [mobileRoomList, setMobileRoomList] = useState(false);
-
-
 
 	return (
 		<div className={styled.relative}>
@@ -19,22 +16,23 @@ function ChatRoom() {
 				setMobileRoomList={setMobileRoomList}
 				mobileRoomList={mobileRoomList}
 			/>
-			< RoomList />
-			<ChatRoomBox />
-
+			<div className={styled.flex}>
+				<RoomList />
+				<ChatRoomBox />
+			</div>
 		</div>
 	);
 }
 
 const useStyles = makeStyles((theme) => ({
-
 	relative: {
-		position: "relative",
-		boxSizing: "border-box",
-
+		boxSizing: 'border-box',
+		display: 'flex',
+		flexDirection: 'column',
 	},
-
-
+	flex: {
+		boxSizing: 'border-box',
+		display: 'flex',
+		flexDirection: 'row',
+	},
 }));
-
-export default ChatRoom;

@@ -24,7 +24,7 @@ export default function CreateRoomModal() {
 	return (
 		<div>
 			<Icon
-				className={classes.root}
+				className={classes.icon}
 				color='primary'
 				fontSize='small'
 				onClick={handleClickOpen}
@@ -32,6 +32,7 @@ export default function CreateRoomModal() {
 				<AddCircle />
 			</Icon>
 			<Dialog
+				className={classes.modal}
 				open={open}
 				onClose={handleClose}
 				aria-labelledby='form-dialog-title'
@@ -44,6 +45,7 @@ export default function CreateRoomModal() {
 					{/* <DialogContentText>Enter name of chat room </DialogContentText> */}
 					<TextField
 						autoFocus
+						variant='outlined'
 						margin='dense'
 						id='chatroom'
 						label='Enter name of chat room'
@@ -55,14 +57,15 @@ export default function CreateRoomModal() {
 					</DialogContentText> */}
 					<TextField
 						autoFocus
+						variant='outlined'
 						margin='dense'
 						id='password'
-						label='Enter chat room password'
+						label='Enter chat room password (Optional)'
 						type='password'
 						fullWidth
 					/>
 				</DialogContent>
-				<DialogActions>
+				<DialogActions className={classes.center}>
 					<Button onClick={handleClose} color='primary'>
 						Cancel
 					</Button>
@@ -82,7 +85,11 @@ export default function CreateRoomModal() {
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		root: {
+		modal: {
+			maxWidth: '25rem',
+			margin: 'auto',
+		},
+		icon: {
 			'& > *': {
 				margin: theme.spacing(1),
 			},
@@ -93,8 +100,9 @@ const useStyles = makeStyles((theme: Theme) =>
 		},
 		modalTitle: {
 			color: 'black',
-			fontSize: '1.2rem',
+			fontSize: '1.5rem',
 			fontWeight: 800,
+			alignSelf: 'center',
 		},
 		buttonStyle: {
 			height: '2rem',
@@ -105,6 +113,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			color: 'white',
 			fontSize: '0.8rem',
 			fontWeight: 600,
+		},
+		center: {
+			alignSelf: 'center',
 		},
 	}),
 );

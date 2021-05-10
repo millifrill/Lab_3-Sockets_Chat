@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 		boxSizing: 'border-box',
 		display: 'flex',
 		height: '100%',
-		width: '20%',
+		width: '25%',
 		[theme.breakpoints.down('sm')]: {
 			display: 'none',
 		},

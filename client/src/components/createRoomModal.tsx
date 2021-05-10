@@ -6,12 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { IconButton } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
-import LockIcon from '@material-ui/icons/Lock';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-export default function PasswordModal() {
+export default function CreateRoomModal() {
 	//   const logoImg = `../assets/logo.png`;
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -30,7 +28,7 @@ export default function PasswordModal() {
 				fontSize='small'
 				onClick={handleClickOpen}
 			>
-				{LockIcon}
+				add_circle
 			</Icon>
 			<Dialog
 				open={open}
@@ -41,14 +39,24 @@ export default function PasswordModal() {
 				{/* <img src={logoImg} alt="" className={imgStyle}/> */}
 
 				<DialogContent>
-					<DialogContentText>Please enter the password</DialogContentText>
+					<DialogContentText>Create a new chat room</DialogContentText>
+					<TextField
+						autoFocus
+						margin='dense'
+						id='chatroom'
+						label='Chatroom'
+						type='chatroom'
+						fullWidth
+					/>
+					<DialogContentText>
+						Enter chat roompassword (optional)
+					</DialogContentText>
 					<TextField
 						autoFocus
 						margin='dense'
 						id='password'
 						label='Password'
 						type='password'
-						placeholder='Enter password'
 						fullWidth
 					/>
 				</DialogContent>
@@ -57,7 +65,7 @@ export default function PasswordModal() {
 						Cancel
 					</Button>
 					<Button onClick={handleClose} color='primary'>
-						Enter room
+						Create room
 					</Button>
 				</DialogActions>
 			</Dialog>

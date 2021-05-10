@@ -13,13 +13,11 @@ export default function ChatRoomBox() {
 		console.log('button');
 	};
 
-	// logiken för bubblorna och meddelandet
-
 	return (
 		<div className={styled.chatContainer}>
-			<ol>
+			{/* <ol>
 				<dt></dt>
-			</ol>
+			</ol> */}
 			<textarea
 				className={styled.textarea}
 				placeholder='Write a message.....'
@@ -35,27 +33,38 @@ export default function ChatRoomBox() {
 
 const useStyles = makeStyles((theme) => ({
 	chatContainer: {
+		display: 'flex',
+		flexDirection: 'row',
 		border: '1px solid #DCD9F2',
-		margin: 'auto',
-		width: '78%',
-		height: '43em',
+		// marginLeft: '26em',
+		width: '80%',
+		height: '90vh',
 		position: 'relative',
 		overflow: 'hidden',
-		display: 'inline-block',
+		// [theme.breakpoints.down('sm')]: {
+		// 	width: '100%',
+		// },
 	},
 	textarea: {
 		position: 'absolute',
 		bottom: '0',
 		background: '#F6F6F6',
-		width: '99.5%',
-		height: '10%',
+		width: '100%',
+		height: '5rem',
 		textDecoration: 'none',
 		border: 'none',
 		outline: 'none',
 	},
 	buttonSend: {
 		position: 'absolute',
-		bottom: '0',
-		right: '0',
+		background: '#897AF2',
+		borderRadius: '10px',
+		fontWeight: 'bold',
+		height: '2rem',
+		width: '4rem',
+		border: 'none',
+		color: '#ffff',
+		bottom: '2%',
+		right: '2%',
 	},
 }));

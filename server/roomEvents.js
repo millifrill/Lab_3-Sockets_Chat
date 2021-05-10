@@ -101,7 +101,7 @@ function getRooms(io) {
   for (socket of sockets) {
     if (socket[0] !== socket[1].values().next().value) {
       const roomName = socket[0];
-      const hasPassword = checkIfRoomHasPassword(socket[0]);
+      const hasPassword = checkIfPassword(socket[0]);
       const users = getUsers(roomName, io)
       rooms.push({ name: roomName, hasPassword: hasPassword, users: users });
     }
@@ -128,7 +128,6 @@ function getUsers(roomName, io) {
   const users = []
   const sockets = io.sockets.adapter.rooms.get(roomName);
   for (const socket of sockets ) {
-     //this is the socket of each client in the room.
      const user = io.sockets.sockets.get(socket).userName;
      users.push(user)
   }
@@ -139,7 +138,7 @@ function getUsers(roomName, io) {
  * 
  * @param {*} socket
  */
-function checkIfRoomHasPassword(socket) {
+function checkIfPassword(socket) {
   for (room of rooms) {
     if (room.name === socket) {
       if (room.password) {

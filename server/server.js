@@ -27,10 +27,6 @@ io.on("connection", (socket) => {
 	socket.on("create-room", (data) => handleCreateRoom(data, socket, io));
 	socket.on("send-message", (data) => handleSendMessage(data, io));
 	socket.on("disconnect", (reason) => handleDisconnect(reason, io));
-
-	/* const rooms = getRooms(io); */
-
-	/* console.log(rooms); */
 });
 
 server.listen(5000, () => {

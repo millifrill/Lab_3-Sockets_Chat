@@ -1,4 +1,5 @@
 
+
 import { makeStyles } from "@material-ui/styles";
 import { useContext, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
@@ -49,12 +50,14 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 			<button className={styled.buttonSend} onClick={sendMessages}>
 				Send
       </button>
+
 		</div>
 	);
 }
 
 const useStyles = makeStyles((theme) => ({
 	chatContainer: {
+
 		display: "flex",
 		flexDirection: "row",
 		border: "1px solid #DCD9F2",
@@ -87,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 		color: "#ffff",
 		bottom: "2%",
 		right: "2%",
+
 	},
 }));
 

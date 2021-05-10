@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { IconButton } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 

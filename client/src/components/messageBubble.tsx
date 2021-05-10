@@ -1,21 +1,27 @@
 import { makeStyles } from "@material-ui/styles";
 import { useContext } from "react";
-import { ChatContext } from "../contexts/chatContext";
+import { ChatContext, Message } from "../contexts/chatContext";
 
-interface MessageProp extends Message {
-    messages: []
-};
+interface hej {
+    message: Message
+}
 
-function MessageBubble(props: messages) {
+function MessageBubble(props: hej) {
     const styled = useStyles();
+    const { message } = props
     const chatContext = useContext(ChatContext);
     const { messages } = chatContext;
 
+    console.log(props)
     return (
 
         <div className={styled.messageBubble}>
-            <div className={styled.incomingMessage}></div>
-            <div className={styled.sentMessage}></div>
+            <div className={styled.incomingMessage}>
+                <p>{message.message}</p>
+            </div>
+            <div className={styled.sentMessage}>
+                <p>{message.userName}</p>
+            </div>
         </div>
 
 
@@ -50,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
         padding: '0.3rem',
         color: 'white',
         marginTop: '1.5rem',
-
 
     }
 

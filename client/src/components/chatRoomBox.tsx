@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 import { useState } from "react";
+import MessageBubble from "./messageBubble";
 
 export default function ChatRoomBox() {
   const styled = useStyles();
@@ -16,10 +17,8 @@ export default function ChatRoomBox() {
 
 	return (
 		<div className={styled.chatContainer}>
-			{/* <MessageBubble /> */}
-			{/* <ol>
-				<dt></dt>
-			</ol> */}
+			 <MessageBubble /> 
+
 			<textarea
 				className={styled.textarea}
 				placeholder='Write a message.....'

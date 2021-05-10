@@ -11,7 +11,7 @@ import Icon from '@material-ui/core/Icon';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export default function CreateRoomModal() {
-	//   const logoImg = `../assets/logo.png`;
+	const logoImg = `../assets/logo.png`;
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const handleClickOpen = () => {
@@ -36,27 +36,28 @@ export default function CreateRoomModal() {
 				onClose={handleClose}
 				aria-labelledby='form-dialog-title'
 			>
-				<DialogTitle id='form-dialog-title'></DialogTitle>
-				{/* <img src={logoImg} alt="" className={imgStyle}/> */}
-
+				<DialogTitle id='form-dialog-title' className={classes.modalTitle}>
+					Create a new chat room
+				</DialogTitle>
+				<img src={logoImg} alt='' className={classes.imgStyle} />
 				<DialogContent>
-					<DialogContentText>Create a new chat room</DialogContentText>
+					{/* <DialogContentText>Enter name of chat room </DialogContentText> */}
 					<TextField
 						autoFocus
 						margin='dense'
 						id='chatroom'
-						label='Chatroom'
+						label='Enter name of chat room'
 						type='chatroom'
 						fullWidth
 					/>
-					<DialogContentText>
-						Enter chat roompassword (optional)
-					</DialogContentText>
+					{/* <DialogContentText>
+						Enter chat room password (optional)
+					</DialogContentText> */}
 					<TextField
 						autoFocus
 						margin='dense'
 						id='password'
-						label='Password'
+						label='Enter chat room password'
 						type='password'
 						fullWidth
 					/>
@@ -65,7 +66,12 @@ export default function CreateRoomModal() {
 					<Button onClick={handleClose} color='primary'>
 						Cancel
 					</Button>
-					<Button onClick={handleClose} color='primary'>
+					<Button
+						className={classes.buttonStyle}
+						variant='outlined'
+						onClick={handleClose}
+						color='primary'
+					>
 						Create room
 					</Button>
 				</DialogActions>
@@ -80,6 +86,25 @@ const useStyles = makeStyles((theme: Theme) =>
 			'& > *': {
 				margin: theme.spacing(1),
 			},
+		},
+		imgStyle: {
+			width: '5rem',
+			alignSelf: 'center',
+		},
+		modalTitle: {
+			color: 'black',
+			fontSize: '1.2rem',
+			fontWeight: 800,
+		},
+		buttonStyle: {
+			height: '2rem',
+			width: '9rem',
+			borderRadius: 10,
+			border: 'none',
+			background: '#7361EF',
+			color: 'white',
+			fontSize: '0.8rem',
+			fontWeight: 600,
 		},
 	}),
 );

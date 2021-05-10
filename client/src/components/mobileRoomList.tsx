@@ -1,26 +1,50 @@
 import { Button, makeStyles } from '@material-ui/core';
-import { AddCircle } from '@material-ui/icons';
 import { useContext } from 'react';
-import { ChatContext } from '../contexts/chatContext';
+import { ChatContext, Room } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
+import LockIcon from '@material-ui/icons/Lock';
 
-export default function MobileRoomList() {
+interface Props {
+	setPasswordModal: React.Dispatch<
+		React.SetStateAction<{
+			room: Room;
+			isOpen: boolean;
+		}>
+	>;
+}
+
+export default function MobileRoomList(props: Props) {
+	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
-	const { allRooms } = chatContext;
+	const { allRooms, handleJoinRoom } = chatContext;
 	const styled = useStyles();
+
+	const handleRoomChange = (room: Room) => {
+		if (room.hasPassword) {
+			setPasswordModal({
+				room: room,
+				isOpen: true,
+			});
+		} else {
+			handleJoinRoom(room);
+		}
+	};
+
 	return (
 		<div className={styled.container}>
 			<div className={styled.listHeader}>
 				<p>Rooms</p>
-				<AddCircle />
-				{CreateRoomModal}
+				<CreateRoomModal />
 			</div>
 			<div className={styled.roomList}>
 				<ol>
-					{/* Exempelrum */}
-					<dt>Rum 1</dt>
 					{allRooms.map((room) => (
-						<dt>{room.name}</dt>
+						<dt onClick={() => handleRoomChange(room)}>
+							{room.name}
+							{room.hasPassword ? (
+								<LockIcon color='primary' fontSize='small' />
+							) : null}
+						</dt>
 					))}
 				</ol>
 			</div>
@@ -68,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
 			padding: 0,
 			margin: 0,
 			'& dt': {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'space-between',
 				padding: '1rem 1.5rem',
 				margin: 0,
 				borderBottom: '1px solid #E5E5E5',

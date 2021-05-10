@@ -3,6 +3,7 @@ import { AddCircle } from "@material-ui/icons";
 import { useContext } from "react";
 import { ChatContext, Room } from "../contexts/chatContext";
 import CreateRoomModal from "./createRoomModal";
+import LockIcon from "@material-ui/icons/Lock";
 
 interface Props {
   setPasswordModal: React.Dispatch<
@@ -41,9 +42,13 @@ export default function RoomList(props: Props) {
           {CreateRoomModal}
         </div>
         <ol className={styled.olList}>
-          <div className={styled.roomContainers} />
           {allRooms.map((room) => (
-            <dt onClick={() => handleRoomChange(room)}>{room.name}</dt>
+            <dt onClick={() => handleRoomChange(room)}>
+              {room.name}
+              {room.hasPassword ? (
+                <LockIcon color="primary" fontSize="small" />
+              ) : null}
+            </dt>
           ))}
         </ol>
         <button className={styled.buttonLogout}>Logout</button>
@@ -86,18 +91,18 @@ const useStyles = makeStyles((theme) => ({
   },
   olList: {
     flex: 1,
-    "& ol": {
-      overflowY: "auto",
-      padding: 0,
+    overflowY: "auto",
+    padding: 0,
+    margin: 0,
+    "& dt": {
+      display: "flex",
+      padding: "1rem 1.5rem",
       margin: 0,
-      "& dt": {
-        padding: "1rem 1.5rem",
-        margin: 0,
-        borderBottom: "1px solid #E5E5E5",
-      },
+      borderBottom: "1px solid #E5E5E5",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
   },
-  roomContainers: {},
   buttonLogout: {
     position: "absolute",
     bottom: "3%",

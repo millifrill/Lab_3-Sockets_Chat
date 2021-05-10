@@ -3,6 +3,7 @@ import { AddCircle } from "@material-ui/icons";
 import { useContext } from "react";
 import { ChatContext, Room } from "../contexts/chatContext";
 import CreateRoomModal from "./createRoomModal";
+import LockIcon from "@material-ui/icons/Lock";
 
 interface Props {
   setPasswordModal: React.Dispatch<
@@ -39,10 +40,13 @@ export default function MobileRoomList(props: Props) {
       </div>
       <div className={styled.roomList}>
         <ol>
-          {/* Exempelrum */}
-          <dt>Rum 1</dt>
           {allRooms.map((room) => (
-            <dt onClick={() => handleRoomChange(room)}>{room.name}</dt>
+            <dt onClick={() => handleRoomChange(room)}>
+              {room.name}
+              {room.hasPassword ? (
+                <LockIcon color="primary" fontSize="small" />
+              ) : null}
+            </dt>
           ))}
         </ol>
       </div>
@@ -90,6 +94,9 @@ const useStyles = makeStyles((theme) => ({
       padding: 0,
       margin: 0,
       "& dt": {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
         padding: "1rem 1.5rem",
         margin: 0,
         borderBottom: "1px solid #E5E5E5",

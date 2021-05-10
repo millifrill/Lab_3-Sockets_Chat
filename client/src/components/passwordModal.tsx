@@ -7,7 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 // import { IconButton } from '@material-ui/core';
-import LockIcon from "@material-ui/icons/Lock";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { ChatContext, Room } from "../contexts/chatContext";
 
@@ -63,12 +62,6 @@ export default function PasswordModal(props: Props) {
 
   return (
     <div>
-      <LockIcon
-        className={styled.root}
-        color="primary"
-        fontSize="small"
-        /* onClick={handleClickOpen} */
-      />
       <Dialog
         open={passwordModal.isOpen}
         /* onClose={handleClose} */

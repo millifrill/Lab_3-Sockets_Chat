@@ -1,16 +1,19 @@
-import { makeStyles } from "@material-ui/styles";
-import { useState, useContext } from "react";
-import { ChatContext } from "../contexts/chatContext";
 
-export default function ChatRoomBox() {
+import { makeStyles } from "@material-ui/styles";
+import { useContext, useState } from "react";
+import { ChatContext } from "../contexts/chatContext";
+import MessageBubble from "./messageBubble";
+
+
+
+export default function ChatRoomBox(props) {
   const styled = useStyles();
   const chatContext = useContext(ChatContext);
-  const { handleSendMessage } = chatContext
-  const [NewMessage, setNewMessage] = useState({
-    message: []
-  });
+  const { handleSendMessage, messages } = chatContext
 
-  const [message, setSendMessages] = useState("") // sending messages
+
+  const [newMessage, setNewMessage] = useState([])
+  const [message, setSendMessages] = useState("")
 
 
 
@@ -20,20 +23,24 @@ export default function ChatRoomBox() {
 
   const sendMessages = (e: any) => {
     e.preventDefault()
+    console.log(sendMessage)
     handleSendMessage(message);
+
+
 
   };
 
 
   return (
     <div className={styled.chatContainer}>
-      <ol>
-        {/* {NewMessage.map((message) => {
-          <li>
-            {message}
-          </li>
-        })} */}
-      </ol>
+
+      {newMessage.map((message) => {
+        <li>
+         {{...props.messages &&  <MessageBubble {props.messages}/>}
+
+        </li>
+      })}
+
       <textarea
         className={styled.textarea}
         placeholder="Write a message....."
@@ -52,13 +59,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     border: "1px solid #DCD9F2",
-    width: "80%",
+    width: "100%",
     height: "92vh",
     position: "relative",
     overflow: "hidden",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-    },
+
   },
   textarea: {
     position: "absolute",
@@ -75,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#897AF2",
     borderRadius: "10px",
     fontWeight: "bold",
+
 
     height: "2rem",
     width: "4rem",

@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		height: '100%',
 		width: '20%',
+		[theme.breakpoints.down('sm')]: {
+			display: 'none',
+		},
 	},
 	chatrooms: {
 		border: '1px solid #F6F6F6',

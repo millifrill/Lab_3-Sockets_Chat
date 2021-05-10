@@ -29,9 +29,9 @@ export default function Header(props: Props) {
 			</div>
 			<div className={styled.flexRow}>
 				<p className={styled.userName}>{userName}</p>
-				<Hidden smUp>
-					<Menu className={styled.hamburger} onClick={handleClick} />
-				</Hidden>
+				{/* <Hidden smUp> */}
+				<Menu className={styled.hamburger} onClick={handleClick} />
+				{/* </Hidden> */}
 			</div>
 		</div>
 	);
@@ -44,19 +44,18 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: 'space-between',
 		padding: '0.5rem 1.5rem',
 		height: '5rem',
+		width: '100%',
 		background: 'white',
 		border: '1px solid #F6F6F6',
 		[theme.breakpoints.up('sm')]: {
 			padding: '0.5rem 2.5rem',
 		},
 	},
-
 	flexRow: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-
 	title: {
 		color: '#897AF2',
 		textAlign: 'left',
@@ -64,21 +63,22 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: '1rem',
 		fontWeight: 600,
 	},
-
 	image: {
 		height: '80%',
 		marginRight: '1rem',
 	},
-
 	userName: {
 		fontWeight: 500,
 		fontSize: '1rem',
-		wordBreak: 'break-word',
+		marginRight: '1rem',
 	},
-
 	hamburger: {
 		fontSize: '1.8rem',
 		color: '#897AF2',
-		marginLeft: '1rem',
+		marginRight: '1rem',
+		display: 'none',
+		[theme.breakpoints.down('sm')]: {
+			display: 'block',
+		},
 	},
 }));

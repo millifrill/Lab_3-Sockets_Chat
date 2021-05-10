@@ -41,9 +41,9 @@ const useStyles = makeStyles((theme) => ({
 		height: '92vh',
 		position: 'relative',
 		overflow: 'hidden',
-		[theme.breakpoints.down('sm')]: {
-			width: '100%',
-		},
+		// [theme.breakpoints.down('sm')]: {
+		// 	width: '100%',
+		// },
 	},
 	textarea: {
 		position: 'absolute',

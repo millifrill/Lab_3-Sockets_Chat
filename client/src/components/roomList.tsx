@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core';
-import { AddCircle } from '@material-ui/icons';
 import { useContext } from 'react';
 import { ChatContext } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
@@ -11,13 +10,14 @@ export default function RoomList() {
 
 	return (
 		<div className={styled.container}>
-			<div className={styled.chatrooms}>
+			<div className={styled.olList}>
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
-					<AddCircle />
-					{CreateRoomModal}
+					<CreateRoomModal />
 				</div>
 				<ol className={styled.olList}>
+					{/* Exempelrum */}
+					<dt>Rum 1</dt>
 					<div className={styled.roomContainers} />
 					{allRooms.map((room) => (
 						<dt>{room.name}</dt>
@@ -38,11 +38,6 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down('sm')]: {
 			display: 'none',
 		},
-	},
-	chatrooms: {
-		border: '1px solid #F6F6F6',
-		width: '100%',
-		height: '100%',
 	},
 	chatroomHeader: {
 		background: '#897AF2',

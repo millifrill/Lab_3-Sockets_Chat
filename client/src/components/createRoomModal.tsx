@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { IconButton } from '@material-ui/core';
+import { AddCircle } from '@material-ui/icons';
 import Icon from '@material-ui/core/Icon';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
@@ -29,7 +29,7 @@ export default function CreateRoomModal() {
 				fontSize='small'
 				onClick={handleClickOpen}
 			>
-				add_circle
+				<AddCircle />
 			</Icon>
 			<Dialog
 				open={open}

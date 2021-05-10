@@ -1,29 +1,43 @@
+import { Message } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ChatContext } from "../contexts/chatContext";
 
 export default function ChatRoomBox() {
   const styled = useStyles();
-  const [NewMessage, setNewMessage] = useState("");
+  const chatContext = useContext(ChatContext);
+  const { handleSendMessage } = chatContext
+  const [NewMessage, setNewMessage] = useState([]);
+  const [sendMessages, setSendMessages] = useState("")
 
-  const handleNewMessageChange = (event: any) => {
+
+
+  const handleNewMessagesChange = (event: any) => {
     setNewMessage(event.target.value);
   };
 
-  const sendMessages = () => {
-    console.log("button");
+  const sendMessages = (e) => {
+    e.preventDefault()
+    sendMessages("");
+
   };
 
 
   return (
     <div className={styled.chatContainer}>
       <ol>
-        <dt></dt>
+        {Message.map((message) => (
+          
+        ))}
+        <li>
+
+        </li>
       </ol>
       <textarea
         className={styled.textarea}
         placeholder="Write a message....."
         value={NewMessage}
-        onChange={handleNewMessageChange}
+        onChange={handleNewMessagesChange}
       />
       <button className={styled.buttonSend} onClick={sendMessages}>
         Send
@@ -58,3 +72,5 @@ const useStyles = makeStyles((theme) => ({
     right: "0",
   },
 }));
+
+

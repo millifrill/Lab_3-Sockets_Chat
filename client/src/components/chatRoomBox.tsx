@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import { useState } from 'react';
 import MessageBubble from './messageBubble';
 
@@ -10,10 +10,6 @@ export default function ChatRoomBox() {
 		setNewMessage(event.target.value);
 	};
 
-	const sendMessages = () => {
-		console.log('button');
-	};
-
 	return (
 		<div className={styled.chatContainer}>
 			<MessageBubble />
@@ -23,7 +19,8 @@ export default function ChatRoomBox() {
 				value={NewMessage}
 				onChange={handleNewMessageChange}
 			/>
-			<button className={styled.buttonSend} onClick={sendMessages}>
+			<button className={styled.buttonSend}>
+				{/* onClick={sendMessages} */}
 				Send
 			</button>
 		</div>
@@ -40,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
 		height: '92vh',
 		position: 'relative',
 		overflow: 'hidden',
-		//  [theme.breakpoints.down("sm")]: {
-		//    width: "100%",
-		//  },
+		[theme.breakpoints.down('sm')]: {
+			width: '100%',
+		},
 	},
 	textarea: {
 		position: 'absolute',
@@ -59,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 		background: '#897AF2',
 		borderRadius: '10px',
 		fontWeight: 'bold',
+
 		height: '2rem',
 		width: '4rem',
 		border: 'none',

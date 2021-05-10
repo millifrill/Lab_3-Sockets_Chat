@@ -23,6 +23,10 @@
   },
   "homepage": "https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat#readme",
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "npm-run-all": "^1.7.0"
+  },
+  "devDependencies": {
+    "prettier": "2.3.0"
   }
 }

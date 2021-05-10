@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { IconButton } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { ChatContext, Room } from '../contexts/chatContext';
 
@@ -29,11 +28,6 @@ export default function PasswordModal(props: Props) {
 	const chatContext = useContext(ChatContext);
 	const { handleJoinRoom, currentRoom, errors } = chatContext;
 	const styled = useStyles();
-	//   const logoImg = `../assets/logo.png`;
-	/* const [open, setOpen] = React.useState(false); */
-	/* const handleClickOpen = () => {
-    setOpen(true);
-  }; */
 
 	// If user has been assigned a room, close password modal
 	useEffect(() => {
@@ -68,8 +62,6 @@ export default function PasswordModal(props: Props) {
 				aria-labelledby='form-dialog-title'
 			>
 				<DialogTitle id='form-dialog-title'></DialogTitle>
-				{/* <img src={logoImg} alt="" className={imgStyle}/> */}
-
 				<DialogContent>
 					<DialogContentText className={styled.modalTitle}>
 						Please enter the password

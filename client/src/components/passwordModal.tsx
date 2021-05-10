@@ -28,10 +28,6 @@ export default function PasswordModal(props: Props) {
 	const chatContext = useContext(ChatContext);
 	const { handleJoinRoom, currentRoom, errors } = chatContext;
 	const styled = useStyles();
-	/* const [open, setOpen] = React.useState(false); */
-	/* const handleClickOpen = () => {
-    setOpen(true);
-  }; */
 
 	// If user has been assigned a room, close password modal
 	useEffect(() => {

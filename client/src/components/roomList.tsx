@@ -37,7 +37,7 @@ export default function RoomList(props: Props) {
 			<div className={styled.chatrooms}>
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
-					{CreateRoomModal}
+					<CreateRoomModal />
 				</div>
 				<ol className={styled.olList}>
 					{allRooms.map((room) => (

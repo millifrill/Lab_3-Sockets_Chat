@@ -1,14 +1,17 @@
 import { makeStyles } from "@material-ui/styles";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
 import MessageBubble from "./messageBubble";
 import MessageIncomingBubble from "./MessageIncomingBubble"
 
+
 export default function ChatRoomBox(props: { messages?: any; }) {
 	const styled = useStyles();
+	const msgRef = useRef<HTMLInputElement>(null);
 	const chatContext = useContext(ChatContext);
 	const { handleSendMessage, messages, userName } = chatContext
 	const [message, setSendMessages] = useState("")
+
 
 	const handleNewMessagesChange = (event: any) => {
 		setSendMessages(event.target.value);
@@ -16,13 +19,30 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 
 	const sendMessages = (e: any) => {
 		e.preventDefault()
-		console.log(messages)
+		console.log(message)
 		handleSendMessage(message);
 	};
 
+
+	useEffect(() => {
+		if (msgRef && msgRef.current) {
+			const element = msgRef.current;
+			element.scroll({
+				top: element.scrollHeight,
+				left: 0,
+				behavior: "smooth"
+			})
+		}
+	}, [msgRef, messages]);
+
+
+
+
+
+
 	return (
-		<div className={styled.chatContainer}>
-			<div className={styled.ListMessages}>
+		<div className={styled.chatContainer} ref={msgRef}>
+			<div className={styled.ListMessages} >
 
 				{messages.map((AllMessage) => (
 					(
@@ -30,7 +50,9 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 							< MessageBubble message={AllMessage} />
 						) : (
 							<MessageIncomingBubble message={AllMessage} />
+
 						)
+
 					))
 
 				)
@@ -86,5 +108,7 @@ const useStyles = makeStyles((theme) => ({
 		cursor: 'pointer'
 	},
 }));
+
+
 
 

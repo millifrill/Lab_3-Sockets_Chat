@@ -3,6 +3,8 @@ import { socket } from "../socket";
 interface Errors {
 	wrongPassword: string;
 	roomNameAlreadyInUse: string;
+	noUsername: string;
+	noRoomName: string;
 }
 export interface Message {
 	userName: string;
@@ -37,6 +39,8 @@ export const ChatContext = createContext<Context>({
 	errors: {
 		wrongPassword: "",
 		roomNameAlreadyInUse: "",
+		noUsername: "",
+		noRoomName: "",
 	},
 	handleSetUsername: () => {},
 	handleJoinRoom: () => {},
@@ -56,6 +60,8 @@ class ChatProvider extends Component<{}, State> {
 		errors: {
 			wrongPassword: "",
 			roomNameAlreadyInUse: "",
+			noUsername: "",
+			noRoomName: "",
 		},
 	};
 
@@ -210,6 +216,19 @@ class ChatProvider extends Component<{}, State> {
 			</ChatContext.Provider>
 		);
 	}
+	//   userName: "",
+	//   currentRoom: "",
+	//   allRooms: [],
+	//   messages: [],
+	//   errors: {
+	//     wrongPassword: "",
+	//     roomNameAlreadyInUse: "",
+
+	//   },
+	//   handleJoinRoom: () => {},
+	//   handleCreateRoom: () => {},
+	//   handleLogout: () => {},
+	//   handleSendMessage: () => {},
 }
 
 export default ChatProvider;

@@ -8,19 +8,22 @@ const rooms = [];
 async function handleJoinRoom(io, data, socket) {
   const { room, currentRoom, password } = data;
 
-  // If user is currently in a room, leave room
-  if (currentRoom) {
-    await socket.leave(currentRoom);
-  }
-
   const newRoomToJoin = rooms.find((r) => r.name === room.name);
-
   if (newRoomToJoin.password) {
     if (newRoomToJoin.password !== password) {
       // Set password error
       return await socket.emit("error", "wrongPassword");
     }
   }
+  if(!socket.userName) {
+    return;
+  }
+
+  // If user is currently in a room, leave room
+  if (currentRoom) {
+    await socket.leave(currentRoom);
+  }
+
   // Room has no password, or correct password was submitted
   await socket.join(room.name);
   // Remove password error
@@ -39,8 +42,12 @@ async function handleJoinRoom(io, data, socket) {
  * @param {*} data
  * @param {io.socket} socket
  */
-function handleRegisterUser(data, socket) {
+async function handleRegisterUser(data, socket) {
   const {userName} = data;
+  if (!userName) {
+    return await socket.emit("error", "noUsername")
+  }
+  socket.emit("no-error", "noUsername")
   socket.userName = userName;
   socket.emit("register-user", userName)
 }
@@ -58,11 +65,17 @@ function handleSendMessage(data, io) {
 
 async function handleCreateRoom(data, socket, io) {
   const { room, password, currentRoom } = data;
-
+  
   const existingRoom = getRooms(io).find((r) => r.name === room.name);
   if (existingRoom) {
     // Set roomName error
     return await socket.emit("error", "roomNameAlreadyInUse");
+  }
+  if (!room.name) {
+    return await socket.emit("error", "noRoomName")
+  }
+  if(!socket.userName) {
+    return;
   }
 
   // If user is currently in a room, leave room
@@ -76,8 +89,9 @@ async function handleCreateRoom(data, socket, io) {
   };
 
   await socket.join(room.name);
-  // Remove roomName error
+  // Remove errors
   await socket.emit("no-error", "roomNameAlreadyInUse");
+  await socket.emit("no-error", "noRoomName");
   // Returns the room that has been joined to client
   io.to(socket.id).emit("join-room", room);
   // Respond to client that join was successful

@@ -1,7 +1,7 @@
-import { CSSProperties } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 import { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
+import { makeStyles } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useHistory } from "react-router";
 

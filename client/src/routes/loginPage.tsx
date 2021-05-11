@@ -168,6 +168,7 @@ export default function LoginPage() {
 								className={styled.formStyle}
 								id='outlined-select'
 								placeholder='Choose room'
+								defaultValue={""}
 								select
 								variant='outlined'
 								onChange={(e) => handleJoinRoomChange(e.target.value)}

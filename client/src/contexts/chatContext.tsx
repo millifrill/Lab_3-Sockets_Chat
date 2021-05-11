@@ -30,7 +30,7 @@ interface State {
 interface Context extends State {
   handleJoinRoom: (room: Room, password?: string, userName?: string) => void;
   handleCreateRoom: (room: Room, password?: string, userName?: string) => void;
-  handleLogout: (user: string) => void;
+  handleLogout: () => void;
   handleSendMessage: (message: string) => void;
 }
 
@@ -140,8 +140,28 @@ class ChatProvider extends Component<{}, State> {
     }));
   }
 
+  /* Körs först när logout på servern har körts */
+  incomingLogout = () => {
+    // Återställer staten i kontexten,
+    // så att de ser likadana ut som innan användaren loggade in
+    // Eftersom userName är tomt, så återvänder användaren till "/" (se rad 24 i chatRoomMain.tsx)
+    this.setState({
+      userName: "",
+    currentRoom: "",
+    allRooms: [],
+    messages: [],
+    errors: {
+      wrongPassword: "",
+      roomNameAlreadyInUse: "",
+      noUsername: "",
+      noRoomName: "",
+    },
+    })
+  }
+
   componentDidMount() {
     socket.on("connect", this.incomingConnectionEstablished);
+    socket.on("logout", this.incomingLogout);
     socket.on("register-user", this.incomingRegisterUser);
     socket.on("disconnect", this.incomingDisconnect);
     socket.on("join-room", this.incomingJoinRoom);
@@ -183,8 +203,10 @@ class ChatProvider extends Component<{}, State> {
   };
 
   handleLogout = () => {
-    const { userName } = this.state;
-    socket.emit("logout", { user: userName });
+    const {currentRoom} = this.state
+    // Kommunicerar logout till servern
+    // och skickar med rummet användaren är med i (se rad 30 i server.js)
+    socket.emit("logout", {currentRoom: currentRoom});
   };
 
   handleSendMessage = (message: string) => {

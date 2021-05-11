@@ -106,6 +106,7 @@ export default function LoginPage() {
 							id="outlined-select"
 							placeholder="Choose room"
 							select
+							defaultValue={""}
 							variant="outlined"
 							onChange={(e) => handleJoinRoomChange(e.target.value)}
 						>
@@ -119,7 +120,7 @@ export default function LoginPage() {
 							<TextField
 								className={styled.textField}
 								id="outlined-basic"
-								placeholder="Enter password"
+								placeholder="Enter room password"
 								onChange={(e) =>
 									handlePasswordChange(e.target.value)
 								}
@@ -148,7 +149,7 @@ export default function LoginPage() {
 				<TextField
 					className={styled.textField}
 					id="outlined-basic"
-					placeholder="Password"
+					placeholder="Enter password"
 					type="password"
 					variant="outlined"
 					onChange={(e) => handlePasswordChange(e.target.value)}

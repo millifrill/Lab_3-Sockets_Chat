@@ -14,6 +14,7 @@ const {
 	handleCreateRoom,
 	handleDisconnect,
 	handleSendMessage,
+	handleLogout,
 	getRooms,
 } = require("./roomEvents");
 
@@ -26,6 +27,8 @@ io.on("connection", (socket) => {
 	socket.on("register-user", (data) => handleRegisterUser(data, socket))
 	socket.on("create-room", (data) => handleCreateRoom(data, socket, io));
 	socket.on("send-message", (data) => handleSendMessage(data, io));
+	// Event listener för logout, kör handleLogout() när den triggas (se rad 107 i roomEvents.js)
+	socket.on("logout", (data) => handleLogout(data, socket, io));
 	socket.on("disconnect", (reason) => handleDisconnect(reason, io));
 });
 

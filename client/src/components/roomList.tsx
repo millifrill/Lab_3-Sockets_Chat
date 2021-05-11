@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { ChatContext, Room } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
 import LockIcon from '@material-ui/icons/Lock';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
 	setPasswordModal: React.Dispatch<
@@ -16,8 +17,12 @@ interface Props {
 export default function RoomList(props: Props) {
 	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
-	const { allRooms, handleJoinRoom } = chatContext;
 	const styled = useStyles();
+	const {
+		allRooms,
+		handleJoinRoom,
+		handleLogout,
+	} = chatContext;
 
 	const handleRoomChange = (room: Room) => {
 		if (room.hasPassword) {
@@ -30,6 +35,12 @@ export default function RoomList(props: Props) {
 			console.log('no password');
 			handleJoinRoom(room);
 		}
+	};
+
+	// När användaren trycker på logout,
+	// kalla på handleLogout från kontexten (se rad 205 i chatContext.tsx)
+	const logout = () => {
+		handleLogout();
 	};
 
 	return (
@@ -49,7 +60,9 @@ export default function RoomList(props: Props) {
 						</dt>
 					))}
 				</ol>
-				<button className={styled.buttonLogout}>Logout</button>
+				<button className={styled.buttonLogout} onClick={logout}>
+					Logout
+				</button>
 			</div>
 		</div>
 	);
@@ -102,16 +115,16 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	buttonLogout: {
-		position: 'absolute',
-		bottom: '3%',
-		left: '1rem',
-		borderRadius: '10px',
-		height: '38px',
-		width: '147px',
-		color: 'white',
-		background: '#897AF2',
-		border: 'none',
-		fontWeight: 'bold',
+		position: "absolute",
+		bottom: "3%",
+		left: "1rem",
+		borderRadius: "10px",
+		height: "38px",
+		width: "147px",
+		color: "white",
+		background: "#897AF2",
+		border: "none",
+		fontWeight: "bold",
 	},
 	roomName: {
 		marginLeft: '2px',

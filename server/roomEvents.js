@@ -3,7 +3,7 @@ const rooms = [];
 
 /**
  * @param {*} data
- * @param {io.socket} socket
+ * @param {io.Socket} socket
  */
 async function handleJoinRoom(io, data, socket) {
   const { room, currentRoom, password } = data;
@@ -40,7 +40,7 @@ async function handleJoinRoom(io, data, socket) {
 
 /**
  * @param {*} data
- * @param {io.socket} socket
+ * @param {io.Socket} socket
  */
 async function handleRegisterUser(data, socket) {
   const {userName} = data;
@@ -99,6 +99,23 @@ async function handleCreateRoom(data, socket, io) {
   // Adds new room to room array
   rooms.push(newRoom);
   io.emit("all-rooms", getRooms(io));
+}
+
+/**
+ * @param {io.Socket} socket
+ */
+async function handleLogout(data, socket, io) {
+  /* !!! Jag tänkte först att vi skulle disconnecta användaren här,
+  men då går det inte att logga in igen utan att uppdatera fönstret !!! */
+  const {currentRoom} = data;
+  // Här får vi användaren att lämna rummet den är med i
+  await socket.leave(currentRoom)
+  // Vi skickar en uppdaterad lista över rummen till alla användare
+  // eftersom att en användare har lämnat ett rum och de har förändrats
+  io.emit("all-rooms", getRooms(io));
+  // När detta är färdigt skickar vi ett svar till clienten
+  // så den kan slutföra logout proccessen (se rad 144 el 164 i chatContext.tsx)
+  socket.emit("logout")
 }
 
 function handleDisconnect(reason, io) {
@@ -170,5 +187,6 @@ module.exports = {
   handleDisconnect,
   handleSendMessage,
   handleCreateRoom,
+  handleLogout,
   getRooms,
 };

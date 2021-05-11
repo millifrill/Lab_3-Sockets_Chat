@@ -18,6 +18,7 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 		e.preventDefault()
 		console.log(messages)
 		handleSendMessage(message);
+		setSendMessages("")
 	};
 
 	return (
@@ -36,7 +37,7 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 				)
 				}
 			</div>
-			<textarea
+			<input
 				className={styled.textarea}
 				placeholder="Write a message....."
 				value={message}

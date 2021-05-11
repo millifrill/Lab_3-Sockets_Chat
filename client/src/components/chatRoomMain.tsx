@@ -11,7 +11,7 @@ import RoomList from "./roomList";
 export default function ChatRoom() {
   const history = useHistory();
   const chatContext = useContext(ChatContext);
-  const { currentRoom } = chatContext;
+  const { userName } = chatContext;
   const styled = useStyles();
   const [mobileRoomList, setMobileRoomList] = useState(false);
   const [passwordModal, setPasswordModal] = useState({
@@ -22,10 +22,10 @@ export default function ChatRoom() {
   });
 
   useEffect(() => {
-    if (!currentRoom) {
+    if (!userName) {
       history.push("/");
     }
-  }, [currentRoom, history]);
+  }, [userName, history]);
 
   return (
     <div className={styled.relative}>

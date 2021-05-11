@@ -6,7 +6,7 @@ const rooms = [];
  * @param {io.socket} socket
  */
 async function handleJoinRoom(io, data, socket) {
-  const { room, currentRoom, password, user } = data;
+  const { room, currentRoom, password } = data;
 
   // If user is currently in a room, leave room
   if (currentRoom) {
@@ -30,11 +30,25 @@ async function handleJoinRoom(io, data, socket) {
   // Respond to client that join was successful
   io.to(socket.id).emit("join-success");
   // Broadcast message to all clients in the room
-  io.to(data.room).emit("new-user-in-room", `${user} has joined the chat`);
+  io.to(room.name).emit("new-user-in-room", `${socket.userName} has joined the chat`);
   // Broadcast rooms update to all clients
   io.emit("all-rooms", getRooms(io));
 }
 
+/**
+ * @param {*} data
+ * @param {io.socket} socket
+ */
+function handleRegisterUser(data, socket) {
+  const {userName} = data;
+  socket.userName = userName;
+  socket.emit("register-user", userName)
+}
+
+/**
+ * @param {*} data
+ * @param {io.Namespace} io
+ */
 function handleSendMessage(data, io) {
   const { room, message, userName } = data;
   const returnMessage = { message: message, userName: userName };
@@ -78,14 +92,18 @@ function handleDisconnect(reason, io) {
   io.emit("all-rooms", getRooms(io));
 }
 
+/**
+ * @param {io.Namespace} io
+ */
 function getRooms(io) {
   const sockets = io.of("/").adapter.rooms;
   const rooms = [];
   for (socket of sockets) {
     if (socket[0] !== socket[1].values().next().value) {
-      const name = socket[0];
-      const hasPassword = checkIfRoomHasPassword(socket[0]);
-      rooms.push({ name: name, hasPassword: hasPassword });
+      const roomName = socket[0];
+      const hasPassword = checkIfPassword(socket[0]);
+      const users = getUsers(roomName, io)
+      rooms.push({ name: roomName, hasPassword: hasPassword, users: users });
     }
   }
   // let rooms = [];
@@ -100,7 +118,27 @@ function getRooms(io) {
   return rooms;
 }
 
-function checkIfRoomHasPassword(socket) {
+/**
+ * 
+ * @param {string} roomName 
+ * @param {io.Namespace} io 
+ * @returns 
+ */
+function getUsers(roomName, io) {
+  const users = []
+  const sockets = io.sockets.adapter.rooms.get(roomName);
+  for (const socket of sockets ) {
+     const user = io.sockets.sockets.get(socket).userName;
+     users.push(user)
+  }
+  return users;
+}
+
+/**
+ * 
+ * @param {*} socket
+ */
+function checkIfPassword(socket) {
   for (room of rooms) {
     if (room.name === socket) {
       if (room.password) {
@@ -113,6 +151,7 @@ function checkIfRoomHasPassword(socket) {
 }
 
 module.exports = {
+  handleRegisterUser,
   handleJoinRoom,
   handleDisconnect,
   handleSendMessage,

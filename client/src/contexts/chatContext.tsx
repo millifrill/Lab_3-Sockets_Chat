@@ -14,6 +14,7 @@ export interface Message {
 export interface Room {
   name: string;
   hasPassword?: boolean;
+  users?: string[]
 }
 
 interface State {
@@ -25,9 +26,8 @@ interface State {
 }
 
 interface Context extends State {
-  handleSetUsername: (user: string) => void;
-  handleJoinRoom: (room: Room, password?: string) => void;
-  handleCreateRoom: (room: Room, password?: string) => void;
+  handleJoinRoom: (room: Room, password?: string, userName?: string) => void;
+  handleCreateRoom: (room: Room, password?: string, userName?: string) => void;
   handleLogout: (user: string) => void;
   handleSendMessage: (message: string) => void;
 }
@@ -41,15 +41,13 @@ export const ChatContext = createContext<Context>({
     wrongPassword: "",
     roomNameAlreadyInUse: "",
   },
-  handleSetUsername: () => { },
-  handleJoinRoom: () => { },
-  handleCreateRoom: () => { },
-  handleLogout: () => { },
-  handleSendMessage: () => { },
+  handleJoinRoom: () => {},
+  handleCreateRoom: () => {},
+  handleLogout: () => {},
+  handleSendMessage: () => {},
 });
 
 class ChatProvider extends Component<{}, State> {
-  /* socket = io('http://localhost:5000', { transports: ['websocket'] }); */
   state: State = {
     userName: "",
     currentRoom: "",
@@ -128,8 +126,17 @@ class ChatProvider extends Component<{}, State> {
     console.log(reason);
   };
 
+  incomingRegisterUser = (userName: string) => {
+    console.log("Your username is", userName)
+    this.setState((prevState) => ({
+      ...prevState,
+      userName: userName
+    }));
+  }
+
   componentDidMount() {
     socket.on("connect", this.incomingConnectionEstablished);
+    socket.on("register-user", this.incomingRegisterUser);
     socket.on("disconnect", this.incomingDisconnect);
     socket.on("join-room", this.incomingJoinRoom);
     socket.on("send-message", this.incomingMessage);
@@ -142,27 +149,24 @@ class ChatProvider extends Component<{}, State> {
     socket.on("error", this.incomingError);
   }
 
-  handleSetUsername = (name: string) => {
-    console.log("Your username is:", name);
-    this.setState((prevState) => ({
-      ...prevState,
-      userName: name,
-    }));
-  };
-
-  handleJoinRoom = async (room: Room, password?: string) => {
-    const { currentRoom, userName } = this.state;
+  handleJoinRoom = async (room: Room, password?: string, userName?: string) => {
+    const { currentRoom } = this.state;
+    if (userName) {
+      socket.emit("register-user", {userName: userName})
+    }
     // Adds user to new room
     socket.emit("join-room", {
       room: room,
-      user: userName,
       currentRoom: currentRoom,
       password: password,
     });
   };
 
-  handleCreateRoom = async (room: Room, password?: string) => {
+  handleCreateRoom = async (room: Room, password?: string, userName?: string) => {
     const { currentRoom } = this.state;
+    if (userName) {
+      socket.emit("register-user", {userName: userName})
+    }
     // Creates and adds user to new room
     socket.emit("create-room", {
       room: room,
@@ -196,7 +200,6 @@ class ChatProvider extends Component<{}, State> {
           allRooms: this.state.allRooms,
           messages: this.state.messages,
           errors: this.state.errors,
-          handleSetUsername: this.handleSetUsername,
           handleJoinRoom: this.handleJoinRoom,
           handleCreateRoom: this.handleCreateRoom,
           handleSendMessage: this.handleSendMessage,

@@ -10,6 +10,7 @@ const io = new Server(server);
 
 const {
 	handleJoinRoom,
+	handleRegisterUser,
 	handleCreateRoom,
 	handleDisconnect,
 	handleSendMessage,
@@ -22,13 +23,10 @@ io.on("connection", (socket) => {
 
 	// Setup event listeners
 	socket.on("join-room", (data) => handleJoinRoom(io, data, socket));
+	socket.on("register-user", (data) => handleRegisterUser(data, socket))
 	socket.on("create-room", (data) => handleCreateRoom(data, socket, io));
 	socket.on("send-message", (data) => handleSendMessage(data, io));
 	socket.on("disconnect", (reason) => handleDisconnect(reason, io));
-
-	/* const rooms = getRooms(io); */
-
-	/* console.log(rooms); */
 });
 
 server.listen(5000, () => {

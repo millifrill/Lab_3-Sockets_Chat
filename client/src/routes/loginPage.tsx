@@ -16,7 +16,6 @@ export default function LoginPage() {
 		currentRoom,
 		handleCreateRoom,
 		handleJoinRoom,
-		handleSetUsername,
 	} = chatContext;
 
 	const [userSettings, setUserSettings] = useState({
@@ -135,13 +134,11 @@ export default function LoginPage() {
 		const room = { name: name };
 		if (isNewRoom) {
 			if (checkUserValidation() && checkCreateRoomValidation()) {
-				handleCreateRoom(room, password);
-				handleSetUsername(userName);
+				handleCreateRoom(room, password, userName);
 			}
 		} else {
 			if (checkUserValidation()) {
-				handleJoinRoom(room, password);
-				handleSetUsername(userName);
+				handleJoinRoom(room, password, userName);
 			}
 		}
 	};

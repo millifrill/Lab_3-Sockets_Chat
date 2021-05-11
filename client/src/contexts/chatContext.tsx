@@ -1,21 +1,18 @@
-import { Component, createContext } from 'react';
-import { socket } from '../socket';
-
+import { Component, createContext } from "react";
+import { socket } from "../socket";
 interface Errors {
 	wrongPassword: string;
 	roomNameAlreadyInUse: string;
 }
-
-interface Message {
+export interface Message {
 	userName: string;
 	message: string;
 }
-
 export interface Room {
 	name: string;
 	hasPassword?: boolean;
+	users?: string[];
 }
-
 interface State {
 	userName: string;
 	currentRoom: string;
@@ -23,7 +20,6 @@ interface State {
 	messages: Message[];
 	errors: Errors;
 }
-
 interface Context extends State {
 	handleSetUsername: (user: string) => void;
 	handleJoinRoom: (room: Room, password?: string) => void;
@@ -34,13 +30,13 @@ interface Context extends State {
 }
 
 export const ChatContext = createContext<Context>({
-	userName: '',
-	currentRoom: '',
+	userName: "",
+	currentRoom: "",
 	allRooms: [],
 	messages: [],
 	errors: {
-		wrongPassword: '',
-		roomNameAlreadyInUse: '',
+		wrongPassword: "",
+		roomNameAlreadyInUse: "",
 	},
 	handleSetUsername: () => {},
 	handleJoinRoom: () => {},
@@ -53,13 +49,13 @@ export const ChatContext = createContext<Context>({
 class ChatProvider extends Component<{}, State> {
 	/* socket = io('http://localhost:5000', { transports: ['websocket'] }); */
 	state: State = {
-		userName: '',
-		currentRoom: '',
+		userName: "",
+		currentRoom: "",
 		allRooms: [],
 		messages: [],
 		errors: {
-			wrongPassword: '',
-			roomNameAlreadyInUse: '',
+			wrongPassword: "",
+			roomNameAlreadyInUse: "",
 		},
 	};
 
@@ -72,11 +68,11 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	incomingConnectionEstablished = () => {
-		console.log('Connection established');
+		console.log("Connection established");
 	};
 
 	incomingMessage = (message: Message) => {
-		console.log('incoming message:', message);
+		console.log("incoming message:", message);
 		this.setState((prevState) => ({
 			...prevState,
 			messages: [...prevState.messages, message],
@@ -84,7 +80,7 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	incomingRooms = (rooms: Room[]) => {
-		console.log('incoming rooms:', rooms);
+		console.log("incoming rooms:", rooms);
 		this.setState((prevState) => ({
 			...prevState,
 			allRooms: rooms,
@@ -92,7 +88,7 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	incomingCreateRoom = (room: Room) => {
-		console.log('new room has been created');
+		console.log("new room has been created");
 		this.setState((prevState) => ({
 			...prevState,
 			currentRoom: room.name,
@@ -101,7 +97,7 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	incomingJoinSuccess = () => {
-		console.log('You have joined a new room');
+		console.log("You have joined a new room");
 		// Current user has successfully joined a new room
 	};
 
@@ -121,7 +117,7 @@ class ChatProvider extends Component<{}, State> {
 	incomingNoError = (noError: string) => {
 		this.setState((prevState) => ({
 			...prevState,
-			errors: { ...prevState.errors, [noError]: '' },
+			errors: { ...prevState.errors, [noError]: "" },
 		}));
 		console.log(this.state.errors);
 	};
@@ -131,20 +127,20 @@ class ChatProvider extends Component<{}, State> {
 	};
 
 	componentDidMount() {
-		socket.on('connect', this.incomingConnectionEstablished);
-		socket.on('disconnect', this.incomingDisconnect);
-		socket.on('join-room', this.incomingJoinRoom);
-		socket.on('send-message', this.incomingMessage);
-		socket.on('all-rooms', this.incomingRooms);
-		socket.on('new-user-in-room', this.incomingUserInRoom);
-		socket.on('create-room', this.incomingCreateRoom);
-		socket.on('join-success', this.incomingJoinSuccess);
-		socket.on('no-error', this.incomingNoError);
-		socket.on('error', this.incomingError);
+		socket.on("connect", this.incomingConnectionEstablished);
+		socket.on("disconnect", this.incomingDisconnect);
+		socket.on("join-room", this.incomingJoinRoom);
+		socket.on("send-message", this.incomingMessage);
+		socket.on("all-rooms", this.incomingRooms);
+		socket.on("new-user-in-room", this.incomingUserInRoom);
+		socket.on("create-room", this.incomingCreateRoom);
+		socket.on("join-success", this.incomingJoinSuccess);
+		socket.on("no-error", this.incomingNoError);
+		socket.on("error", this.incomingError);
 	}
 
 	handleSetUsername = (name: string) => {
-		console.log('Your username is:', name);
+		console.log("Your username is:", name);
 		this.setState((prevState) => ({
 			...prevState,
 			userName: name,
@@ -154,7 +150,7 @@ class ChatProvider extends Component<{}, State> {
 	handleJoinRoom = async (room: Room, password?: string) => {
 		const { currentRoom, userName } = this.state;
 		// Adds user to new room
-		socket.emit('join-room', {
+		socket.emit("join-room", {
 			room: room,
 			user: userName,
 			currentRoom: currentRoom,
@@ -165,7 +161,7 @@ class ChatProvider extends Component<{}, State> {
 	handleCreateRoom = async (room: Room, password?: string) => {
 		const { currentRoom } = this.state;
 		// Creates and adds user to new room
-		socket.emit('create-room', {
+		socket.emit("create-room", {
 			room: room,
 			currentRoom: currentRoom,
 			password: password,
@@ -174,19 +170,19 @@ class ChatProvider extends Component<{}, State> {
 
 	handleLogout = () => {
 		const { userName } = this.state;
-		socket.emit('logout', { user: userName });
+		socket.emit("logout", { user: userName });
 	};
 
 	handleDisconnect = () => {
 		const { userName } = this.state;
-		socket.emit('disconnect', { user: userName });
+		socket.emit("disconnect", { user: userName });
 	};
 
 	handleSendMessage = (message: string) => {
 		const { userName, currentRoom } = this.state;
 
 		// Sends message
-		socket.emit('send-message', {
+		socket.emit("send-message", {
 			userName: userName,
 			message: message,
 			room: currentRoom,

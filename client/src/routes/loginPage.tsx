@@ -7,17 +7,12 @@ import { useHistory } from "react-router";
 
 export default function LoginPage() {
 	const history = useHistory();
+	const styled = useStyles();
 	const logoImg = `../assets/logo.png`;
 	const [passwordInput, showPasswordInput] = useState(false);
 	const chatContext = useContext(ChatContext);
-	const {
-		allRooms,
-		errors,
-		currentRoom,
-		handleCreateRoom,
-		handleJoinRoom,
-		handleSetUsername,
-	} = chatContext;
+	const { allRooms, errors, currentRoom, handleCreateRoom, handleJoinRoom } =
+		chatContext;
 
 	const [userSettings, setUserSettings] = useState({
 		userName: "",
@@ -135,39 +130,37 @@ export default function LoginPage() {
 		const room = { name: name };
 		if (isNewRoom) {
 			if (checkUserValidation() && checkCreateRoomValidation()) {
-				handleCreateRoom(room, password);
-				handleSetUsername(userName);
+				handleCreateRoom(room, password, userName);
 			}
 		} else {
 			if (checkUserValidation()) {
-				handleJoinRoom(room, password);
-				handleSetUsername(userName);
+				handleJoinRoom(room, password, userName);
 			}
 		}
 	};
 
 	return (
-		<div style={mainContent}>
-			<p style={nameStyle}>Chattastic</p>
-			<img src={logoImg} alt="" style={imgStyle} />
-			<div style={formBox}>
+		<div className={styled.mainContent}>
+			<p className={styled.nameStyle}>Chattastic</p>
+			<img src={logoImg} alt="" className={styled.imgStyle} />
+			<div className={styled.formBox}>
 				<div>
-					<p style={text}>Please enter your name</p>
+					<p className={styled.text}>Please enter your name</p>
 					<TextField
-						style={formStyle}
+						className={styled.formStyle}
 						id="outlined-basic"
 						placeholder="Enter name"
 						onChange={(e) => handleUserNameChange(e.target.value)}
 						variant="outlined"
 					/>
-					<p style={errorMessage}>
+					<p className={styled.errorMessage}>
 						{userErrors.userName ? userErrors.userName : ""}
 					</p>
 					{allRooms.length ? (
-						<div style={flexCenter}>
-							<p style={text}>Choose a room to join</p>
+						<div className={styled.flexCenter}>
+							<p className={styled.text}>Choose a room to join</p>
 							<TextField
-								style={formStyle}
+								className={styled.formStyle}
 								id="outlined-select"
 								placeholder="Choose room"
 								select
@@ -182,50 +175,50 @@ export default function LoginPage() {
 							</TextField>
 							{passwordInput ? (
 								<TextField
-									style={formStyle}
+									className={styled.formStyle}
 									id="outlined-basic"
-									placeholder="Enter password (Optional)"
+									placeholder="Enter password"
 									onChange={(e) =>
 										handlePasswordChange(e.target.value)
 									}
 									variant="outlined"
 								/>
 							) : null}
-							<p style={errorMessage}>
+							<p className={styled.errorMessage}>
 								{errors.wrongPassword
 									? "Please enter the correct password"
 									: ""}
 							</p>
-							<p style={text}>Or</p>
+							<p className={styled.text}>Or</p>
 						</div>
 					) : null}
-					<p style={text}>Create a new chatroom</p>
-					<div style={formBox}>
+					<p className={styled.text}>Create a new chatroom</p>
+					<div className={styled.formBox}>
 						<TextField
-							style={formStyle}
+							className={styled.formStyle}
 							id="outlined-basic"
 							placeholder="Enter room name"
 							variant="outlined"
 							onChange={(e) => handleCreateRoomChange(e.target.value)}
 						/>
-						<p style={errorMessage}>
+						<p className={styled.errorMessage}>
 							{userErrors.roomName ? userErrors.roomName : null}
 						</p>
-						<p style={errorMessage}>
+						<p className={styled.errorMessage}>
 							{errors.roomNameAlreadyInUse
 								? "Room name already in use"
 								: null}
 						</p>
-						<p style={text}>Enter chatroom password</p>
+						<p className={styled.text}>Enter chatroom password</p>
 						<TextField
-							style={formStyle}
+							className={styled.formStyle}
 							id="outlined-basic"
-							placeholder="Enter password (Optional)"
+							placeholder="Password"
 							type="password"
 							variant="outlined"
 							onChange={(e) => handlePasswordChange(e.target.value)}
 						/>
-						<button style={connectButton} onClick={connect}>
+						<button className={styled.connectButton} onClick={connect}>
 							Connect
 						</button>
 					</div>
@@ -235,71 +228,66 @@ export default function LoginPage() {
 	);
 }
 
-const mainContent: CSSProperties = {
-	width: "100%",
-	minHeight: "100vh",
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	flexDirection: "column",
-	backgroundColor: "#DCD9F2",
-};
-const imgStyle: CSSProperties = {
-	width: "6rem",
-	position: "relative",
-	marginTop: "-5rem",
-};
-
-const nameStyle: CSSProperties = {
-	fontSize: "4rem",
-	marginTop: "-2rem",
-	color: "#7361EF",
-	width: "100%",
-	heigth: "100%",
-	textAlign: "center",
-};
-
-const formBox: CSSProperties = {
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	flexDirection: "column",
-};
-
-const formStyle: CSSProperties = {
-	width: "18rem",
-	borderRadius: 9,
-	outline: "none",
-	marginTop: "0.3rem",
-	background: "white",
-};
-
-const connectButton: CSSProperties = {
-	marginTop: "0.5rem",
-	height: "3rem",
-	width: "18rem",
-	borderRadius: 20,
-	border: "none",
-	background: "#7361EF",
-	color: "white",
-	fontSize: "1rem",
-	fontWeight: 600,
-};
-
-const text: CSSProperties = {
-	color: "#1CA491",
-	textAlign: "center",
-	margin: "0.5rem",
-	fontWeight: 600,
-};
-
-const flexCenter: CSSProperties = {
-	display: "flex",
-	justifyContent: "center",
-	alignItems: "center",
-	flexDirection: "column",
-};
-
-const errorMessage: CSSProperties = {
-	color: "red",
-};
+const useStyles = makeStyles((theme) => ({
+	mainContent: {
+		width: "100%",
+		minHeight: "100vh",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+		backgroundColor: "#DCD9F2",
+	},
+	imgStyle: {
+		width: "6rem",
+		position: "relative",
+		marginTop: "-5rem",
+	},
+	nameStyle: {
+		fontSize: "4rem",
+		marginTop: "-2rem",
+		color: "#7361EF",
+		width: "100%",
+		heigth: "100%",
+		textAlign: "center",
+	},
+	formBox: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+	},
+	formStyle: {
+		width: "18rem",
+		borderRadius: 9,
+		outline: "none",
+		marginTop: "0.3rem",
+		background: "white",
+	},
+	connectButton: {
+		marginTop: "0.5rem",
+		height: "3rem",
+		width: "18rem",
+		borderRadius: 20,
+		border: "none",
+		background: "#7361EF",
+		color: "white",
+		fontSize: "1rem",
+		fontWeight: 600,
+	},
+	text: {
+		color: "#1CA491",
+		textAlign: "center",
+		margin: "0.5rem",
+		fontWeight: 600,
+	},
+	flexCenter: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+	},
+	errorMessage: {
+		color: "red",
+	},
+}));

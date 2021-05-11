@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { AddCircle } from "@material-ui/icons";
 import { useContext, useEffect } from "react";
 import { ChatContext, Room } from "../contexts/chatContext";
 import CreateRoomModal from "./createRoomModal";
@@ -57,8 +56,7 @@ export default function RoomList(props: Props) {
 			<div className={styled.chatrooms}>
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
-					<AddCircle />
-					{CreateRoomModal}
+					<CreateRoomModal />
 				</div>
 				<ol className={styled.olList}>
 					{allRooms.map((room) => (

@@ -26,9 +26,9 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 
 	useEffect(() => {
 		if (msgRef && msgRef.current) {
-			const element = msgRef.current;
-			element.scroll({
-				top: element.scrollHeight,
+			const msgElement = msgRef.current;
+			msgElement.scroll({
+				top: msgElement.scrollHeight,
 				left: 0,
 				behavior: "smooth"
 			})
@@ -41,8 +41,8 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 
 
 	return (
-		<div className={styled.chatContainer} ref={msgRef}>
-			<div className={styled.ListMessages} >
+		<div className={styled.chatContainer}>
+			<div className={styled.ListMessages} ref={msgRef}>
 
 				{messages.map((AllMessage) => (
 					(
@@ -58,7 +58,7 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 				)
 				}
 			</div>
-			<textarea
+			<input
 				className={styled.textarea}
 				placeholder="Write a message....."
 				value={message}

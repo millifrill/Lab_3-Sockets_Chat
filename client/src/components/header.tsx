@@ -22,7 +22,7 @@ export default function Header(props: Props) {
 	return (
 		<div className={styled.header}>
 			<div className={styled.flexRow}>
-				<img className={styled.image} src={image} alt='chat-pic' />
+			<img className={styled.image} src={image} alt='chat-pic' />
 				<Hidden xsDown>
 					<h1 className={styled.title}>Chattastic</h1>
 				</Hidden>
@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 600,
 	},
 	image: {
-		height: '80%',
+		// height: '80%',
+		width: '3rem',
 		marginRight: '1rem',
 	},
 	userName: {

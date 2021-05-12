@@ -1,7 +1,7 @@
 import TextField from "@material-ui/core/TextField";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useHistory } from "react-router";
 
@@ -23,11 +23,6 @@ export default function LoginPage() {
 		},
 	});
 
-	const [userErrors, setUserErrors] = useState({
-		userName: "",
-		roomName: "",
-	});
-
 	// If user has been assigned a room, redirect to chatroom
 	useEffect(() => {
 		if (currentRoom) {
@@ -36,17 +31,6 @@ export default function LoginPage() {
 	}, [history, currentRoom]);
 
 	const handleUserNameChange = (name: string) => {
-		if (!name) {
-			setUserErrors((prevState) => ({
-				...prevState,
-				userName: "Please enter a username",
-			}));
-		} else {
-			setUserErrors((prevState) => ({
-				...prevState,
-				userName: "",
-			}));
-		}
 		setUserSettings((prevState) => ({
 			...prevState,
 			userName: name,
@@ -69,17 +53,6 @@ export default function LoginPage() {
 	};
 
 	const handleCreateRoomChange = (name: string) => {
-		if (!name) {
-			setUserErrors((prevState) => ({
-				...prevState,
-				roomName: "Please enter a room name",
-			}));
-		} else {
-			setUserErrors((prevState) => ({
-				...prevState,
-				roomName: "",
-			}));
-		}
 		setUserSettings((prevState) => ({
 			...prevState,
 			room: {
@@ -100,42 +73,14 @@ export default function LoginPage() {
 		}));
 	};
 
-	function checkUserValidation() {
-		if (!userErrors.userName && userSettings.userName) {
-			return true;
-		} else {
-			setUserErrors((prevState) => ({
-				...prevState,
-				userName: "Please enter a username",
-			}));
-			return false;
-		}
-	}
-
-	function checkCreateRoomValidation() {
-		if (!userErrors.roomName && userSettings.room.name) {
-			return true;
-		} else {
-			setUserErrors((prevState) => ({
-				...prevState,
-				roomName: "Please enter a room name",
-			}));
-			return false;
-		}
-	}
-
 	const connect = () => {
 		const { userName } = userSettings;
 		const { password, isNewRoom, name } = userSettings.room;
 		const room = { name: name };
 		if (isNewRoom) {
-			if (checkUserValidation() && checkCreateRoomValidation()) {
 				handleCreateRoom(room, password, userName);
-			}
 		} else {
-			if (checkUserValidation()) {
 				handleJoinRoom(room, password, userName);
-			}
 		}
 	};
 
@@ -144,85 +89,74 @@ export default function LoginPage() {
 			<p className={styled.nameStyle}>Chattastic</p>
 			<img src={logoImg} alt="" className={styled.imgStyle} />
 			<div className={styled.formBox}>
-				<div>
-					<p className={styled.text}>Please enter your name</p>
-					<TextField
-						className={styled.formStyle}
-						id="outlined-basic"
-						placeholder="Enter name"
-						onChange={(e) => handleUserNameChange(e.target.value)}
-						variant="outlined"
-					/>
-					<p className={styled.errorMessage}>
-						{userErrors.userName ? userErrors.userName : ""}
-					</p>
-					{allRooms.length ? (
-						<div className={styled.flexCenter}>
-							<p className={styled.text}>Choose a room to join</p>
+				<p className={styled.text}>Please choose a username</p>
+				<TextField
+					className={styled.textField}
+					id="outlined-basic"
+					placeholder="Enter username"
+					onChange={(e) => handleUserNameChange(e.target.value)}
+					variant="outlined"
+				/>
+				{errors.noUsername ? <p className={styled.errorMessage}>Please enter a username</p> : null}
+				{allRooms.length ? (
+					<>
+						<p className={styled.text}>Choose a room to join</p>
+						<TextField
+							className={styled.textField}
+							id="outlined-select"
+							placeholder="Choose room"
+							select
+							defaultValue={""}
+							variant="outlined"
+							onChange={(e) => handleJoinRoomChange(e.target.value)}
+						>
+							{allRooms.map((room, index) => (
+								<MenuItem key={index} value={index}>
+									{room.name}
+								</MenuItem>
+							))}
+						</TextField>
+						{passwordInput ? (
 							<TextField
-								className={styled.formStyle}
-								id="outlined-select"
-								placeholder="Choose room"
-								select
+								className={styled.textField}
+								id="outlined-basic"
+								placeholder="Enter room password"
+								onChange={(e) =>
+									handlePasswordChange(e.target.value)
+								}
 								variant="outlined"
-								onChange={(e) => handleJoinRoomChange(e.target.value)}
-							>
-								{allRooms.map((room, index) => (
-									<MenuItem key={index} value={index}>
-										{room.name}
-									</MenuItem>
-								))}
-							</TextField>
-							{passwordInput ? (
-								<TextField
-									className={styled.formStyle}
-									id="outlined-basic"
-									placeholder="Enter password"
-									onChange={(e) =>
-										handlePasswordChange(e.target.value)
-									}
-									variant="outlined"
-								/>
-							) : null}
-							<p className={styled.errorMessage}>
-								{errors.wrongPassword
-									? "Please enter the correct password"
-									: ""}
-							</p>
-							<p className={styled.text}>Or</p>
+							/>
+						) : null}
+						{errors.wrongPassword ? <p className={styled.errorMessage}>Incorrect password</p> : null}
+						<div className={styled.divideContainer}>
+						<hr className={styled.hr}/>
+						<p className={styled.breakText}>Or</p>
+						<hr className={styled.hr}/>
 						</div>
-					) : null}
-					<p className={styled.text}>Create a new chatroom</p>
-					<div className={styled.formBox}>
-						<TextField
-							className={styled.formStyle}
-							id="outlined-basic"
-							placeholder="Enter room name"
-							variant="outlined"
-							onChange={(e) => handleCreateRoomChange(e.target.value)}
-						/>
-						<p className={styled.errorMessage}>
-							{userErrors.roomName ? userErrors.roomName : null}
-						</p>
-						<p className={styled.errorMessage}>
-							{errors.roomNameAlreadyInUse
-								? "Room name already in use"
-								: null}
-						</p>
-						<p className={styled.text}>Enter chatroom password</p>
-						<TextField
-							className={styled.formStyle}
-							id="outlined-basic"
-							placeholder="Password"
-							type="password"
-							variant="outlined"
-							onChange={(e) => handlePasswordChange(e.target.value)}
-						/>
-						<button className={styled.connectButton} onClick={connect}>
-							Connect
-						</button>
-					</div>
-				</div>
+					</>
+				) : null}
+				<p className={styled.text}>Create a new chatroom</p>
+				<TextField
+					className={styled.textField}
+					id="outlined-basic"
+					placeholder="Enter room name"
+					variant="outlined"
+					onChange={(e) => handleCreateRoomChange(e.target.value)}
+				/>
+				{errors.noRoomName ? <p className={styled.errorMessage}>Please enter a room name</p> : null}
+				{errors.roomNameAlreadyInUse ? <p className={styled.errorMessage}>Room name is already in use</p> : null}
+				<p className={styled.text}>Choose room password (optional)</p>
+				<TextField
+					className={styled.textField}
+					id="outlined-basic"
+					placeholder="Enter password"
+					type="password"
+					variant="outlined"
+					onChange={(e) => handlePasswordChange(e.target.value)}
+				/>
+				<Button className={styled.connectButton} onClick={connect} variant="contained" color="secondary">
+					Connect
+				</Button>
 			</div>
 		</div>
 	);
@@ -232,54 +166,68 @@ const useStyles = makeStyles((theme) => ({
 	mainContent: {
 		width: "100%",
 		minHeight: "100vh",
+		padding: "2.5rem 1.5rem",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "column",
-		backgroundColor: "#DCD9F2",
+		backgroundColor: theme.palette.primary.main,
+		textAlign: "center",
 	},
 	imgStyle: {
-		width: "6rem",
-		position: "relative",
-		marginTop: "-5rem",
+		width: "4.5rem",
 	},
 	nameStyle: {
-		fontSize: "4rem",
-		marginTop: "-2rem",
-		color: "#7361EF",
-		width: "100%",
-		heigth: "100%",
-		textAlign: "center",
+		fontSize: "3.5rem",
+		margin: 0,
+		color: theme.palette.secondary.main,
 	},
 	formBox: {
 		display: "flex",
+		width: "100%",
+		maxWidth: "18rem",
+		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		flexDirection: "column",
 	},
-	formStyle: {
-		width: "18rem",
-		borderRadius: 9,
-		outline: "none",
-		marginTop: "0.3rem",
-		background: "white",
+	textField: {
+		textAlign: "left",
+		margin: "0.5rem 0 0 0",
+		borderRadius: "0.4rem",
+		width: "100%",
+		backgroundColor: "#ffff",
+		"& .MuiOutlinedInput-input": {
+			padding: "0.7rem"
+		},
 	},
 	connectButton: {
-		marginTop: "0.5rem",
-		height: "3rem",
-		width: "18rem",
-		borderRadius: 20,
-		border: "none",
-		background: "#7361EF",
-		color: "white",
-		fontSize: "1rem",
+		marginTop: "1.5rem",
+		width: "100%",
 		fontWeight: 600,
 	},
 	text: {
+		margin: "1.2rem 0 0.25rem 0",
 		color: "#1CA491",
 		textAlign: "center",
-		margin: "0.5rem",
+		width: "100%",
 		fontWeight: 600,
+		fontSize: "0.8rem",
+	},
+	divideContainer: {
+		width: "100%",
+		marginTop: "1.5rem",
+	},
+	breakText: {
+		color: theme.palette.secondary.main,
+		textAlign: "center",
+		width: "100%",
+		fontWeight: 600,
+		margin: "0.5rem 0",
+	},
+	hr: {
+		border: "none",
+		borderTop: `1px ${theme.palette.secondary.main} solid`,
+		width: "100%",
 	},
 	flexCenter: {
 		display: "flex",
@@ -288,6 +236,9 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 	},
 	errorMessage: {
+		margin: "0.5rem 0 0 0",
+		fontStyle: "italic",
+		fontSize: "0.8rem",
 		color: "red",
 	},
 }));

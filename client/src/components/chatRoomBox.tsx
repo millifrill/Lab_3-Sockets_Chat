@@ -36,11 +36,11 @@ export default function ChatRoomBox(props: { messages?: any }) {
 	return (
 		<div className={styled.chatContainer}>
 			<div className={styled.ListMessages} ref={msgRef}>
-				{messages.map((AllMessage) =>
+				{messages.map((AllMessage, index) =>
 					AllMessage.userName === userName ? (
-						<MessageBubble message={AllMessage} />
+						<MessageBubble key={index} message={AllMessage} />
 					) : (
-						<MessageIncomingBubble message={AllMessage} />
+						<MessageIncomingBubble key={index} message={AllMessage} />
 					),
 				)}
 			</div>

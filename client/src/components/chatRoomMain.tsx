@@ -44,7 +44,7 @@ export default function ChatRoom() {
 			/>
 			<div className={styled.flex}>
 				<RoomList setPasswordModal={setPasswordModal} />
-				{/* <ChatRoomBox /> */}
+				<ChatRoomBox />
 			</div>
 		</div>
 	);

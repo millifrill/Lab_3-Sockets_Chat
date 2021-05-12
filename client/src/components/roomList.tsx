@@ -1,10 +1,9 @@
-import { makeStyles } from "@material-ui/core";
-import { useContext, useEffect } from "react";
-import { ChatContext, Room } from "../contexts/chatContext";
-import CreateRoomModal from "./createRoomModal";
-import LockIcon from "@material-ui/icons/Lock";
-import { useHistory } from "react-router-dom";
-// import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
+import { useContext } from 'react';
+import { ChatContext, Room } from '../contexts/chatContext';
+import CreateRoomModal from './createRoomModal';
+import LockIcon from '@material-ui/icons/Lock';
+
 interface Props {
 	setPasswordModal: React.Dispatch<
 		React.SetStateAction<{
@@ -15,17 +14,14 @@ interface Props {
 }
 
 export default function RoomList(props: Props) {
-	const history = useHistory();
 	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
+	const styled = useStyles();
 	const {
 		allRooms,
-		userName,
 		handleJoinRoom,
 		handleLogout,
-		handleDisconnect,
 	} = chatContext;
-	const styled = useStyles();
 
 	const handleRoomChange = (room: Room) => {
 		if (room.hasPassword) {
@@ -41,15 +37,8 @@ export default function RoomList(props: Props) {
 	};
 
 	const logout = () => {
-		handleLogout(userName);
-		handleDisconnect(userName);
+		handleLogout();
 	};
-
-	useEffect(() => {
-		if (userName) {
-			history.push("/");
-		}
-	}, [history, userName, handleLogout, handleDisconnect]);
 
 	return (
 		<div className={styled.container}>

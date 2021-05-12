@@ -39,7 +39,9 @@ const useStyles = makeStyles((theme) => ({
 		color: "black",
 		marginTop: "0.7rem",
 		marginLeft: "1em",
-		display: "table",
+		display: 'flex',
+		alignItems: 'flex-start'
+		// display: "table",
 	},
 	username: {
 		fontSize: "10px",

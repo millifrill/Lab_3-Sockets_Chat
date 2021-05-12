@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 		color: "white",
 		marginTop: "5vh",
 		marginLeft: "67%",
-		display: "table",
+		// display: "table",
 	},
 	username: {
 		fontSize: "10px",

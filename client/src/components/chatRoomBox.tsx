@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: "scroll",
 	},
 	textarea: {
-		position: "fixed",
+		position: "absolute",
 		bottom: "0",
 		background: "#F6F6F6",
 		width: "100%",

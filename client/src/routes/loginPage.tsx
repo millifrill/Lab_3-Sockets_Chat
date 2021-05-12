@@ -211,6 +211,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 		width: "100%",
 		fontWeight: 600,
+		fontSize: "0.8rem",
 	},
 	divideContainer: {
 		width: "100%",

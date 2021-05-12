@@ -1,9 +1,9 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -13,8 +13,9 @@ const {
 	handleJoinRoom,
 	handleSendMessage,
 	handleLogout,
+	handleRegisterUser,
 	getRooms,
-} = require('./roomEvents');
+} = require("./roomEvents");
 
 io.on('connection', (socket) => {
 	console.log('Client was connected', socket.id);
@@ -30,5 +31,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(5000, () => {
-	console.log('Server is running on port 5000');
+	console.log("Server is running on port 5000");
 });

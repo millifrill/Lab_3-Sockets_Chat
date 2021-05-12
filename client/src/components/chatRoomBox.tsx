@@ -2,28 +2,25 @@ import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
 import MessageBubble from "./messageBubble";
-import MessageIncomingBubble from "./MessageIncomingBubble"
+import MessageIncomingBubble from "./MessageIncomingBubble";
 
-
-export default function ChatRoomBox(props: { messages?: any; }) {
+export default function ChatRoomBox(props: { messages?: any }) {
 	const styled = useStyles();
 	const msgRef = useRef<HTMLInputElement>(null);
 	const chatContext = useContext(ChatContext);
-	const { handleSendMessage, messages, userName } = chatContext
-	const [message, setSendMessages] = useState("")
-
+	const { handleSendMessage, messages, userName } = chatContext;
+	const [message, setSendMessages] = useState("");
 
 	const handleNewMessagesChange = (event: any) => {
 		setSendMessages(event.target.value);
 	};
 
 	const sendMessages = (e: any) => {
-		e.preventDefault()
-		console.log(message)
+		e.preventDefault();
+		console.log(message);
 		handleSendMessage(message);
-		setSendMessages("")
+		setSendMessages("");
 	};
-
 
 	useEffect(() => {
 		if (msgRef && msgRef.current) {
@@ -31,33 +28,21 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 			msgElement.scroll({
 				top: msgElement.scrollHeight,
 				left: 0,
-				behavior: "smooth"
-			})
+				behavior: "smooth",
+			});
 		}
 	}, [msgRef, messages]);
-
-
-
-
-
 
 	return (
 		<div className={styled.chatContainer}>
 			<div className={styled.ListMessages} ref={msgRef}>
-
-				{messages.map((AllMessage) => (
-					(
-						AllMessage.userName === userName ? (
-							< MessageBubble message={AllMessage} />
-						) : (
-							<MessageIncomingBubble message={AllMessage} />
-
-						)
-
-					))
-
-				)
-				}
+				{messages.map((AllMessage) =>
+					AllMessage.userName === userName ? (
+						<MessageBubble message={AllMessage} />
+					) : (
+						<MessageIncomingBubble message={AllMessage} />
+					),
+				)}
 			</div>
 			<input
 				className={styled.textarea}
@@ -67,7 +52,7 @@ export default function ChatRoomBox(props: { messages?: any; }) {
 			/>
 			<button className={styled.buttonSend} onClick={sendMessages}>
 				Send
-      </button>
+			</button>
 		</div>
 	);
 }
@@ -83,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	ListMessages: {
 		flex: 1,
-		overflowY: 'scroll',
+		overflowY: "scroll",
 	},
 	textarea: {
 		position: "absolute",
@@ -106,10 +91,6 @@ const useStyles = makeStyles((theme) => ({
 		color: "#ffff",
 		bottom: "5%",
 		right: "2%",
-		cursor: 'pointer'
+		cursor: "pointer",
 	},
 }));
-
-
-
-

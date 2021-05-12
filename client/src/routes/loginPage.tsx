@@ -130,13 +130,11 @@ export default function LoginPage() {
 		const room = { name: name };
 		if (isNewRoom) {
 			if (checkUserValidation() && checkCreateRoomValidation()) {
-				handleCreateRoom(room, password);
-				// handleCreateRoom(room, password, userName);
+				handleCreateRoom(room, password, userName);
 			}
 		} else {
 			if (checkUserValidation()) {
-				handleJoinRoom(room, password);
-				// handleJoinRoom(room, password, userName);
+				handleJoinRoom(room, password, userName);
 			}
 		}
 	};

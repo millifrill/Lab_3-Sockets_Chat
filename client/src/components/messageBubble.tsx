@@ -40,24 +40,16 @@ const useStyles = makeStyles((theme) => ({
         width: '30%',
         padding: '0.3rem',
         color: 'black',
-        marginTop: '0.3rem',
-        left: '1em',
-    },
-    sentMessage: {
-        border: '1px solid #897AF2',
-        borderRadius: '0.6rem',
-        backgroundColor: '#897AF2',
-        height: '3.5rem',
-        width: '30%',
-        padding: '0.3rem',
-        color: 'white',
-        marginTop: '15vh',
-        left: '68%',
+        marginTop: '0.7rem',
+        marginLeft: '1em',
         display: 'table',
+
     },
+
     username: {
         fontSize: '10px',
         color: 'black',
+
     }
 }))
 

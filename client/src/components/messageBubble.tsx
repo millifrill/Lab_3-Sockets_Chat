@@ -2,22 +2,20 @@ import { makeStyles } from "@material-ui/styles";
 import { useContext } from "react";
 import { ChatContext, Message } from "../contexts/chatContext";
 
-interface hej {
+interface messageBubble {
 	message: Message;
 }
 
-function MessageBubble(props: hej) {
+function MessageBubble(props: messageBubble) {
 	const styled = useStyles();
 	const { message } = props;
-	const chatContext = useContext(ChatContext);
-	const { messages } = chatContext;
 
 	console.log(props);
 	return (
 		<div className={styled.messageBubble}>
-			<div className={styled.incomingMessage}>
-				<p>{message.message}</p>
+			<div className={styled.sentMessage}>
 				<p className={styled.username}>{message.userName}</p>
+				<p className={styled.messageText}>{message.message}</p>
 			</div>
 		</div>
 	);
@@ -31,21 +29,31 @@ const useStyles = makeStyles((theme) => ({
 		boxSizing: "border-box",
 		overflowY: "scroll",
 	},
-	incomingMessage: {
-		border: "1px solid #E8E4FF",
+
+	sentMessage: {
+		border: "1px solid #897AF2",
 		borderRadius: "0.6rem",
-		backgroundColor: "#E8E4FF",
+		backgroundColor: "#897AF2",
 		height: "3.5rem",
 		width: "30%",
 		padding: "0.3rem",
-		color: "black",
-		marginTop: "0.7rem",
-		marginLeft: "1em",
-		display: "table",
+		color: "white",
+		marginTop: "5vh",
+		marginLeft: "67%",
+		display: 'flex',
+	
+	},
+	messageText: {
+		fontSize: '11px',
+		marginLeft: '0.8rem',
+
+
 	},
 	username: {
 		fontSize: "10px",
 		color: "black",
+		fontWeight: 600,
+		marginTop: '0.1rem',
 	},
 }));
 

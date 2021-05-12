@@ -102,7 +102,6 @@ export default function CreateRoomModal() {
 	return (
 		<div className={styled.modalBox}>
 			<Icon
-				className={styled.root}
 				color="primary"
 				fontSize="small"
 				onClick={handleClickOpen}
@@ -175,14 +174,8 @@ export default function CreateRoomModal() {
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		root: {
-			"& > *": {
-				margin: theme.spacing(1),
-			},
-		},
 		modalBox: {
 			maxWidth: "10rem",
-			margin: "auto",
 		},
 		imgStyle: {
 			width: "5rem",

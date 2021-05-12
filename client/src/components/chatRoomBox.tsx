@@ -1,5 +1,6 @@
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
 import MessageBubble from "./messageBubble";
 import MessageIncomingBubble from "./MessageIncomingBubble";
@@ -47,15 +48,18 @@ export default function ChatRoomBox(props: { messages?: any }) {
 					),
 				)}
 			</div>
+			<div className={styled.inputContainer}>
+
 			<input
 				className={styled.textarea}
 				placeholder="Write a message....."
 				value={message}
 				onChange={handleNewMessagesChange}
-			/>
-			<button className={styled.buttonSend} onClick={sendMessages}>
+				/>
+			<Button variant="contained" color="secondary" className={styled.buttonSend} onClick={sendMessages}>
 				Send
-			</button>
+			</Button>
+				</div>
 		</div>
 	);
 }
@@ -63,53 +67,46 @@ export default function ChatRoomBox(props: { messages?: any }) {
 const useStyles = makeStyles((theme) => ({
 	chatContainer: {
 		display: "flex",
-		flexDirection: "row",
-		border: "1px solid #DCD9F2",
+		flexDirection: "column",		
 		width: "100%",
 		height: "100%",
-		position: "relative",
 	},
 	currentRoomHeader: {
-		marginTop: "0.5rem",
 		borderBottom: "1px solid #DCD9F2",
 		width: "100%",
+		height: "3.5rem",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "flex-start",
-		marginLeft: "0%",
-		position: "absolute",
 	},
 	currentRoomName: {
-		marginLeft: "1rem",
+		marginLeft: "1.5rem",
 		fontWeight: 600,
 	},
 	ListMessages: {
 		flex: 1,
-		overflowY: "scroll",
-		marginBottom: "1rem",
-		marginTop: "2rem",
+		overflowY: "auto",
+		padding: "1rem",
+	},
+	inputContainer: {
+		width: "100%",
+		padding: "1rem 1.5rem",
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		background: "#F6F6F6",
 	},
 	textarea: {
-		position: "absolute",
-		bottom: "0",
 		background: "#F6F6F6",
 		width: "100%",
-		height: "5rem",
+		height: "3rem",
 		textDecoration: "none",
 		border: "none",
 		outline: "none",
 	},
 	buttonSend: {
-		position: "absolute",
-		background: "#897AF2",
-		borderRadius: "5px",
-		fontWeight: "bold",
-		height: "2rem",
+		fontWeight: 600,
 		width: "4rem",
-		border: "none",
-		color: "#ffff",
-		bottom: "3%",
-		right: "2%",
-		cursor: "pointer",
+		marginLeft: "1rem",
 	},
 }));

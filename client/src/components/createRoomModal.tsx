@@ -101,13 +101,10 @@ export default function CreateRoomModal() {
 
 	return (
 		<div className={styled.modalBox}>
-			<Icon
-				color="primary"
-				fontSize="small"
-				onClick={handleClickOpen}
-			>
-				<AddCircle />
-			</Icon>
+				<AddCircle 
+					color="primary"
+					onClick={handleClickOpen} 
+				/>
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -175,6 +172,7 @@ export default function CreateRoomModal() {
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		modalBox: {
+			height: "1.5rem",
 			maxWidth: "10rem",
 		},
 		imgStyle: {

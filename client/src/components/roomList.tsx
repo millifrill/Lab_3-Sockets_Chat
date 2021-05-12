@@ -1,8 +1,8 @@
-import { Button, makeStyles } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { ChatContext, Room } from '../contexts/chatContext';
-import CreateRoomModal from './createRoomModal';
-import LockIcon from '@material-ui/icons/Lock';
+import { Button, makeStyles } from "@material-ui/core";
+import React, { useContext } from "react";
+import { ChatContext, Room } from "../contexts/chatContext";
+import CreateRoomModal from "./createRoomModal";
+import LockIcon from "@material-ui/icons/Lock";
 interface Props {
 	setPasswordModal: React.Dispatch<
 		React.SetStateAction<{
@@ -16,11 +16,7 @@ export default function RoomList(props: Props) {
 	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
 	const styled = useStyles();
-	const {
-		allRooms,
-		handleJoinRoom,
-		handleLogout,
-	} = chatContext;
+	const { allRooms, handleJoinRoom, handleLogout } = chatContext;
 
 	const handleRoomChange = (room: Room) => {
 		if (room.hasPassword) {
@@ -41,12 +37,7 @@ export default function RoomList(props: Props) {
 
 	return (
 		<div className={styled.container}>
-
-			<div className={styled.currentRoomHeader}>
-				<p>currentRoom</p>
-			</div>
 			<div className={styled.chatrooms}>
-
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
 					<CreateRoomModal />
@@ -63,14 +54,13 @@ export default function RoomList(props: Props) {
 						))}
 					</ol>
 				</div>
-				</div>
-				<div className={styled.buttonContainer}>
-					<Button variant="contained" color="secondary" onClick={logout}>
-						Logout
-					</Button>
-				</div>
 			</div>
-			
+			<div className={styled.buttonContainer}>
+				<Button variant="contained" color="secondary" onClick={logout}>
+					Logout
+				</Button>
+			</div>
+		</div>
 	);
 }
 
@@ -85,24 +75,19 @@ const useStyles = makeStyles((theme) => ({
 			display: "none",
 		},
 	},
-
 	currentRoomHeader: {
-		marginTop: '0.5rem',
-		// borderBottom: '1px solid #F6F6F6',
-		// width: '100%',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		marginLeft: '90%',
-		position: 'absolute',
-
+		marginTop: "0.5rem",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "flex-end",
+		marginLeft: "90%",
+		position: "absolute",
 	},
 	chatrooms: {
 		border: "1px solid #F6F6F6",
 		width: "100%",
 		height: "100%",
 	},
-
 	chatroomHeader: {
 		background: "#897AF2",
 		color: "white",
@@ -122,25 +107,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 	roomList: {
 		flex: 1,
-		'& ol': {
-			overflowY: 'auto',
+		"& ol": {
+			overflowY: "auto",
 			padding: 0,
 			margin: 0,
-			'& dt': {
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'space-between',
-				padding: '1rem 1.5rem',
+			"& dt": {
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+				padding: "1rem 1.5rem",
 				margin: 0,
-				borderBottom: '1px solid #E5E5E5',
+				borderBottom: "1px solid #E5E5E5",
 			},
 		},
 	},
 	buttonContainer: {
-		padding: '2rem 1.5rem',
-		'& button': {
-			width: '100%',
-			textTransform: 'capitalize',
+		padding: "2rem 1.5rem",
+		"& button": {
+			width: "100%",
+			textTransform: "capitalize",
 			fontWeight: 600,
 		},
 	},

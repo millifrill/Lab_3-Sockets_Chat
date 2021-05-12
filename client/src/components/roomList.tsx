@@ -69,6 +69,7 @@ export default function RoomList(props: Props) {
 					</Button>
 				</div>
 			</div>
+			</div>
 	);
 }
 
@@ -85,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	currentRoomHeader: {
-	
 		marginTop: '0.5rem',
 		// borderBottom: '1px solid #F6F6F6',
 		// width: '100%',

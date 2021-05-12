@@ -41,6 +41,12 @@ export default function RoomList(props: Props) {
 
 	return (
 		<div className={styled.container}>
+
+			<div className={styled.currentRoomHeader}>
+				<p>currentRoom</p>
+			</div>
+			<div className={styled.chatrooms}>
+
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
 					<CreateRoomModal />
@@ -77,6 +83,25 @@ const useStyles = makeStyles((theme) => ({
 			display: "none",
 		},
 	},
+
+	currentRoomHeader: {
+	
+		marginTop: '0.5rem',
+		// borderBottom: '1px solid #F6F6F6',
+		// width: '100%',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		marginLeft: '90%',
+		position: 'absolute',
+
+	},
+	chatrooms: {
+		border: "1px solid #F6F6F6",
+		width: "100%",
+		height: "100%",
+	},
+
 	chatroomHeader: {
 		background: "#897AF2",
 		color: "white",

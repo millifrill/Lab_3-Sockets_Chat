@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
 import MessageBubble from "./messageBubble";
 import MessageIncomingBubble from "./MessageIncomingBubble";
@@ -8,7 +8,7 @@ export default function ChatRoomBox(props: { messages?: any }) {
 	const styled = useStyles();
 	const msgRef = useRef<HTMLInputElement>(null);
 	const chatContext = useContext(ChatContext);
-	const { handleSendMessage, messages, userName } = chatContext;
+	const { currentRoom, handleSendMessage, messages, userName } = chatContext;
 	const [message, setSendMessages] = useState("");
 
 	const handleNewMessagesChange = (event: any) => {
@@ -35,6 +35,9 @@ export default function ChatRoomBox(props: { messages?: any }) {
 
 	return (
 		<div className={styled.chatContainer}>
+			<div className={styled.currentRoomHeader}>
+				<p className={styled.currentRoomName}>{currentRoom}</p>
+			</div>
 			<div className={styled.ListMessages} ref={msgRef}>
 				{messages.map((AllMessage, index) =>
 					AllMessage.userName === userName ? (
@@ -66,10 +69,24 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%",
 		position: "relative",
 	},
+	currentRoomHeader: {
+		marginTop: "0.5rem",
+		borderBottom: "1px solid #DCD9F2",
+		width: "100%",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "flex-end",
+		marginLeft: "0%",
+		position: "absolute",
+	},
+	currentRoomName: {
+		textAlign: "left",
+	},
 	ListMessages: {
 		flex: 1,
 		overflowY: "scroll",
-		marginBottom: '1rem',
+		marginBottom: "1rem",
+		marginTop: "2rem",
 	},
 	textarea: {
 		position: "absolute",
@@ -84,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 	buttonSend: {
 		position: "absolute",
 		background: "#897AF2",
-		borderRadius: "10px",
+		borderRadius: "5px",
 		fontWeight: "bold",
 		height: "2rem",
 		width: "4rem",

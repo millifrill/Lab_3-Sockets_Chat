@@ -12,6 +12,7 @@ const {
 	handleCreateRoom,
 	handleJoinRoom,
 	handleSendMessage,
+	handleDisconnect,
 	handleLogout,
 	handleRegisterUser,
 	getRooms,

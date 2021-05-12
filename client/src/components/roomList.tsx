@@ -3,7 +3,6 @@ import { useContext } from 'react';
 import { ChatContext, Room } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
 import LockIcon from '@material-ui/icons/Lock';
-import { useHistory } from 'react-router-dom';
 
 interface Props {
 	setPasswordModal: React.Dispatch<
@@ -15,7 +14,6 @@ interface Props {
 }
 
 export default function RoomList(props: Props) {
-	const history = useHistory();
 	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
 	const styled = useStyles();
@@ -38,8 +36,6 @@ export default function RoomList(props: Props) {
 		}
 	};
 
-	// När användaren trycker på logout,
-	// kalla på handleLogout från kontexten (se rad 205 i chatContext.tsx)
 	const logout = () => {
 		handleLogout();
 	};

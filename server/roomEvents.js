@@ -105,16 +105,10 @@ async function handleCreateRoom(data, socket, io) {
  * @param {io.Socket} socket
  */
 async function handleLogout(data, socket, io) {
-  /* !!! Jag tänkte först att vi skulle disconnecta användaren här,
-  men då går det inte att logga in igen utan att uppdatera fönstret !!! */
   const {currentRoom} = data;
-  // Här får vi användaren att lämna rummet den är med i
+  // Remove user from current room
   await socket.leave(currentRoom)
-  // Vi skickar en uppdaterad lista över rummen till alla användare
-  // eftersom att en användare har lämnat ett rum och de har förändrats
   io.emit("all-rooms", getRooms(io));
-  // När detta är färdigt skickar vi ett svar till clienten
-  // så den kan slutföra logout proccessen (se rad 144 el 164 i chatContext.tsx)
   socket.emit("logout")
 }
 

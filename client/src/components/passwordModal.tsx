@@ -68,6 +68,7 @@ export default function PasswordModal(props: Props) {
 					</DialogContentText>
 					<TextField
 						autoFocus
+						variant='outlined'
 						margin='dense'
 						id='password'
 						label='Password'

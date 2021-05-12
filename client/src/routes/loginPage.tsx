@@ -215,7 +215,7 @@ export default function LoginPage() {
 						<TextField
 							className={styled.formStyle}
 							id="outlined-basic"
-							placeholder="Password"
+							placeholder="Enter chatroom password (Optional)"
 							type="password"
 							variant="outlined"
 							onChange={(e) => handlePasswordChange(e.target.value)}
@@ -282,6 +282,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "center",
 		margin: "0.5rem",
 		fontWeight: 600,
+		fontSize: "0.8rem",
 	},
 	flexCenter: {
 		display: "flex",

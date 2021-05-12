@@ -1,19 +1,97 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-// import DialogContentText from '@material-ui/core/DialogContentText';
+import { useHistory } from "react-router";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { AddCircle } from "@material-ui/icons";
 import Icon from "@material-ui/core/Icon";
+import { ChatContext } from "../contexts/chatContext";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 export default function CreateRoomModal() {
+	const history = useHistory();
 	const logoImg = `../assets/logo.png`;
-	const classes = useStyles();
+	const [passwordInput, showPasswordInput] = useState(false);
+	const styled = useStyles();
 	const [open, setOpen] = React.useState(false);
+	const chatContext = useContext(ChatContext);
+	const { errors, currentRoom, handleCreateRoom } = chatContext;
+
+	const [userSettings, setUserSettings] = useState({
+		userName: "",
+		room: {
+			name: "",
+			password: "",
+			isNewRoom: true,
+		},
+	});
+
+	const [userErrors, setUserErrors] = useState({
+		userName: "",
+		roomName: "",
+	});
+
+	useEffect(() => {
+		if (currentRoom) {
+			history.push("/chatroom");
+		}
+	}, [history, currentRoom]);
+
+	const handleCreateRoomChange = (name: string) => {
+		if (!name) {
+			setUserErrors((prevState) => ({
+				...prevState,
+				roomName: "Please enter a room name",
+			}));
+		} else {
+			setUserErrors((prevState) => ({
+				...prevState,
+				roomName: "",
+			}));
+		}
+		setUserSettings((prevState) => ({
+			...prevState,
+			room: {
+				...prevState.room,
+				name: name,
+				isNewRoom: true,
+			},
+		}));
+	};
+
+	const handlePasswordChange = (password: string) => {
+		setUserSettings((prevState) => ({
+			...prevState,
+			room: {
+				...prevState.room,
+				password: password,
+			},
+		}));
+	};
+
+	function checkCreateRoomValidation() {
+		if (!userErrors.roomName && userSettings.room.name) {
+			return true;
+		} else {
+			setUserErrors((prevState) => ({
+				...prevState,
+				roomName: "Please enter a room name",
+			}));
+			return false;
+		}
+	}
+
+	const connect = () => {
+		const { password, name } = userSettings.room;
+		const room = { name: name };
+		if (checkCreateRoomValidation()) {
+			handleCreateRoom(room, password);
+		}
+	};
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -22,9 +100,9 @@ export default function CreateRoomModal() {
 	};
 
 	return (
-		<div>
+		<div className={styled.modalBox}>
 			<Icon
-				className={classes.root}
+				className={styled.root}
 				color="primary"
 				fontSize="small"
 				onClick={handleClickOpen}
@@ -36,20 +114,30 @@ export default function CreateRoomModal() {
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title" className={classes.modalTitle}>
+				<DialogTitle id="form-dialog-title" className={styled.modalTitle}>
 					Create a new chat room
 				</DialogTitle>
-				<img src={logoImg} alt="" className={classes.imgStyle} />
+				<img src={logoImg} alt="" className={styled.imgStyle} />
 				<DialogContent>
 					{/* <DialogContentText>Enter name of chat room </DialogContentText> */}
 					<TextField
 						autoFocus
 						margin="dense"
 						id="chatroom"
-						label="Enter name of chat room"
+						label="Enter room name"
 						type="chatroom"
+						variant="outlined"
+						onChange={(e) => handleCreateRoomChange(e.target.value)}
 						fullWidth
 					/>
+					<p className={styled.errorMessage}>
+						{userErrors.roomName ? userErrors.roomName : null}
+					</p>
+					<p className={styled.errorMessage}>
+						{errors.roomNameAlreadyInUse
+							? "Room name already in use"
+							: null}
+					</p>
 					{/* <DialogContentText>
 						Enter chat room password (optional)
 					</DialogContentText> */}
@@ -57,8 +145,10 @@ export default function CreateRoomModal() {
 						autoFocus
 						margin="dense"
 						id="password"
-						label="Enter chat room password"
+						label="Enter password (Optional)"
 						type="password"
+						variant="outlined"
+						onChange={(e) => handlePasswordChange(e.target.value)}
 						fullWidth
 					/>
 				</DialogContent>
@@ -67,9 +157,12 @@ export default function CreateRoomModal() {
 						Cancel
 					</Button>
 					<Button
-						className={classes.buttonStyle}
+						className={styled.buttonStyle}
 						variant="outlined"
-						onClick={handleClose}
+						onClick={() => {
+							handleClose();
+							connect();
+						}}
 						color="primary"
 					>
 						Create room
@@ -86,6 +179,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			"& > *": {
 				margin: theme.spacing(1),
 			},
+		},
+		modalBox: {
+			maxWidth: "10rem",
+			margin: "auto",
 		},
 		imgStyle: {
 			width: "5rem",
@@ -105,6 +202,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			color: "white",
 			fontSize: "0.8rem",
 			fontWeight: 600,
+		},
+		errorMessage: {
+			color: "red",
 		},
 	}),
 );

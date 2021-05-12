@@ -20,28 +20,28 @@ export default function ChatRoomBox(props: { messages?: any }) {
 		handleSendMessage(message);
 	};
 
-	return (
-		<div className={styled.chatContainer}>
-			<div className={styled.ListMessages}>
-				{messages.map((AllMessage) =>
-					AllMessage.userName === userName ? (
-						<MessageBubble message={AllMessage} />
-					) : (
-						<MessageIncomingBubble message={AllMessage} />
-					),
-				)}
-			</div>
-			<textarea
-				className={styled.textarea}
-				placeholder="Write a message....."
-				value={message}
-				onChange={handleNewMessagesChange}
-			/>
-			<button className={styled.buttonSend} onClick={sendMessages}>
-				Send
-			</button>
-		</div>
-	);
+	// return (
+	// 	<div className={styled.chatContainer}>
+	// 		<div className={styled.ListMessages}>
+	// 			{messages.map((AllMessage) =>
+	// 				AllMessage.userName === userName ? (
+	// 					<MessageBubble message={AllMessage} />
+	// 				) : (
+	// 					<MessageIncomingBubble message={AllMessage} />
+	// 				),
+	// 			)}
+	// 		</div>
+	// 		<textarea
+	// 			className={styled.textarea}
+	// 			placeholder="Write a message....."
+	// 			value={message}
+	// 			onChange={handleNewMessagesChange}
+	// 		/>
+	// 		<button className={styled.buttonSend} onClick={sendMessages}>
+	// 			Send
+	// 		</button>
+	// 	</div>
+	// )
 }
 
 const useStyles = makeStyles((theme) => ({

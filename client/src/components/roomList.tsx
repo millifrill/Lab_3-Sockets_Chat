@@ -69,7 +69,7 @@ export default function RoomList(props: Props) {
 					</Button>
 				</div>
 			</div>
-			</div>
+		</div>
 	);
 }
 

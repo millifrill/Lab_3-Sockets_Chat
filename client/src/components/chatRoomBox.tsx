@@ -17,7 +17,6 @@ export default function ChatRoomBox(props: { messages?: any }) {
 
 	const sendMessages = (e: any) => {
 		e.preventDefault();
-		console.log(message);
 		handleSendMessage(message);
 		setSendMessages("");
 	};

@@ -13,6 +13,7 @@ const {
 	handleJoinRoom,
 	handleSendMessage,
 	handleLogout,
+	handleDisconnect,
 	handleRegisterUser,
 	getRooms,
 } = require("./roomEvents");

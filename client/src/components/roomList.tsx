@@ -63,13 +63,14 @@ export default function RoomList(props: Props) {
 						))}
 					</ol>
 				</div>
+				</div>
 				<div className={styled.buttonContainer}>
 					<Button variant="contained" color="secondary" onClick={logout}>
 						Logout
 					</Button>
 				</div>
 			</div>
-			</div>
+			
 	);
 }
 

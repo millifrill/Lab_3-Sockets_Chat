@@ -4,6 +4,8 @@ import { socket } from "../socket";
 interface Errors {
   wrongPassword: string;
   roomNameAlreadyInUse: string;
+  noUsername: string;
+  noRoomName: string;
 }
 
 export interface Message {
@@ -40,6 +42,8 @@ export const ChatContext = createContext<Context>({
   errors: {
     wrongPassword: "",
     roomNameAlreadyInUse: "",
+    noUsername: "",
+    noRoomName: "",
   },
   handleJoinRoom: () => {},
   handleCreateRoom: () => {},
@@ -56,6 +60,8 @@ class ChatProvider extends Component<{}, State> {
     errors: {
       wrongPassword: "",
       roomNameAlreadyInUse: "",
+      noUsername: "",
+      noRoomName: "",
     },
   };
 
@@ -151,7 +157,7 @@ class ChatProvider extends Component<{}, State> {
 
   handleJoinRoom = async (room: Room, password?: string, userName?: string) => {
     const { currentRoom } = this.state;
-    if (userName) {
+    if (userName !== undefined) {
       socket.emit("register-user", {userName: userName})
     }
     // Adds user to new room
@@ -164,7 +170,8 @@ class ChatProvider extends Component<{}, State> {
 
   handleCreateRoom = async (room: Room, password?: string, userName?: string) => {
     const { currentRoom } = this.state;
-    if (userName) {
+    console.log(typeof(userName))
+    if (userName !== undefined) {
       socket.emit("register-user", {userName: userName})
     }
     // Creates and adds user to new room

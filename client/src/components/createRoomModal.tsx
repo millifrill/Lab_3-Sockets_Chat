@@ -1,14 +1,14 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 // import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { AddCircle } from '@material-ui/icons';
-import Icon from '@material-ui/core/Icon';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { AddCircle } from "@material-ui/icons";
+import Icon from "@material-ui/core/Icon";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 export default function CreateRoomModal() {
 	const logoImg = `../assets/logo.png`;
@@ -24,32 +24,30 @@ export default function CreateRoomModal() {
 	return (
 		<div>
 			<Icon
-				className={classes.icon}
-				color='primary'
-				fontSize='small'
+				className={classes.root}
+				color="primary"
+				fontSize="small"
 				onClick={handleClickOpen}
 			>
 				<AddCircle />
 			</Icon>
 			<Dialog
-				className={classes.modal}
 				open={open}
 				onClose={handleClose}
-				aria-labelledby='form-dialog-title'
+				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id='form-dialog-title' className={classes.modalTitle}>
+				<DialogTitle id="form-dialog-title" className={classes.modalTitle}>
 					Create a new chat room
 				</DialogTitle>
-				<img src={logoImg} alt='' className={classes.imgStyle} />
+				<img src={logoImg} alt="" className={classes.imgStyle} />
 				<DialogContent>
 					{/* <DialogContentText>Enter name of chat room </DialogContentText> */}
 					<TextField
 						autoFocus
-						variant='outlined'
-						margin='dense'
-						id='chatroom'
-						label='Enter name of chat room'
-						type='chatroom'
+						margin="dense"
+						id="chatroom"
+						label="Enter name of chat room"
+						type="chatroom"
 						fullWidth
 					/>
 					{/* <DialogContentText>
@@ -57,23 +55,22 @@ export default function CreateRoomModal() {
 					</DialogContentText> */}
 					<TextField
 						autoFocus
-						variant='outlined'
-						margin='dense'
-						id='password'
-						label='Enter chat room password (Optional)'
-						type='password'
+						margin="dense"
+						id="password"
+						label="Enter chat room password"
+						type="password"
 						fullWidth
 					/>
 				</DialogContent>
-				<DialogActions className={classes.center}>
-					<Button onClick={handleClose} color='primary'>
+				<DialogActions>
+					<Button onClick={handleClose} color="primary">
 						Cancel
 					</Button>
 					<Button
 						className={classes.buttonStyle}
-						variant='outlined'
+						variant="outlined"
 						onClick={handleClose}
-						color='primary'
+						color="primary"
 					>
 						Create room
 					</Button>
@@ -85,37 +82,29 @@ export default function CreateRoomModal() {
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
-		modal: {
-			maxWidth: '25rem',
-			margin: 'auto',
-		},
-		icon: {
-			'& > *': {
+		root: {
+			"& > *": {
 				margin: theme.spacing(1),
 			},
 		},
 		imgStyle: {
-			width: '5rem',
-			alignSelf: 'center',
+			width: "5rem",
+			alignSelf: "center",
 		},
 		modalTitle: {
-			color: 'black',
-			fontSize: '1.5rem',
+			color: "black",
+			fontSize: "1.2rem",
 			fontWeight: 800,
-			alignSelf: 'center',
 		},
 		buttonStyle: {
-			height: '2rem',
-			width: '9rem',
+			height: "2rem",
+			width: "9rem",
 			borderRadius: 10,
-			border: 'none',
-			background: '#7361EF',
-			color: 'white',
-			fontSize: '0.8rem',
+			border: "none",
+			background: "#7361EF",
+			color: "white",
+			fontSize: "0.8rem",
 			fontWeight: 600,
-		},
-		center: {
-			alignSelf: 'center',
 		},
 	}),
 );

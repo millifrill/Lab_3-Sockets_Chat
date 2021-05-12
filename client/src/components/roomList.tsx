@@ -41,7 +41,7 @@ export default function RoomList(props: Props) {
 				</div>
 				<ol className={styled.olList}>
 					{allRooms.map((room) => (
-						<dt onClick={() => handleRoomChange(room)}>
+						<dt key={room.name} onClick={() => handleRoomChange(room)}>
 							{room.name}
 							{room.hasPassword ? (
 								<LockIcon color='primary' fontSize='small' />

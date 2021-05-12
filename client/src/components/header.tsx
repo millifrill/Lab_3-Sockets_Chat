@@ -29,9 +29,9 @@ export default function Header(props: Props) {
 			</div>
 			<div className={styled.flexRow}>
 				<p className={styled.userName}>{userName}</p>
-				{/* <Hidden smUp> */}
+				<Hidden mdUp>
 				<Menu className={styled.hamburger} onClick={handleClick} />
-				{/* </Hidden> */}
+				</Hidden>
 			</div>
 		</div>
 	);
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 600,
 	},
 	image: {
-		height: '80%',
+		width: "3rem",
 		marginRight: '1rem',
 	},
 	userName: {

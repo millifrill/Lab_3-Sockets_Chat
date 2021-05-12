@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core';
-import { useContext } from 'react';
+import { Button, makeStyles } from '@material-ui/core';
+import React, { useContext } from 'react';
 import { ChatContext, Room } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
 import LockIcon from '@material-ui/icons/Lock';
-
 interface Props {
 	setPasswordModal: React.Dispatch<
 		React.SetStateAction<{
@@ -42,43 +41,41 @@ export default function RoomList(props: Props) {
 
 	return (
 		<div className={styled.container}>
-			<div className={styled.chatrooms}>
 				<div className={styled.chatroomHeader}>
 					<p>Rooms</p>
 					<CreateRoomModal />
 				</div>
-				<ol className={styled.olList}>
-					{allRooms.map((room) => (
-						<dt key={room.name} onClick={() => handleRoomChange(room)}>
-							{room.name}
-							{room.hasPassword ? (
-								<LockIcon color="primary" fontSize="small" />
-							) : null}
-						</dt>
-					))}
-				</ol>
-				<button className={styled.buttonLogout} onClick={logout}>
-					Logout
-				</button>
+				<div className={styled.roomList}>
+					<ol>
+						{allRooms.map((room) => (
+							<dt key={room.name} onClick={() => handleRoomChange(room)}>
+								{room.name}
+								{room.hasPassword ? (
+									<LockIcon color="primary" fontSize="small" />
+								) : null}
+							</dt>
+						))}
+					</ol>
+				</div>
+				<div className={styled.buttonContainer}>
+					<Button variant="contained" color="secondary" onClick={logout}>
+						Logout
+					</Button>
+				</div>
 			</div>
-		</div>
 	);
 }
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		boxSizing: "border-box",
 		display: "flex",
+		flexDirection: "column",
 		height: "100%",
-		width: "20%",
+		width: "100%",
+		maxWidth: "18rem",
 		[theme.breakpoints.down("sm")]: {
 			display: "none",
 		},
-	},
-	chatrooms: {
-		border: "1px solid #F6F6F6",
-		width: "100%",
-		height: "100%",
 	},
 	chatroomHeader: {
 		background: "#897AF2",
@@ -97,31 +94,29 @@ const useStyles = makeStyles((theme) => ({
 			color: "#ffff",
 		},
 	},
-	olList: {
+	roomList: {
 		flex: 1,
-		overflowY: "auto",
-		padding: 0,
-		margin: 0,
-		"& dt": {
-			display: "flex",
-			padding: "1rem 1.5rem",
+		'& ol': {
+			overflowY: 'auto',
+			padding: 0,
 			margin: 0,
-			borderBottom: "1px solid #E5E5E5",
-			justifyContent: "space-between",
-			alignItems: "center",
+			'& dt': {
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'space-between',
+				padding: '1rem 1.5rem',
+				margin: 0,
+				borderBottom: '1px solid #E5E5E5',
+			},
 		},
 	},
-	buttonLogout: {
-		position: "absolute",
-		bottom: "3%",
-		left: "1rem",
-		borderRadius: "10px",
-		height: "38px",
-		width: "147px",
-		color: "white",
-		background: "#897AF2",
-		border: "none",
-		fontWeight: "bold",
+	buttonContainer: {
+		padding: '2rem 1.5rem',
+		'& button': {
+			width: '100%',
+			textTransform: 'capitalize',
+			fontWeight: 600,
+		},
 	},
 	roomName: {
 		marginLeft: "2px",

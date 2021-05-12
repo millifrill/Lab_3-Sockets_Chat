@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "row",
 		border: "1px solid #DCD9F2",
 		width: "100%",
-		height: "92vh",
+		height: "100%",
 		position: "relative",
 	},
 	ListMessages: {

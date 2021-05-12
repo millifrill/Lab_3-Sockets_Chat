@@ -2,15 +2,13 @@ import { makeStyles } from "@material-ui/styles";
 import { useContext } from "react";
 import { ChatContext, Message } from "../contexts/chatContext";
 
-interface hej {
+interface messageBubble {
 	message: Message;
 }
 
-function MessageBubble(props: hej) {
+function MessageBubble(props: messageBubble) {
 	const styled = useStyles();
 	const { message } = props;
-	const chatContext = useContext(ChatContext);
-	const { messages } = chatContext;
 
 	console.log(props);
 	return (

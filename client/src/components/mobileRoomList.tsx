@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",
+		height: "3.5rem",
 		padding: "1rem 1.5rem",
 		border: "1px solid #DCD9F2",
 		backgroundColor: theme.palette.secondary.main,

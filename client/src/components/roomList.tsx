@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%",
 		width: "100%",
 		maxWidth: "18rem",
+		borderRight: "1px solid #DCD9F2",
 		[theme.breakpoints.down("sm")]: {
 			display: "none",
 		},
@@ -84,13 +85,13 @@ const useStyles = makeStyles((theme) => ({
 		position: "absolute",
 	},
 	chatrooms: {
-		border: "1px solid #F6F6F6",
 		width: "100%",
 		height: "100%",
 	},
 	chatroomHeader: {
 		background: "#897AF2",
 		color: "white",
+		height: "3.5rem",
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "space-between",

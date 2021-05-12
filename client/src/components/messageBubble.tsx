@@ -25,35 +25,29 @@ const useStyles = makeStyles((theme) => ({
 	messageBubble: {
 		width: "100%",
 		display: "flex",
-		justifyContent: "space-between",
-		boxSizing: "border-box",
-		overflowY: "scroll",
+		flexDirection: "column",
+		alignItems: "flex-end",
 	},
-
 	sentMessage: {
 		border: "1px solid #897AF2",
 		borderRadius: "0.6rem",
 		backgroundColor: "#897AF2",
-		height: "3.5rem",
-		width: "30%",
-		padding: "0.3rem",
+		width: "100%",
+		maxWidth: "20rem",
+		padding: "0.5rem",
 		color: "white",
-		marginTop: "5vh",
-		marginLeft: "67%",
+		marginBottom: "1rem",
 		display: 'flex',
-	
+		flexDirection: "column",
 	},
 	messageText: {
-		fontSize: '11px',
-		marginLeft: '0.8rem',
-
-
+		margin: "0.5rem 0",
+		fontSize: '12px',
 	},
 	username: {
+		margin: 0,
 		fontSize: "10px",
-		color: "black",
 		fontWeight: 600,
-		marginTop: '0.1rem',
 	},
 }));
 

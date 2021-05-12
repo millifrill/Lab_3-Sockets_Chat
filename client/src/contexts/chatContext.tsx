@@ -135,25 +135,8 @@ class ChatProvider extends Component<{}, State> {
     }));
   }
 
-  incomingLogout = () => {
-    // Resets the state
-    this.setState({
-      userName: "",
-      currentRoom: "",
-      allRooms: [],
-      messages: [],
-      errors: {
-      wrongPassword: "",
-      roomNameAlreadyInUse: "",
-      noUsername: "",
-      noRoomName: "",
-    },
-    })
-  }
-
   componentDidMount() {
     socket.on("connect", this.incomingConnectionEstablished);
-    socket.on("logout", this.incomingLogout);
     socket.on("register-user", this.incomingRegisterUser);
     socket.on("join-room", this.incomingJoinRoom);
     socket.on("send-message", this.incomingMessage);
@@ -196,6 +179,19 @@ class ChatProvider extends Component<{}, State> {
   handleLogout = () => {
     const {currentRoom} = this.state
     socket.emit("logout", {currentRoom: currentRoom});
+    // Resets state
+    this.setState({
+      userName: "",
+      currentRoom: "",
+      allRooms: [],
+      messages: [],
+      errors: {
+      wrongPassword: "",
+      roomNameAlreadyInUse: "",
+      noUsername: "",
+      noRoomName: "",
+    },
+    })
   };
 
   handleSendMessage = (message: string) => {

@@ -109,7 +109,6 @@ async function handleLogout(data, socket, io) {
   // Remove user from current room
   await socket.leave(currentRoom)
   io.emit("all-rooms", getRooms(io));
-  socket.emit("logout")
 }
 
 function handleDisconnect(reason, io) {

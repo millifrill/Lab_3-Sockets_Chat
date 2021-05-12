@@ -11,9 +11,9 @@ function MessageBubble(Props: messageBubble) {
 
 	return (
 		<div className={styled.messageBubble}>
-			<div className={styled.sentMessage}>
-				<p>{message.message}</p>
+			<div className={styled.incomingMessage}>
 				<p className={styled.username}>{message.userName}</p>
+				<p className={styled.messageText}>{message.message}</p>
 			</div>
 		</div>
 	);
@@ -27,22 +27,29 @@ const useStyles = makeStyles((theme) => ({
 		boxSizing: "border-box",
 		overflowY: "scroll",
 	},
-
-	sentMessage: {
-		border: "1px solid #897AF2",
+	incomingMessage: {
+		border: "1px solid #E8E4FF",
 		borderRadius: "0.6rem",
-		backgroundColor: "#897AF2",
+		backgroundColor: "#E8E4FF",
 		height: "3.5rem",
 		width: "30%",
 		padding: "0.3rem",
-		color: "white",
-		marginTop: "5vh",
-		marginLeft: "67%",
-		// display: "table",
+		color: "black",
+		marginTop: "0.7rem",
+		marginLeft: "1em",
+		display: 'flex',
+	
+	},
+
+	messageText: {
+		fontSize: '11px',
+		marginLeft: '0.8rem',
 	},
 	username: {
 		fontSize: "10px",
 		color: "black",
+		fontWeight: 600,
+		marginTop: '0.1rem',
 	},
 }));
 

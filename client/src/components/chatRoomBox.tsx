@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 	ListMessages: {
 		flex: 1,
 		overflowY: "scroll",
+		marginBottom: '1rem',
 	},
 	textarea: {
 		position: "absolute",

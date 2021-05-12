@@ -14,7 +14,7 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 export default function CreateRoomModal() {
 	const history = useHistory();
 	const logoImg = `../assets/logo.png`;
-	const [passwordInput, showPasswordInput] = useState(false);
+	// const [passwordInput, showPasswordInput] = useState(false);
 	const styled = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const chatContext = useContext(ChatContext);

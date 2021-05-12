@@ -21,7 +21,6 @@ export default function ChatRoom() {
     isOpen: false,
   });
 
-  // När ett användarnamn inte finns, återvänder användaren till loginsidan
   useEffect(() => {
     if (!userName) {
       history.push("/");

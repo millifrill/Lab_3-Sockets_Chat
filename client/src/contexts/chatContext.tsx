@@ -1,32 +1,27 @@
 import { Component, createContext } from "react";
 import { socket } from "../socket";
-
 interface Errors {
-  wrongPassword: string;
-  roomNameAlreadyInUse: string;
-  noUsername: string;
-  noRoomName: string;
+	wrongPassword: string;
+	roomNameAlreadyInUse: string;
+	noUsername: string;
+	noRoomName: string;
 }
-
 export interface Message {
-  userName: string;
-  message: string;
+	userName: string;
+	message: string;
 }
-
 export interface Room {
-  name: string;
-  hasPassword?: boolean;
-  users?: string[]
+	name: string;
+	hasPassword?: boolean;
+	users?: string[];
 }
-
 interface State {
-  userName: string;
-  currentRoom: string;
-  allRooms: Room[];
-  messages: Message[];
-  errors: Errors;
+	userName: string;
+	currentRoom: string;
+	allRooms: Room[];
+	messages: Message[];
+	errors: Errors;
 }
-
 interface Context extends State {
   handleJoinRoom: (room: Room, password?: string, userName?: string) => void;
   handleCreateRoom: (room: Room, password?: string, userName?: string) => void;
@@ -35,20 +30,20 @@ interface Context extends State {
 }
 
 export const ChatContext = createContext<Context>({
-  userName: "",
-  currentRoom: "",
-  allRooms: [],
-  messages: [],
-  errors: {
-    wrongPassword: "",
-    roomNameAlreadyInUse: "",
-    noUsername: "",
-    noRoomName: "",
-  },
-  handleJoinRoom: () => {},
-  handleCreateRoom: () => {},
-  handleLogout: () => {},
-  handleSendMessage: () => {},
+	userName: "",
+	currentRoom: "",
+	allRooms: [],
+	messages: [],
+	errors: {
+		wrongPassword: "",
+		roomNameAlreadyInUse: "",
+		noUsername: "",
+		noRoomName: "",
+	},
+	handleJoinRoom: () => {},
+	handleCreateRoom: () => {},
+	handleLogout: () => {},
+	handleSendMessage: () => {},
 });
 
 class ChatProvider extends Component<{}, State> {
@@ -140,17 +135,14 @@ class ChatProvider extends Component<{}, State> {
     }));
   }
 
-  /* Körs först när logout på servern har körts */
   incomingLogout = () => {
-    // Återställer staten i kontexten,
-    // så att de ser likadana ut som innan användaren loggade in
-    // Eftersom userName är tomt, så återvänder användaren till "/" (se rad 24 i chatRoomMain.tsx)
+    // Resets the state
     this.setState({
       userName: "",
-    currentRoom: "",
-    allRooms: [],
-    messages: [],
-    errors: {
+      currentRoom: "",
+      allRooms: [],
+      messages: [],
+      errors: {
       wrongPassword: "",
       roomNameAlreadyInUse: "",
       noUsername: "",
@@ -163,7 +155,6 @@ class ChatProvider extends Component<{}, State> {
     socket.on("connect", this.incomingConnectionEstablished);
     socket.on("logout", this.incomingLogout);
     socket.on("register-user", this.incomingRegisterUser);
-    socket.on("disconnect", this.incomingDisconnect);
     socket.on("join-room", this.incomingJoinRoom);
     socket.on("send-message", this.incomingMessage);
     socket.on("all-rooms", this.incomingRooms);
@@ -204,8 +195,6 @@ class ChatProvider extends Component<{}, State> {
 
   handleLogout = () => {
     const {currentRoom} = this.state
-    // Kommunicerar logout till servern
-    // och skickar med rummet användaren är med i (se rad 30 i server.js)
     socket.emit("logout", {currentRoom: currentRoom});
   };
 

@@ -15,6 +15,7 @@ interface Props {
 }
 
 export default function RoomList(props: Props) {
+	const history = useHistory();
 	const { setPasswordModal } = props;
 	const chatContext = useContext(ChatContext);
 	const styled = useStyles();
@@ -26,13 +27,13 @@ export default function RoomList(props: Props) {
 
 	const handleRoomChange = (room: Room) => {
 		if (room.hasPassword) {
-			console.log('password');
+			console.log("password");
 			setPasswordModal({
 				room: room,
 				isOpen: true,
 			});
 		} else {
-			console.log('no password');
+			console.log("no password");
 			handleJoinRoom(room);
 		}
 	};
@@ -55,7 +56,7 @@ export default function RoomList(props: Props) {
 						<dt key={room.name} onClick={() => handleRoomChange(room)}>
 							{room.name}
 							{room.hasPassword ? (
-								<LockIcon color='primary' fontSize='small' />
+								<LockIcon color="primary" fontSize="small" />
 							) : null}
 						</dt>
 					))}
@@ -70,48 +71,48 @@ export default function RoomList(props: Props) {
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		boxSizing: 'border-box',
-		display: 'flex',
-		height: '100%',
-		width: '20%',
-		[theme.breakpoints.down('sm')]: {
-			display: 'none',
+		boxSizing: "border-box",
+		display: "flex",
+		height: "100%",
+		width: "20%",
+		[theme.breakpoints.down("sm")]: {
+			display: "none",
 		},
 	},
 	chatrooms: {
-		border: '1px solid #F6F6F6',
-		width: '100%',
-		height: '100%',
+		border: "1px solid #F6F6F6",
+		width: "100%",
+		height: "100%",
 	},
 	chatroomHeader: {
-		background: '#897AF2',
-		color: 'white',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		padding: '1rem 1.5rem',
+		background: "#897AF2",
+		color: "white",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		padding: "1rem 1.5rem",
 		backgroundColor: theme.palette.secondary.main,
-		'& p': {
+		"& p": {
 			margin: 0,
 			fontWeight: 600,
-			color: '#ffff',
+			color: "#ffff",
 		},
-		'& svg': {
-			color: '#ffff',
+		"& svg": {
+			color: "#ffff",
 		},
 	},
 	olList: {
 		flex: 1,
-		overflowY: 'auto',
+		overflowY: "auto",
 		padding: 0,
 		margin: 0,
-		'& dt': {
-			display: 'flex',
-			padding: '1rem 1.5rem',
+		"& dt": {
+			display: "flex",
+			padding: "1rem 1.5rem",
 			margin: 0,
-			borderBottom: '1px solid #E5E5E5',
-			justifyContent: 'space-between',
-			alignItems: 'center',
+			borderBottom: "1px solid #E5E5E5",
+			justifyContent: "space-between",
+			alignItems: "center",
 		},
 	},
 	buttonLogout: {
@@ -127,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 	},
 	roomName: {
-		marginLeft: '2px',
-		fontWeight: 'bold',
+		marginLeft: "2px",
+		fontWeight: "bold",
 	},
 }));

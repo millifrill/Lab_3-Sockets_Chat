@@ -46,10 +46,7 @@ const useStyles = makeStyles((theme) => ({
 		height: '5rem',
 		width: '100%',
 		background: 'white',
-		border: '1px solid #F6F6F6',
-		[theme.breakpoints.up('sm')]: {
-			padding: '0.5rem 2.5rem',
-		},
+		borderBottom: "1px solid #DCD9F2",
 	},
 	flexRow: {
 		display: 'flex',

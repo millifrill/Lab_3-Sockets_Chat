@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../contexts/chatContext";
@@ -8,7 +9,7 @@ export default function ChatRoomBox(props: { messages?: any }) {
 	const styled = useStyles();
 	const msgRef = useRef<HTMLInputElement>(null);
 	const chatContext = useContext(ChatContext);
-	const { handleSendMessage, messages, userName } = chatContext;
+	const { currentRoom, handleSendMessage, messages, userName } = chatContext;
 	const [message, setSendMessages] = useState("");
 
 	const handleNewMessagesChange = (event: any) => {
@@ -44,6 +45,9 @@ export default function ChatRoomBox(props: { messages?: any }) {
 
 	return (
 		<div className={styled.chatContainer}>
+			<div className={styled.currentRoomHeader}>
+				<p className={styled.currentRoomName}>{currentRoom}</p>
+			</div>
 			<div className={styled.ListMessages} ref={msgRef}>
 				{messages.map((AllMessage, index) =>
 					AllMessage.userName === userName ? (
@@ -53,16 +57,19 @@ export default function ChatRoomBox(props: { messages?: any }) {
 					),
 				)}
 			</div>
-			<input
-				className={styled.textarea}
-				placeholder="Write a message....."
-				value={message}
-				onChange={handleNewMessagesChange}
-				onKeyPress={sendOnKeyPress}
-			/>
-			<button type="submit" className={styled.buttonSend} onClick={sendMessages}>
-				Send
+			<div className={styled.inputContainer}>
+
+				<input
+					className={styled.textarea}
+					placeholder="Write a message....."
+					value={message}
+					onChange={handleNewMessagesChange}
+					onKeyPress={sendOnKeyPress}
+				/>
+				<button className={styled.buttonSend} onClick={sendMessages}>
+					Send
 			</button>
+			</div>
 		</div>
 	);
 }
@@ -70,38 +77,46 @@ export default function ChatRoomBox(props: { messages?: any }) {
 const useStyles = makeStyles((theme) => ({
 	chatContainer: {
 		display: "flex",
-		flexDirection: "row",
-		border: "1px solid #DCD9F2",
+		flexDirection: "column",
 		width: "100%",
 		height: "100%",
-		position: "relative",
+	},
+	currentRoomHeader: {
+		borderBottom: "1px solid #DCD9F2",
+		width: "100%",
+		height: "3.5rem",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "flex-start",
+	},
+	currentRoomName: {
+		marginLeft: "1.5rem",
+		fontWeight: 600,
 	},
 	ListMessages: {
 		flex: 1,
-		overflowY: "scroll",
-		marginBottom: '1rem',
+		overflowY: "auto",
+		padding: "1rem",
+	},
+	inputContainer: {
+		width: "100%",
+		padding: "1rem 1.5rem",
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		background: "#F6F6F6",
 	},
 	textarea: {
-		position: "absolute",
-		bottom: "0",
 		background: "#F6F6F6",
 		width: "100%",
-		height: "5rem",
+		height: "3rem",
 		textDecoration: "none",
 		border: "none",
 		outline: "none",
 	},
 	buttonSend: {
-		position: "absolute",
-		background: "#897AF2",
-		borderRadius: "10px",
-		fontWeight: "bold",
-		height: "2rem",
+		fontWeight: 600,
 		width: "4rem",
-		border: "none",
-		color: "#ffff",
-		bottom: "5%",
-		right: "2%",
-		cursor: "pointer",
+		marginLeft: "1rem",
 	},
 }));

@@ -22,6 +22,15 @@ export default function ChatRoomBox(props: { messages?: any }) {
 		setSendMessages("");
 	};
 
+	const sendOnKeyPress = (event: any) => {
+		if (event.key === 'Enter') {
+			console.log('Enter')
+			handleSendMessage(message)
+			setSendMessages("");
+
+		}
+	}
+
 	useEffect(() => {
 		if (msgRef && msgRef.current) {
 			const msgElement = msgRef.current;
@@ -49,8 +58,9 @@ export default function ChatRoomBox(props: { messages?: any }) {
 				placeholder="Write a message....."
 				value={message}
 				onChange={handleNewMessagesChange}
+				onKeyPress={sendOnKeyPress}
 			/>
-			<button className={styled.buttonSend} onClick={sendMessages}>
+			<button type="submit" className={styled.buttonSend} onClick={sendMessages}>
 				Send
 			</button>
 		</div>

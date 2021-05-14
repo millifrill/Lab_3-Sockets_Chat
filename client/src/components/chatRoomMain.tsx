@@ -9,7 +9,6 @@ import PasswordModal from "./passwordModal";
 import RoomList from "./roomList";
 import { colorTheme } from "../styling/colorTheme";
 
-
 export default function ChatRoom() {
 	const history = useHistory();
 	const chatContext = useContext(ChatContext);
@@ -29,19 +28,19 @@ export default function ChatRoom() {
 		}
 	}, [userName, history]);
 
-  // Closes mobile room list if window width is higher than medium breakpoint
-  useEffect(() => {
-    function checkWindowWidth() {
-      window.innerWidth > colorTheme.breakpoints.values.md
-        ? setMobileRoomList(false)
-        : setMobileRoomList(mobileRoomList)
-    }
-    window.addEventListener("resize", checkWindowWidth);
+	// Closes mobile room list if window width is higher than medium breakpoint
+	useEffect(() => {
+		function checkWindowWidth() {
+			window.innerWidth > colorTheme.breakpoints.values.md
+				? setMobileRoomList(false)
+				: setMobileRoomList(mobileRoomList);
+		}
+		window.addEventListener("resize", checkWindowWidth);
 
-    return function cleanup() {
-      window.removeEventListener("resize", checkWindowWidth);
-    };
-  });
+		return function cleanup() {
+			window.removeEventListener("resize", checkWindowWidth);
+		};
+	});
 
 	return (
 		<div className={styled.relative}>
@@ -68,12 +67,12 @@ export default function ChatRoom() {
 
 const useStyles = makeStyles((theme) => ({
 	relative: {
-    height: "100%",
+		height: "100%",
 		display: "flex",
 		flexDirection: "column",
 	},
 	flex: {
-    height: "calc(100% - 5rem)",
+		height: "calc(100% - 5rem)",
 		display: "flex",
 		flexDirection: "row",
 	},

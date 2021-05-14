@@ -24,13 +24,12 @@ export default function ChatRoomBox(props: { messages?: any }) {
 	};
 
 	const sendOnKeyPress = (event: any) => {
-		if (event.key === 'Enter') {
-			console.log('Enter')
-			handleSendMessage(message)
+		if (event.key === "Enter") {
+			console.log("Enter");
+			handleSendMessage(message);
 			setSendMessages("");
-
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (msgRef && msgRef.current) {
@@ -58,7 +57,6 @@ export default function ChatRoomBox(props: { messages?: any }) {
 				)}
 			</div>
 			<div className={styled.inputContainer}>
-
 				<input
 					className={styled.textarea}
 					placeholder="Write a message....."
@@ -66,9 +64,9 @@ export default function ChatRoomBox(props: { messages?: any }) {
 					onChange={handleNewMessagesChange}
 					onKeyPress={sendOnKeyPress}
 				/>
-				<button className={styled.buttonSend} onClick={sendMessages}>
+				<Button className={styled.buttonSend} onClick={sendMessages}>
 					Send
-			</button>
+				</Button>
 			</div>
 		</div>
 	);
@@ -118,5 +116,7 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: 600,
 		width: "4rem",
 		marginLeft: "1rem",
+		background: "#897AF2",
+		color: "#ffff",
 	},
 }));

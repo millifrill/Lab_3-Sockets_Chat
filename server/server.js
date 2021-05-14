@@ -18,13 +18,17 @@ const {
 	getRooms,
 } = require("./roomEvents");
 
-io.on('connection', (socket) => {
-	console.log('Client was connected', socket.id);
-	io.emit('all-rooms', getRooms(io));
+io.on("connection", (socket) => {
+	console.log("Client was connected", socket.id);
+	io.emit("all-rooms", getRooms(io));
+	// socket.emit("newMessage", generateMessage("Välkommen till §{params.room}!"));
+	// socket.broadcast
+	// 	.to(params.room)
+	// 	.emit("newMessage", generateMessage("Välkommen till §{params.room}!"));
 
 	// Setup event listeners
 	socket.on("join-room", (data) => handleJoinRoom(io, data, socket));
-	socket.on("register-user", (data) => handleRegisterUser(data, socket))
+	socket.on("register-user", (data) => handleRegisterUser(data, socket));
 	socket.on("create-room", (data) => handleCreateRoom(data, socket, io));
 	socket.on("send-message", (data) => handleSendMessage(data, io));
 	socket.on("logout", (data) => handleLogout(data, socket, io));

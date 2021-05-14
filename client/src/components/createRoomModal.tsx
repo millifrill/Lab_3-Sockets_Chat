@@ -7,14 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { useHistory } from "react-router";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { AddCircle } from "@material-ui/icons";
-import Icon from "@material-ui/core/Icon";
 import { ChatContext } from "../contexts/chatContext";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { DialogContentText } from "@material-ui/core";
 
 export default function CreateRoomModal() {
 	const history = useHistory();
 	const logoImg = `../assets/logo.png`;
-	// const [passwordInput, showPasswordInput] = useState(false);
 	const styled = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const chatContext = useContext(ChatContext);
@@ -101,10 +100,7 @@ export default function CreateRoomModal() {
 
 	return (
 		<div className={styled.modalBox}>
-				<AddCircle 
-					color="primary"
-					onClick={handleClickOpen} 
-				/>
+			<AddCircle color="primary" onClick={handleClickOpen} />
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -115,7 +111,9 @@ export default function CreateRoomModal() {
 				</DialogTitle>
 				<img src={logoImg} alt="" className={styled.imgStyle} />
 				<DialogContent>
-					{/* <DialogContentText>Enter name of chat room </DialogContentText> */}
+					<DialogContentText className={styled.dialogContentText}>
+						Enter name of chat room{" "}
+					</DialogContentText>
 					<TextField
 						autoFocus
 						margin="dense"
@@ -134,11 +132,10 @@ export default function CreateRoomModal() {
 							? "Room name already in use"
 							: null}
 					</p>
-					{/* <DialogContentText>
+					<DialogContentText className={styled.dialogContentText}>
 						Enter chat room password (optional)
-					</DialogContentText> */}
+					</DialogContentText>
 					<TextField
-						autoFocus
 						margin="dense"
 						id="password"
 						label="Enter password (Optional)"
@@ -193,6 +190,10 @@ const useStyles = makeStyles((theme: Theme) =>
 			color: "white",
 			fontSize: "0.8rem",
 			fontWeight: 600,
+		},
+		dialogContentText: {
+			color: "#7361EF",
+			margin: 0,
 		},
 		errorMessage: {
 			color: "red",

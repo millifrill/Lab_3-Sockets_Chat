@@ -57,7 +57,7 @@ export default function RoomList(props: Props) {
 			</div>
 			<div className={styled.buttonContainer}>
 				<Button variant="contained" color="secondary" onClick={logout}>
-					Logout
+					LOGOUT
 				</Button>
 			</div>
 		</div>
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	buttonContainer: {
-		padding: "2rem 1.5rem",
+		padding: "1.5rem 1.5rem",
 		"& button": {
 			width: "100%",
 			textTransform: "capitalize",

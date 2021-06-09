@@ -1,81 +1,68 @@
 import image from '../chat-icon.png';
-import { Hidden, makeStyles } from '@material-ui/core';
-import { ChatContext } from '../contexts/chatContext';
-import { Menu } from '@material-ui/icons';
-import React, { useContext } from 'react';
+import { AppBar, createStyles, IconButton, makeStyles, Theme, Toolbar, Typography } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 interface Props {
-	setMobileRoomList: React.Dispatch<React.SetStateAction<boolean>>;
-	mobileRoomList: boolean;
+    handleDrawerToggle: () => void;
 }
 
 export default function Header(props: Props) {
-	const styled = useStyles();
-	const chatContext = useContext(ChatContext);
-	const { userName } = chatContext;
-	const { setMobileRoomList, mobileRoomList } = props;
-
-	const handleClick = () => {
-		setMobileRoomList(!mobileRoomList);
-	};
+	const classes = useStyles();
+	const {handleDrawerToggle} = props;
 
 	return (
-		<div className={styled.header}>
-			<div className={styled.flexRow}>
-			<img className={styled.image} src={image} alt='chat-pic' />
-				<Hidden xsDown>
-					<h1 className={styled.title}>Chattastic</h1>
-				</Hidden>
+		<AppBar color="inherit" position="fixed" className={classes.appBar}>
+            <Toolbar className={classes.headerInner}>
+			<div style={{flex: 1}}>
+				<img src={image} alt="Chat" className={classes.image}></img>
+				<Typography noWrap color="secondary">
+					Chattastic
+				</Typography>
 			</div>
-			<div className={styled.flexRow}>
-				<p className={styled.userName}>{userName}</p>
-				<Hidden mdUp>
-				<Menu className={styled.hamburger} onClick={handleClick} />
-				</Hidden>
-			</div>
-		</div>
+            <IconButton
+                color="secondary"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}
+            >
+                <MenuIcon />
+            </IconButton>
+            </Toolbar>
+        </AppBar>
 	);
 }
 
-const useStyles = makeStyles((theme) => ({
-	header: {
-		boxSizing: 'border-box',
-		display: 'flex',
-		justifyContent: 'space-between',
-		padding: '0.5rem 1.5rem',
-		height: '5rem',
-		width: '100%',
-		background: 'white',
-		borderBottom: "1px solid #DCD9F2",
-	},
-	flexRow: {
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-	},
-	title: {
-		color: '#897AF2',
-		textAlign: 'left',
-		fontSize: '1.3rem',
-		marginRight: '1rem',
-		fontWeight: 600,
-	},
-	image: {
-		width: '3rem',
-		marginRight: '1rem',
-	},
-	userName: {
-		fontWeight: 500,
-		fontSize: '1rem',
-		marginRight: '1rem',
-	},
-	hamburger: {
-		fontSize: '1.8rem',
-		color: '#897AF2',
-		marginRight: '1rem',
-		display: 'none',
-		[theme.breakpoints.down('sm')]: {
-			display: 'block',
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    appBar: {
+		zIndex: 100,
+		[theme.breakpoints.up('sm')]: {
+			width: '100%',
 		},
+    },
+    menuButton: {
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+	image: {
+		width: "2rem",
+		marginRight: "1rem",
 	},
-}));
+	headerInner: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		"& div": {
+			display: "flex",
+			alignItems: "center",
+			"& p": {
+				fontSize: "1.2rem",
+				fontWeight: 600,
+			}
+		}
+	}
+  }),
+);

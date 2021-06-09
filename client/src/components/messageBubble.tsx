@@ -1,6 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-import { useContext } from "react";
-import { ChatContext, Message } from "../contexts/chatContext";
+import { Message } from "../contexts/chatContext";
 
 interface messageBubble {
 	message: Message;

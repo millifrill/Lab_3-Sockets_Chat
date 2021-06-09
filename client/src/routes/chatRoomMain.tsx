@@ -3,7 +3,6 @@ import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ChatContext } from "../contexts/chatContext";
 import ChatRoomBox from "../components/chatRoomBox";
-import Header from "../components/header";
 import MobileRoomList from "../components/mobileRoomList";
 import PasswordModal from "../components/passwordModal";
 import RoomList from "../components/roomList";
@@ -53,10 +52,6 @@ export default function ChatRoom() {
 					passwordModal={passwordModal}
 				/>
 			)}
-			<Header
-				setMobileRoomList={setMobileRoomList}
-				mobileRoomList={mobileRoomList}
-			/>
 			<div className={styled.flex}>
 				<RoomList setPasswordModal={setPasswordModal} />
 				<ChatRoomBox />

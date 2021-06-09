@@ -2,11 +2,11 @@ import { makeStyles } from "@material-ui/core";
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ChatContext } from "../contexts/chatContext";
-import ChatRoomBox from "./chatRoomBox";
-import Header from "./header";
-import MobileRoomList from "./mobileRoomList";
-import PasswordModal from "./passwordModal";
-import RoomList from "./roomList";
+import ChatRoomBox from "../components/chatRoomBox";
+import Header from "../components/header";
+import MobileRoomList from "../components/mobileRoomList";
+import PasswordModal from "../components/passwordModal";
+import RoomList from "../components/roomList";
 import { colorTheme } from "../styling/colorTheme";
 
 export default function ChatRoom() {

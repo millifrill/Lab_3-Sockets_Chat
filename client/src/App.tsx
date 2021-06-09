@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { colorTheme } from "./styling/colorTheme";
 import { ThemeProvider } from "@material-ui/core";
-import ChatRoomMain from "./components/chatRoomMain";
+import ChatRoomMain from "./routes/chatRoomMain";
 import ChatProvider from "./contexts/chatContext";
 import LoginPage from "./routes/loginPage";
 

@@ -13,7 +13,6 @@ import { DialogContentText } from "@material-ui/core";
 
 export default function CreateRoomModal() {
 	const history = useHistory();
-	const logoImg = `../assets/logo.png`;
 	const styled = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const chatContext = useContext(ChatContext);
@@ -83,11 +82,12 @@ export default function CreateRoomModal() {
 		}
 	}
 
-	const connect = () => {
+	const createRoom = () => {
 		const { password, name } = userSettings.room;
 		const room = { name: name };
 		if (checkCreateRoomValidation()) {
 			handleCreateRoom(room, password);
+			handleClose();
 		}
 	};
 
@@ -109,7 +109,6 @@ export default function CreateRoomModal() {
 				<DialogTitle id="form-dialog-title" className={styled.modalTitle}>
 					Create a new chat room
 				</DialogTitle>
-				<img src={logoImg} alt="" className={styled.imgStyle} />
 				<DialogContent>
 					<DialogContentText className={styled.dialogContentText}>
 						Enter name of chat room{" "}
@@ -119,7 +118,6 @@ export default function CreateRoomModal() {
 						margin="dense"
 						id="chatroom"
 						label="Enter room name"
-						type="chatroom"
 						variant="outlined"
 						onChange={(e) => handleCreateRoomChange(e.target.value)}
 						fullWidth
@@ -138,7 +136,7 @@ export default function CreateRoomModal() {
 					<TextField
 						margin="dense"
 						id="password"
-						label="Enter password (Optional)"
+						label="Enter password"
 						type="password"
 						variant="outlined"
 						onChange={(e) => handlePasswordChange(e.target.value)}
@@ -146,17 +144,13 @@ export default function CreateRoomModal() {
 					/>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose} color="primary">
+					<Button onClick={handleClose} color="secondary">
 						Cancel
 					</Button>
 					<Button
-						className={styled.buttonStyle}
-						variant="outlined"
-						onClick={() => {
-							handleClose();
-							connect();
-						}}
-						color="primary"
+						variant="contained"
+						onClick={createRoom}
+						color="secondary"
 					>
 						Create room
 					</Button>
@@ -181,22 +175,14 @@ const useStyles = makeStyles((theme: Theme) =>
 			fontSize: "1.2rem",
 			fontWeight: 800,
 		},
-		buttonStyle: {
-			height: "2rem",
-			width: "9rem",
-			borderRadius: 10,
-			border: "none",
-			background: "#7361EF",
-			color: "white",
-			fontSize: "0.8rem",
-			fontWeight: 600,
-		},
 		dialogContentText: {
 			color: "#7361EF",
 			margin: 0,
 		},
 		errorMessage: {
 			color: "red",
+			fontSize: "0.8rem",
+			margin: "0 0 1rem 0",
 		},
 	}),
 );

@@ -1,6 +1,6 @@
 import { Button, makeStyles, TextField } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { ChatContext } from '../contexts/chatContext';
+import { ChatContext } from '../../contexts/chatContext';
 
 interface Props {
     connect: () => void;
@@ -42,6 +42,7 @@ export default function NewRoomForm(props: Props) {
                 fullWidth
                 variant='outlined'
                 margin='dense'
+                type='password'
                 placeholder='Password (optional)'
                 onChange={(e) => setPassword(e.target.value)}
             />
@@ -68,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '1rem',
     },
     errorMessage: {
-        margin: 0,
+        margin: '0.5rem 0 0 0',
         fontStyle: 'italic',
         fontSize: '0.8rem',
         color: 'red',

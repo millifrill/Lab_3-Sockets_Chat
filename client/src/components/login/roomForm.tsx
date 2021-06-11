@@ -1,6 +1,6 @@
 import { makeStyles, Paper, Tab, Tabs } from '@material-ui/core';
 import React, { ChangeEvent, useContext } from 'react';
-import { ChatContext } from '../contexts/chatContext';
+import { ChatContext } from '../../contexts/chatContext';
 import JoinRoomForm from './joinRoomForm';
 import NewRoomForm from './newRoomForm';
 

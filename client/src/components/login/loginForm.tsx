@@ -1,7 +1,7 @@
 import { Button, makeStyles, Paper, TextField } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import logo from '../chat-icon.png';
-import { ChatContext } from '../contexts/chatContext';
+import logo from '../../chat-icon.png';
+import { ChatContext } from '../../contexts/chatContext';
 
 export default function LoginForm() {
     const classes = useStyles();

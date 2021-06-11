@@ -36,7 +36,7 @@ export function MessagesContainer() {
 const useStyles = makeStyles((theme) => ({
     content: {
         backgroundColor: 'white',
-        padding: '2rem',
+        padding: '1.5rem',
         overflowX: 'auto',
         flex: 1,
     },

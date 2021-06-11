@@ -128,7 +128,6 @@ class ChatProvider extends Component<{}, State> {
             ...prevState,
             errors: { ...prevState.errors, [error]: error },
         }));
-        console.log(this.state.errors);
     };
 
     incomingNoError = (noError: string) => {
@@ -136,7 +135,6 @@ class ChatProvider extends Component<{}, State> {
             ...prevState,
             errors: { ...prevState.errors, [noError]: '' },
         }));
-        console.log(this.state.errors);
     };
 
     incomingDisconnect = (reason: any) => {

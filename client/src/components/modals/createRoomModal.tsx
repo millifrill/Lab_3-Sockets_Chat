@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useHistory } from 'react-router';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
-import { ChatContext } from '../contexts/chatContext';
+import { ChatContext } from '../../contexts/chatContext';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export default function CreateRoomModal() {

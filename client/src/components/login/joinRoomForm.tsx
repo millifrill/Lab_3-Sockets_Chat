@@ -6,7 +6,7 @@ import {
     TextField,
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import { ChatContext } from '../contexts/chatContext';
+import { ChatContext } from '../../contexts/chatContext';
 
 interface Props {
     connect: () => void;

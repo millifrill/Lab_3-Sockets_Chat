@@ -12,7 +12,7 @@ import SiteHeader from '../components/siteHeader';
 import { MessagesContainer } from '../components/messagesContainer';
 import { ChatContext } from '../contexts/chatContext';
 import { useHistory } from 'react-router';
-import PasswordModal from '../components/passwordModal';
+import PasswordModal from '../components/modals/passwordModal';
 
 const drawerWidth = 240;
 

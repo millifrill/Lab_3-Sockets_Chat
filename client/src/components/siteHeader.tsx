@@ -1,4 +1,4 @@
-import image from '../chat-icon.png';
+import logo from '../chat-icon.png';
 import {
     AppBar,
     createStyles,
@@ -9,6 +9,8 @@ import {
     Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { useContext } from 'react';
+import { ChatContext } from '../contexts/chatContext';
 
 interface Props {
     handleDrawerToggle: () => void;
@@ -16,17 +18,19 @@ interface Props {
 
 export default function SiteHeader(props: Props) {
     const classes = useStyles();
+    const { userName } = useContext(ChatContext);
     const { handleDrawerToggle } = props;
 
     return (
         <AppBar color='inherit' position='fixed' className={classes.appBar}>
             <Toolbar className={classes.headerInner}>
                 <div style={{ flex: 1 }}>
-                    <img src={image} alt='Chat' className={classes.image}></img>
+                    <img src={logo} alt='Chat' className={classes.image}></img>
                     <Typography noWrap color='primary'>
                         Chattastic
                     </Typography>
                 </div>
+                <Typography className={classes.userName}>{userName}</Typography>
                 <IconButton
                     color='primary'
                     aria-label='open drawer'
@@ -70,6 +74,10 @@ const useStyles = makeStyles((theme: Theme) =>
                     fontWeight: 600,
                 },
             },
+        },
+        userName: {
+            marginRight: '1rem',
+            fontWeight: 600,
         },
     })
 );

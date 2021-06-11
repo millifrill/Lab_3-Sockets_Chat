@@ -16,7 +16,7 @@ import {
 import React, { useContext } from 'react';
 import { Lock } from '@material-ui/icons';
 import { ChatContext, Room } from '../contexts/chatContext';
-import CreateRoomModal from './createRoomModal';
+import CreateRoomModal from './modals/createRoomModal';
 
 const drawerWidth = 240;
 
@@ -79,7 +79,9 @@ export default function ResponsiveDrawer(props: Props) {
                             primary={room.name}
                             onClick={() => handleRoomChange(room)}
                         />
-                        {room.hasPassword ? <Lock /> : null}
+                        {room.hasPassword ? (
+                            <Lock className={classes.lockIcon} />
+                        ) : null}
                     </ListItem>
                 ))}
             </List>
@@ -179,6 +181,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             display: 'flex',
             alignItems: 'flex-end',
+        },
+        lockIcon: {
+            color: 'grey',
         },
     })
 );

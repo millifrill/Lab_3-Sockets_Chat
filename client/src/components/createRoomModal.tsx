@@ -147,13 +147,13 @@ export default function CreateRoomModal() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color='secondary'>
+                    <Button onClick={handleClose} color='primary'>
                         Cancel
                     </Button>
                     <Button
                         variant='contained'
                         onClick={createRoom}
-                        color='secondary'
+                        color='primary'
                     >
                         Create room
                     </Button>

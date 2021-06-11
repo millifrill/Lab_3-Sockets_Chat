@@ -1,13 +1,12 @@
-import { createMuiTheme } from "@material-ui/core";
-
+import { createMuiTheme } from '@material-ui/core';
 
 export const colorTheme = createMuiTheme({
     palette: {
         primary: {
-            main:"#E8E4FF", // Ljuslila
+            main: '#897AF2', // Ljuslila
         },
         secondary: {
-            main: "#897AF2", //Mörklila
-        }
-    }
+            main: '#E8E4FF', //Mörklila
+        },
+    },
 });

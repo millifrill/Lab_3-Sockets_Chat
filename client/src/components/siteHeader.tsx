@@ -23,12 +23,12 @@ export default function SiteHeader(props: Props) {
             <Toolbar className={classes.headerInner}>
                 <div style={{ flex: 1 }}>
                     <img src={image} alt='Chat' className={classes.image}></img>
-                    <Typography noWrap color='secondary'>
+                    <Typography noWrap color='primary'>
                         Chattastic
                     </Typography>
                 </div>
                 <IconButton
-                    color='secondary'
+                    color='primary'
                     aria-label='open drawer'
                     edge='start'
                     onClick={handleDrawerToggle}

@@ -102,6 +102,7 @@ class ChatProvider extends Component<{}, State> {
             currentRoom: room.name,
             messages: [],
         }));
+        return true;
     };
 
     incomingJoinSuccess = () => {

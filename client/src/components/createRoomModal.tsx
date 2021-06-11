@@ -26,11 +26,6 @@ export default function CreateRoomModal() {
         },
     });
 
-    const [userErrors, setUserErrors] = useState({
-        userName: '',
-        roomName: '',
-    });
-
     useEffect(() => {
         if (currentRoom) {
             history.push('/chatroom');
@@ -38,17 +33,6 @@ export default function CreateRoomModal() {
     }, [history, currentRoom]);
 
     const handleCreateRoomChange = (name: string) => {
-        if (!name) {
-            setUserErrors((prevState) => ({
-                ...prevState,
-                roomName: 'Please enter a room name',
-            }));
-        } else {
-            setUserErrors((prevState) => ({
-                ...prevState,
-                roomName: '',
-            }));
-        }
         setUserSettings((prevState) => ({
             ...prevState,
             room: {
@@ -69,25 +53,17 @@ export default function CreateRoomModal() {
         }));
     };
 
-    function checkCreateRoomValidation() {
-        if (!userErrors.roomName && !errors.roomNameAlreadyInUse) {
-            return true;
-        } else {
-            setUserErrors((prevState) => ({
-                ...prevState,
-                roomName: 'Please enter a room name',
-            }));
-            return false;
+    // If user has created a new room, close modal
+    useEffect(() => {
+        if (!errors.roomNameAlreadyInUse && !errors.noRoomName) {
+            handleClose();
         }
-    }
+    }, [errors, currentRoom]);
 
     const createRoom = () => {
         const { password, name } = userSettings.room;
         const room = { name: name };
-        if (checkCreateRoomValidation()) {
-            handleCreateRoom(room, password);
-            handleClose();
-        }
+        handleCreateRoom(room, password);
     };
 
     const handleClickOpen = () => {
@@ -101,6 +77,7 @@ export default function CreateRoomModal() {
         <div>
             <AddCircle onClick={handleClickOpen} />
             <Dialog
+                fullWidth={true}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby='form-dialog-title'
@@ -111,7 +88,9 @@ export default function CreateRoomModal() {
                 <DialogContent>
                     <TextField
                         autoFocus
-                        error={Boolean(errors.roomNameAlreadyInUse)}
+                        error={Boolean(
+                            errors.roomNameAlreadyInUse || errors.noRoomName
+                        )}
                         required
                         margin='dense'
                         id='chatroom'
@@ -119,6 +98,11 @@ export default function CreateRoomModal() {
                         onChange={(e) => handleCreateRoomChange(e.target.value)}
                         fullWidth
                     />
+                    {errors.noRoomName ? (
+                        <p className={classes.errorMessage}>
+                            Please enter a room name
+                        </p>
+                    ) : null}
                     {errors.roomNameAlreadyInUse ? (
                         <p className={classes.errorMessage}>
                             Room name already in use

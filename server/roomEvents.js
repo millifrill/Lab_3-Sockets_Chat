@@ -74,12 +74,17 @@ async function handleCreateRoom(data, socket, io) {
     const { room, password, currentRoom } = data;
 
     const existingRoom = getRooms(io).find((r) => r.name === room.name);
-    if (existingRoom) {
-        // Set roomName error
-        return await socket.emit('error', 'roomNameAlreadyInUse');
-    }
     if (!room.name) {
-        return await socket.emit('error', 'noRoomName');
+        return (
+            await socket.emit('error', 'noRoomName'),
+            await socket.emit('no-error', 'roomNameAlreadyInUse')
+        );
+    }
+    if (existingRoom) {
+        return (
+            await socket.emit('error', 'roomNameAlreadyInUse'),
+            await socket.emit('no-error', 'noRoomName')
+        );
     }
     if (!socket.userName) {
         return `${socket.userName} has joined the chat`;

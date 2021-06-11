@@ -11,7 +11,7 @@ export default function LoginPage() {
     const logoImg = `../assets/logo.png`;
     const [passwordInput, showPasswordInput] = useState(false);
     const chatContext = useContext(ChatContext);
-    const { allRooms, errors, currentRoom, handleCreateRoom, handleJoinRoom } =
+    const { allRooms, errors, userName, handleCreateRoom, handleJoinRoom } =
         chatContext;
 
     const [userSettings, setUserSettings] = useState({
@@ -25,10 +25,10 @@ export default function LoginPage() {
 
     // If user has been assigned a room, redirect to chatroom
     useEffect(() => {
-        if (currentRoom) {
+        if (userName) {
             history.push('/chatroom');
         }
-    }, [history, currentRoom]);
+    }, [history, userName]);
 
     const handleUserNameChange = (name: string) => {
         setUserSettings((prevState) => ({

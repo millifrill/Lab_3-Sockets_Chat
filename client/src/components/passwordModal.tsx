@@ -29,7 +29,7 @@ export default function PasswordModal(props: Props) {
     const { handleJoinRoom, currentRoom, errors } = chatContext;
     const classes = useStyles();
 
-    // If user has been assigned a room, close password modal
+    // If user has been assigned a room, close modal
     useEffect(() => {
         if (!errors.wrongPassword) {
             setPasswordModal((prevState) => ({
@@ -57,6 +57,7 @@ export default function PasswordModal(props: Props) {
     return (
         <div>
             <Dialog
+                fullWidth={true}
                 open={passwordModal.isOpen}
                 onClose={handleClose}
                 aria-labelledby='form-dialog-title'

@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core';
 import ChatProvider from './contexts/chatContext';
 import LoginPage from './routes/loginPage';
 import MainPage from './routes/mainPage';
-import Page from './routes/page';
+import PageNotFound from './components/404';
 
 function App() {
     return (
@@ -12,8 +12,9 @@ function App() {
             <ThemeProvider theme={colorTheme}>
                 <Router>
                     <Switch>
-                        <Route exact path='/' component={Page}></Route>
+                        <Route exact path='/' component={LoginPage}></Route>
                         <Route path='/chatroom' component={MainPage}></Route>
+                        <PageNotFound />
                     </Switch>
                 </Router>
             </ThemeProvider>

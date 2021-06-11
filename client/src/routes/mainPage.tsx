@@ -5,18 +5,18 @@ import {
     Theme,
 } from '@material-ui/core';
 import React, { useContext, useEffect, useState } from 'react';
-import MenuBar from './roomHeader';
-import ChatRoomBox from './chatRoomBox';
-import ResponsiveDrawer from './drawer';
-import Header from './header';
-import { MessagesContainer } from './messagesContainer';
+import RoomHeader from '../components/roomHeader';
+import MessageInput from '../components/messageInput';
+import ResponsiveDrawer from '../components/drawer';
+import SiteHeader from '../components/siteHeader';
+import { MessagesContainer } from '../components/messagesContainer';
 import { ChatContext } from '../contexts/chatContext';
 import { useHistory } from 'react-router';
-import PasswordModal from './passwordModal';
+import PasswordModal from '../components/passwordModal';
 
 const drawerWidth = 240;
 
-export default function Main() {
+export default function MainPage() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [passwordModal, setPasswordModal] = useState({
         room: {
@@ -46,7 +46,7 @@ export default function Main() {
                     passwordModal={passwordModal}
                 />
             )}
-            <Header handleDrawerToggle={handleDrawerToggle} />
+            <SiteHeader handleDrawerToggle={handleDrawerToggle} />
             <CssBaseline />
             <ResponsiveDrawer
                 setPasswordModal={setPasswordModal}
@@ -54,11 +54,11 @@ export default function Main() {
                 mobileOpen={mobileOpen}
             />
             <main className={classes.main}>
-                <MenuBar />
+                <RoomHeader />
                 <div className={classes.toolbar} />
                 <div className={classes.toolbar} />
                 <MessagesContainer />
-                <ChatRoomBox />
+                <MessageInput />
             </main>
         </>
     );

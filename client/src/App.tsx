@@ -1,10 +1,9 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { colorTheme } from './styling/colorTheme';
 import { ThemeProvider } from '@material-ui/core';
-import ChatRoomMain from './routes/chatRoomMain';
 import ChatProvider from './contexts/chatContext';
 import LoginPage from './routes/loginPage';
-import Main from './components/main';
+import MainPage from './routes/mainPage';
 
 function App() {
     return (
@@ -13,8 +12,7 @@ function App() {
                 <Router>
                     <Switch>
                         <Route exact path='/' component={LoginPage}></Route>
-                        <Route path='/chatroom' component={Main}></Route>
-                        <Route path='/room' component={ChatRoomMain}></Route>
+                        <Route path='/chatroom' component={MainPage}></Route>
                     </Switch>
                 </Router>
             </ThemeProvider>

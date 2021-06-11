@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { Message, ChatContext } from '../contexts/chatContext';
-import MessageBubble from './messageBubble';
-import MessageIncomingBubble from './MessageIncomingBubble';
+import OutgoingMessageBubble from './outgoingMessageBubble';
+import IncomingMessageBubble from './incomingMessageBubble';
 
 export function MessagesContainer() {
     const msgRef = useRef<HTMLInputElement>(null);
@@ -10,7 +10,6 @@ export function MessagesContainer() {
     const { messages, userName } = useContext(ChatContext);
 
     useEffect(() => {
-        console.log(messages);
         if (msgRef && msgRef.current) {
             const msgElement = msgRef.current;
             msgElement.scroll({
@@ -25,9 +24,9 @@ export function MessagesContainer() {
         <div className={classes.content} ref={msgRef}>
             {messages.map((message: Message, index: number) =>
                 message.userName === userName ? (
-                    <MessageBubble key={index} message={message} />
+                    <OutgoingMessageBubble key={index} message={message} />
                 ) : (
-                    <MessageIncomingBubble key={index} message={message} />
+                    <IncomingMessageBubble key={index} message={message} />
                 )
             )}
         </div>

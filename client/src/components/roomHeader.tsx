@@ -11,7 +11,7 @@ import { ChatContext } from '../contexts/chatContext';
 
 const drawerWidth = 240;
 
-export default function MenuBar() {
+export default function RoomHeader() {
     const classes = useStyles();
     const { currentRoom } = useContext(ChatContext);
 

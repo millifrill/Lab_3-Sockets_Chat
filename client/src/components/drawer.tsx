@@ -14,7 +14,7 @@ import {
     Button,
 } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { AddCircle, Lock } from '@material-ui/icons';
+import { Lock } from '@material-ui/icons';
 import { ChatContext, Room } from '../contexts/chatContext';
 import CreateRoomModal from './createRoomModal';
 
@@ -143,6 +143,9 @@ const useStyles = makeStyles((theme: Theme) =>
             width: drawerWidth,
             [theme.breakpoints.up('sm')]: {
                 top: '4rem',
+            },
+            [theme.breakpoints.down('xs')]: {
+                height: '100%',
             },
         },
         content: {

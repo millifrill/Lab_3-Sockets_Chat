@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import React, { useContext, useState } from 'react';
 import { ChatContext } from '../contexts/chatContext';
 
-export default function ChatRoomBox() {
+export default function MessageInput() {
     const styled = useStyles();
     const { handleSendMessage } = useContext(ChatContext);
     const [message, setMessage] = useState('');

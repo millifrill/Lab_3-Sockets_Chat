@@ -9,23 +9,20 @@ async function handleJoinRoom(io, data, socket) {
     const { room, currentRoom, password } = data;
 
     const newRoomToJoin = rooms.find((r) => r.name === room.name);
+    if (!room.name) {
+        return socket.emit('error', 'noRoomName');
+    }
+    socket.emit('no-error', 'noRoomName');
     if (newRoomToJoin.password) {
         if (!password) {
-            return (
-                socket.emit('error', 'noPassword'),
-                socket.emit('no-error', 'wrongPassword')
-            );
+            return socket.emit('error', 'noPassword');
         }
+        socket.emit('no-error', 'noPassword');
         if (newRoomToJoin.password !== password) {
             // Set password error
-            return (
-                socket.emit('error', 'wrongPassword'),
-                socket.emit('no-error', 'noPassword')
-            );
+            return socket.emit('error', 'wrongPassword');
         }
-    }
-    if (!socket.userName) {
-        return;
+        socket.emit('no-error', 'wrongPassword');
     }
 
     // If user is currently in a room, leave room
@@ -57,7 +54,7 @@ async function handleJoinRoom(io, data, socket) {
  * @param {io.Socket} socket
  */
 async function handleRegisterUser(data, socket) {
-    const { userName } = data;
+    const userName = data;
     if (!userName) {
         return socket.emit('error', 'noUsername');
     }
@@ -96,9 +93,6 @@ async function handleCreateRoom(data, socket, io) {
             await socket.emit('error', 'roomNameAlreadyInUse'),
             await socket.emit('no-error', 'noRoomName')
         );
-    }
-    if (!socket.userName) {
-        return `${socket.userName} has joined the chat`;
     }
 
     // If user is currently in a room, leave room

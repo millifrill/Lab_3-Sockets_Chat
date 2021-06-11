@@ -41,7 +41,8 @@ const defaultState = {
 };
 
 interface Context extends State {
-    handleJoinRoom: (room: Room, password?: string, userName?: string) => void;
+    handleJoinRoom: (room: Room, password?: string) => void;
+    handleSetUsername: (username: string) => void;
     handleCreateRoom: (
         room: Room,
         password?: string,
@@ -65,6 +66,7 @@ export const ChatContext = createContext<Context>({
         noMessage: '',
     },
     handleJoinRoom: () => {},
+    handleSetUsername: () => {},
     handleCreateRoom: () => {},
     handleLogout: () => {},
     handleSendMessage: () => {},
@@ -164,15 +166,8 @@ class ChatProvider extends Component<{}, State> {
         socket.on('error', this.incomingError);
     }
 
-    handleJoinRoom = async (
-        room: Room,
-        password?: string,
-        userName?: string
-    ) => {
+    handleJoinRoom = async (room: Room, password?: string) => {
         const { currentRoom } = this.state;
-        if (userName !== undefined) {
-            socket.emit('register-user', { userName: userName });
-        }
         // Adds user to new room
         socket.emit('join-room', {
             room: room,
@@ -181,15 +176,8 @@ class ChatProvider extends Component<{}, State> {
         });
     };
 
-    handleCreateRoom = async (
-        room: Room,
-        password?: string,
-        userName?: string
-    ) => {
+    handleCreateRoom = async (room: Room, password?: string) => {
         const { currentRoom } = this.state;
-        if (userName !== undefined) {
-            socket.emit('register-user', { userName: userName });
-        }
         // Creates and adds user to new room
         socket.emit('create-room', {
             room: room,
@@ -216,6 +204,10 @@ class ChatProvider extends Component<{}, State> {
         });
     };
 
+    handleSetUsername = (username: string) => {
+        socket.emit('register-user', username);
+    };
+
     render() {
         return (
             <ChatContext.Provider
@@ -226,6 +218,7 @@ class ChatProvider extends Component<{}, State> {
                     messages: this.state.messages,
                     errors: this.state.errors,
                     handleJoinRoom: this.handleJoinRoom,
+                    handleSetUsername: this.handleSetUsername,
                     handleCreateRoom: this.handleCreateRoom,
                     handleSendMessage: this.handleSendMessage,
                     handleLogout: this.handleLogout,

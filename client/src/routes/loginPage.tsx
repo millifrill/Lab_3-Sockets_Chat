@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import React, { useContext, useEffect, useState } from 'react';
 import { ChatContext } from '../contexts/chatContext';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Select } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 
@@ -37,7 +37,7 @@ export default function LoginPage() {
         }));
     };
 
-    const handleJoinRoomChange = (index: string) => {
+    const handleJoinRoomChange = (index: any) => {
         const room = allRooms[Number(index)];
         if (room.hasPassword) {
             showPasswordInput(true);
@@ -78,24 +78,25 @@ export default function LoginPage() {
         const { password, isNewRoom, name } = userSettings.room;
         const room = { name: name };
         if (isNewRoom) {
-            handleCreateRoom(room, password, userName);
+            handleCreateRoom(room, password);
         } else {
-            handleJoinRoom(room, password, userName);
+            handleJoinRoom(room, password);
         }
     };
 
     return (
         <div className={styled.mainContent}>
-            <p className={styled.nameStyle}>Chattastic</p>
-            <img src={logoImg} alt='' className={styled.imgStyle} />
+            <img src={logoImg} alt='Chattastic logo' className={styled.logo} />
+            <h1 className={styled.title}>Chattastic</h1>
             <div className={styled.formBox}>
-                <p className={styled.text}>Please choose a username</p>
                 <TextField
-                    className={styled.textField}
-                    id='outlined-basic'
+                    label='Username'
+                    variant='outlined'
+                    margin='dense'
+                    fullWidth
+                    error={Boolean(errors.noUsername)}
                     placeholder='Enter username'
                     onChange={(e) => handleUserNameChange(e.target.value)}
-                    variant='outlined'
                 />
                 {errors.noUsername ? (
                     <p className={styled.errorMessage}>
@@ -104,14 +105,12 @@ export default function LoginPage() {
                 ) : null}
                 {allRooms.length ? (
                     <>
-                        <p className={styled.text}>Choose a room to join</p>
-                        <TextField
-                            className={styled.textField}
-                            id='outlined-select'
-                            placeholder='Choose room'
-                            select
-                            defaultValue={''}
+                        {/* <p>Choose a room to join</p>
+                        <Select
+                            fullWidth
                             variant='outlined'
+                            margin='dense'
+                            defaultValue={''}
                             onChange={(e) =>
                                 handleJoinRoomChange(e.target.value)
                             }
@@ -121,16 +120,16 @@ export default function LoginPage() {
                                     {room.name}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </Select> */}
                         {passwordInput ? (
                             <TextField
-                                className={styled.textField}
-                                id='outlined-basic'
+                                fullWidth
+                                variant='outlined'
+                                margin='dense'
                                 placeholder='Enter room password'
                                 onChange={(e) =>
                                     handlePasswordChange(e.target.value)
                                 }
-                                variant='outlined'
                             />
                         ) : null}
                         {errors.wrongPassword ? (
@@ -138,42 +137,38 @@ export default function LoginPage() {
                                 Incorrect password
                             </p>
                         ) : null}
-                        <div className={styled.divideContainer}>
-                            <hr className={styled.hr} />
-                            <p className={styled.breakText}>Or</p>
-                            <hr className={styled.hr} />
-                        </div>
                     </>
                 ) : null}
-                <p className={styled.text}>Create a new chatroom</p>
+                <p>Create a new chatroom</p>
                 <TextField
-                    className={styled.textField}
-                    id='outlined-basic'
-                    placeholder='Enter room name'
+                    fullWidth
+                    error={Boolean(
+                        errors.noRoomName || errors.roomNameAlreadyInUse
+                    )}
                     variant='outlined'
+                    margin='dense'
+                    placeholder='Enter room name'
                     onChange={(e) => handleCreateRoomChange(e.target.value)}
                 />
                 {errors.noRoomName ? (
                     <p className={styled.errorMessage}>
                         Please enter a room name
                     </p>
-                ) : null}
-                {errors.roomNameAlreadyInUse ? (
+                ) : errors.roomNameAlreadyInUse ? (
                     <p className={styled.errorMessage}>
                         Room name is already in use
                     </p>
                 ) : null}
-                <p className={styled.text}>Choose room password (optional)</p>
                 <TextField
-                    className={styled.textField}
-                    id='outlined-basic'
-                    placeholder='Enter password'
-                    type='password'
+                    fullWidth
                     variant='outlined'
+                    margin='dense'
+                    placeholder='Enter password (optional)'
+                    type='password'
                     onChange={(e) => handlePasswordChange(e.target.value)}
                 />
                 <Button
-                    className={styled.connectButton}
+                    fullWidth
                     onClick={connect}
                     variant='contained'
                     color='primary'
@@ -194,15 +189,14 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        backgroundColor: theme.palette.secondary.main,
         textAlign: 'center',
     },
-    imgStyle: {
-        width: '4.5rem',
+    logo: {
+        width: '3.5rem',
     },
-    nameStyle: {
-        fontSize: '3.5rem',
-        margin: 0,
+    title: {
+        fontSize: '2rem',
+        margin: '0.5rem 0 1.5rem 0',
         color: theme.palette.primary.main,
     },
     formBox: {
@@ -212,45 +206,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    textField: {
-        textAlign: 'left',
-        margin: '0.5rem 0 0 0',
-        borderRadius: '0.4rem',
-        width: '100%',
-        backgroundColor: '#ffff',
-        '& .MuiOutlinedInput-input': {
-            padding: '0.7rem',
-        },
-    },
-    connectButton: {
-        marginTop: '1.5rem',
-        width: '100%',
-        fontWeight: 600,
-    },
-    text: {
-        margin: '1.2rem 0 0.25rem 0',
-        color: '#1CA491',
-        textAlign: 'center',
-        width: '100%',
-        fontWeight: 600,
-        fontSize: '0.8rem',
-    },
-    divideContainer: {
-        width: '100%',
-        marginTop: '1.5rem',
-    },
-    breakText: {
-        color: theme.palette.primary.main,
-        textAlign: 'center',
-        width: '100%',
-        fontWeight: 600,
-        margin: '0.5rem 0',
-    },
-    hr: {
-        border: 'none',
-        borderTop: `1px ${theme.palette.primary.main} solid`,
-        width: '100%',
     },
     flexCenter: {
         display: 'flex',

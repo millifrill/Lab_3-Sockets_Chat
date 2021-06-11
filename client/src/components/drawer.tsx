@@ -35,14 +35,17 @@ interface Props {
 
 export default function ResponsiveDrawer(props: Props) {
     const { handleDrawerToggle, mobileOpen, setPasswordModal } = props;
-    const { allRooms, handleLogout, handleJoinRoom } = useContext(ChatContext);
+    const { allRooms, handleLogout, handleJoinRoom, currentRoom } =
+        useContext(ChatContext);
 
     const classes = useStyles();
     const theme = useTheme();
 
     const handleRoomChange = (room: Room) => {
         if (room.hasPassword) {
-            console.log('password');
+            if (room.name === currentRoom) {
+                return;
+            }
             setPasswordModal({
                 room: room,
                 isOpen: true,
@@ -56,7 +59,7 @@ export default function ResponsiveDrawer(props: Props) {
     const drawer = (
         <div className={classes.drawerContainer}>
             <AppBar
-                color='secondary'
+                color='primary'
                 className={classes.drawerBar}
                 position='relative'
             >
@@ -67,7 +70,11 @@ export default function ResponsiveDrawer(props: Props) {
             </AppBar>
             <List>
                 {allRooms.map((room, index) => (
-                    <ListItem button key={index}>
+                    <ListItem
+                        selected={room.name === currentRoom}
+                        button
+                        key={index}
+                    >
                         <ListItemText
                             primary={room.name}
                             onClick={() => handleRoomChange(room)}
@@ -79,7 +86,7 @@ export default function ResponsiveDrawer(props: Props) {
             <div className={classes.logoutContainer}>
                 <Button
                     variant='contained'
-                    color='secondary'
+                    color='primary'
                     onClick={handleLogout}
                     fullWidth={true}
                 >

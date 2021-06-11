@@ -117,7 +117,6 @@ async function handleLogout(data, socket, io) {
 function handleDisconnect(reason, io, socket) {
     console.log(reason);
     io.emit('all-rooms', getRooms(io));
-    socket.emit('disconnect', reason);
 }
 
 /**

@@ -2,6 +2,7 @@ import { Component, createContext } from 'react';
 import { socket } from '../socket';
 interface Errors {
     wrongPassword: string;
+    noPassword: string;
     roomNameAlreadyInUse: string;
     noUsername: string;
     noRoomName: string;
@@ -23,6 +24,22 @@ interface State {
     messages: Message[];
     errors: Errors;
 }
+
+const defaultState = {
+    userName: '',
+    currentRoom: '',
+    allRooms: [],
+    messages: [],
+    errors: {
+        wrongPassword: '',
+        noPassword: '',
+        roomNameAlreadyInUse: '',
+        noUsername: '',
+        noRoomName: '',
+        noMessage: '',
+    },
+};
+
 interface Context extends State {
     handleJoinRoom: (room: Room, password?: string, userName?: string) => void;
     handleCreateRoom: (
@@ -41,6 +58,7 @@ export const ChatContext = createContext<Context>({
     messages: [],
     errors: {
         wrongPassword: '',
+        noPassword: '',
         roomNameAlreadyInUse: '',
         noUsername: '',
         noRoomName: '',
@@ -53,19 +71,7 @@ export const ChatContext = createContext<Context>({
 });
 
 class ChatProvider extends Component<{}, State> {
-    state: State = {
-        userName: '',
-        currentRoom: '',
-        allRooms: [],
-        messages: [],
-        errors: {
-            wrongPassword: '',
-            roomNameAlreadyInUse: '',
-            noUsername: '',
-            noRoomName: '',
-            noMessage: '',
-        },
-    };
+    state: State = defaultState;
 
     incomingJoinRoom = (room: Room) => {
         this.setState((prevState) => ({
@@ -133,10 +139,7 @@ class ChatProvider extends Component<{}, State> {
 
     incomingDisconnect = (reason: any) => {
         console.log(reason);
-        this.setState((prevState) => ({
-            ...prevState,
-            userName: '',
-        }));
+        this.setState(defaultState);
     };
 
     incomingRegisterUser = (userName: string) => {
@@ -199,19 +202,7 @@ class ChatProvider extends Component<{}, State> {
         const { currentRoom } = this.state;
         socket.emit('logout', { currentRoom: currentRoom });
         // Resets state
-        this.setState({
-            userName: '',
-            currentRoom: '',
-            allRooms: [],
-            messages: [],
-            errors: {
-                wrongPassword: '',
-                roomNameAlreadyInUse: '',
-                noUsername: '',
-                noRoomName: '',
-                noMessage: '',
-            },
-        });
+        this.setState(defaultState);
     };
 
     handleSendMessage = (message: string) => {

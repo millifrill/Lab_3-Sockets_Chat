@@ -10,9 +10,18 @@ async function handleJoinRoom(io, data, socket) {
 
     const newRoomToJoin = rooms.find((r) => r.name === room.name);
     if (newRoomToJoin.password) {
+        if (!password) {
+            return (
+                socket.emit('error', 'noPassword'),
+                socket.emit('no-error', 'wrongPassword')
+            );
+        }
         if (newRoomToJoin.password !== password) {
             // Set password error
-            return await socket.emit('error', 'wrongPassword');
+            return (
+                socket.emit('error', 'wrongPassword'),
+                socket.emit('no-error', 'noPassword')
+            );
         }
     }
     if (!socket.userName) {
@@ -28,6 +37,7 @@ async function handleJoinRoom(io, data, socket) {
     await socket.join(room.name);
     // Remove errors
     socket.emit('no-error', 'wrongPassword');
+    socket.emit('no-error', 'noPassword');
     socket.emit('no-error', 'noMessage');
     // Returns the room that has been joined to client
     io.to(socket.id).emit('join-room', room);
@@ -66,6 +76,7 @@ function handleSendMessage(data, io, socket) {
         return socket.emit('error', 'noMessage');
     }
     const returnMessage = { message: message, userName: userName };
+    socket.emit('no-error', 'noMessage');
     // Returns message to client
     io.to(room).emit('send-message', returnMessage);
 }

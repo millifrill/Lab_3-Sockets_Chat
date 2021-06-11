@@ -31,13 +31,13 @@ export default function PasswordModal(props: Props) {
 
     // If user has been assigned a room, close modal
     useEffect(() => {
-        if (!errors.wrongPassword) {
+        if (!errors.wrongPassword && !errors.noPassword) {
             setPasswordModal((prevState) => ({
                 ...prevState,
                 isOpen: false,
             }));
         }
-    }, [currentRoom, setPasswordModal, errors.wrongPassword]);
+    }, [currentRoom, setPasswordModal, errors]);
 
     const handleClose = () => {
         setPasswordModal((prevState) => ({
@@ -77,6 +77,9 @@ export default function PasswordModal(props: Props) {
                         required
                         margin='dense'
                         id='password'
+                        error={Boolean(
+                            errors.noPassword || errors.wrongPassword
+                        )}
                         label='Password'
                         type='password'
                         onChange={(e) => handlePasswordChange(e.target.value)}
@@ -85,6 +88,10 @@ export default function PasswordModal(props: Props) {
                     {errors.wrongPassword ? (
                         <p className={classes.errorMessage}>
                             Incorrect password
+                        </p>
+                    ) : errors.noPassword ? (
+                        <p className={classes.errorMessage}>
+                            Please enter a password
                         </p>
                     ) : null}
                 </DialogContent>

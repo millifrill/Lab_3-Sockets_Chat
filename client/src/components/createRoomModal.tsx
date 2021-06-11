@@ -83,7 +83,7 @@ export default function CreateRoomModal() {
                 aria-labelledby='form-dialog-title'
             >
                 <DialogTitle id='form-dialog-title'>
-                    Create a new chat room
+                    Create a new chatroom
                 </DialogTitle>
                 <DialogContent>
                     <TextField
@@ -102,8 +102,7 @@ export default function CreateRoomModal() {
                         <p className={classes.errorMessage}>
                             Please enter a room name
                         </p>
-                    ) : null}
-                    {errors.roomNameAlreadyInUse ? (
+                    ) : errors.roomNameAlreadyInUse ? (
                         <p className={classes.errorMessage}>
                             Room name already in use
                         </p>

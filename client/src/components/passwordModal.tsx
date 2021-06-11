@@ -27,7 +27,7 @@ export default function PasswordModal(props: Props) {
     const [password, setPassword] = useState('');
     const chatContext = useContext(ChatContext);
     const { handleJoinRoom, currentRoom, errors } = chatContext;
-    const styled = useStyles();
+    const classes = useStyles();
 
     // If user has been assigned a room, close password modal
     useEffect(() => {
@@ -63,7 +63,7 @@ export default function PasswordModal(props: Props) {
             >
                 <DialogTitle
                     id='form-dialog-title'
-                    className={styled.modalTitle}
+                    className={classes.modalTitle}
                 >
                     Password
                 </DialogTitle>
@@ -73,6 +73,7 @@ export default function PasswordModal(props: Props) {
                     </DialogContentText>
                     <TextField
                         autoFocus
+                        required
                         margin='dense'
                         id='password'
                         label='Password'
@@ -80,9 +81,11 @@ export default function PasswordModal(props: Props) {
                         onChange={(e) => handlePasswordChange(e.target.value)}
                         fullWidth
                     />
-                    <p className={styled.errorMessage}>
-                        {errors.wrongPassword ? 'Incorrect password' : null}
-                    </p>
+                    {errors.wrongPassword ? (
+                        <p className={classes.errorMessage}>
+                            Incorrect password
+                        </p>
+                    ) : null}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color='primary'>
@@ -109,6 +112,9 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         errorMessage: {
+            margin: '0.5rem 0 0 0',
+            fontStyle: 'italic',
+            fontSize: '0.8rem',
             color: 'red',
         },
         modalTitle: {

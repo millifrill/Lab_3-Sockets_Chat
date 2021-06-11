@@ -9,11 +9,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
 import { ChatContext } from '../contexts/chatContext';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { DialogContentText } from '@material-ui/core';
 
 export default function CreateRoomModal() {
     const history = useHistory();
-    const styled = useStyles();
+    const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const chatContext = useContext(ChatContext);
     const { errors, currentRoom, handleCreateRoom } = chatContext;
@@ -71,7 +70,7 @@ export default function CreateRoomModal() {
     };
 
     function checkCreateRoomValidation() {
-        if (!userErrors.roomName && userSettings.room.name) {
+        if (!userErrors.roomName && !errors.roomNameAlreadyInUse) {
             return true;
         } else {
             setUserErrors((prevState) => ({
@@ -99,49 +98,37 @@ export default function CreateRoomModal() {
     };
 
     return (
-        <div className={styled.modalBox}>
+        <div>
             <AddCircle onClick={handleClickOpen} />
             <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby='form-dialog-title'
             >
-                <DialogTitle
-                    id='form-dialog-title'
-                    className={styled.modalTitle}
-                >
+                <DialogTitle id='form-dialog-title'>
                     Create a new chat room
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText className={styled.dialogContentText}>
-                        Enter name of chat room{' '}
-                    </DialogContentText>
                     <TextField
                         autoFocus
+                        error={Boolean(errors.roomNameAlreadyInUse)}
+                        required
                         margin='dense'
                         id='chatroom'
                         label='Enter room name'
-                        variant='outlined'
                         onChange={(e) => handleCreateRoomChange(e.target.value)}
                         fullWidth
                     />
-                    <p className={styled.errorMessage}>
-                        {userErrors.roomName ? userErrors.roomName : null}
-                    </p>
-                    <p className={styled.errorMessage}>
-                        {errors.roomNameAlreadyInUse
-                            ? 'Room name already in use'
-                            : null}
-                    </p>
-                    <DialogContentText className={styled.dialogContentText}>
-                        Enter chat room password (optional)
-                    </DialogContentText>
+                    {errors.roomNameAlreadyInUse ? (
+                        <p className={classes.errorMessage}>
+                            Room name already in use
+                        </p>
+                    ) : null}
                     <TextField
                         margin='dense'
                         id='password'
-                        label='Enter password'
+                        label='Enter password (optional)'
                         type='password'
-                        variant='outlined'
                         onChange={(e) => handlePasswordChange(e.target.value)}
                         fullWidth
                     />
@@ -165,27 +152,11 @@ export default function CreateRoomModal() {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        modalBox: {
-            height: '1.5rem',
-            maxWidth: '10rem',
-        },
-        imgStyle: {
-            width: '5rem',
-            alignSelf: 'center',
-        },
-        modalTitle: {
-            color: 'black',
-            fontSize: '1.2rem',
-            fontWeight: 800,
-        },
-        dialogContentText: {
-            color: '#7361EF',
-            margin: 0,
-        },
         errorMessage: {
-            color: 'red',
+            margin: '0.5rem 0 0 0',
+            fontStyle: 'italic',
             fontSize: '0.8rem',
-            margin: '0 0 1rem 0',
+            color: 'red',
         },
     })
 );

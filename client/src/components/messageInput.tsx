@@ -1,20 +1,19 @@
-import { Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import React, { useContext, useState } from 'react';
 import { ChatContext } from '../contexts/chatContext';
+import { Send } from '@material-ui/icons';
 
 export default function MessageInput() {
-    const styled = useStyles();
-    const { handleSendMessage } = useContext(ChatContext);
+    const classes = useStyles();
+    const { handleSendMessage, errors } = useContext(ChatContext);
     const [message, setMessage] = useState('');
 
     const handleNewMessagesChange = (event: any) => {
         setMessage(event.target.value);
     };
 
-    const sendMessages = (e: any) => {
-        e.preventDefault();
-        console.log(message);
+    const sendMessage = () => {
         handleSendMessage(message);
         setMessage('');
     };
@@ -28,50 +27,45 @@ export default function MessageInput() {
     };
 
     return (
-        <div className={styled.chatContainer}>
-            <div className={styled.inputContainer}>
-                <input
-                    className={styled.textarea}
+        <div className={classes.messageContainer}>
+            <div className={classes.inputContainer}>
+                <TextField
                     placeholder='Write a message.....'
+                    margin='dense'
+                    error={Boolean(errors.noMessage)}
                     value={message}
+                    required
+                    size='small'
+                    multiline
+                    fullWidth
                     onChange={handleNewMessagesChange}
                     onKeyPress={sendOnKeyPress}
                 />
-                <Button className={styled.buttonSend} onClick={sendMessages}>
-                    Send
-                </Button>
             </div>
+            <Send
+                className={classes.send}
+                color='primary'
+                onClick={sendMessage}
+            />
         </div>
     );
 }
 
 const useStyles = makeStyles((theme) => ({
-    chatContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-    },
-    inputContainer: {
+    messageContainer: {
         width: '100%',
         padding: '1rem 1.5rem',
         display: 'flex',
+        justifyContent: 'flex-end',
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'start',
         background: '#F6F6F6',
     },
-    textarea: {
-        background: '#F6F6F6',
+    inputContainer: {
         width: '100%',
-        height: '3rem',
-        textDecoration: 'none',
-        border: 'none',
-        outline: 'none',
     },
-    buttonSend: {
-        fontWeight: 600,
-        width: '4rem',
-        marginLeft: '1rem',
-        background: '#897AF2',
-        color: '#ffff',
+    send: {
+        margin: '0.5rem 0 0.5rem 1rem',
+        transform: 'rotate(-20deg)',
     },
 }));

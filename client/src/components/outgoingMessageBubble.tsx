@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '0.6rem',
         backgroundColor: '#897AF2',
         width: '100%',
-        maxWidth: '20rem',
+        maxWidth: '30rem',
         padding: '0.5rem',
         color: 'white',
         marginBottom: '1rem',
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     messageText: {
         margin: '0.5rem 0',
-        fontSize: '12px',
+        fontSize: '0.9rem',
     },
     username: {
         margin: 0,

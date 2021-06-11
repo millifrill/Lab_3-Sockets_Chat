@@ -6,11 +6,12 @@ import { Send } from '@material-ui/icons';
 
 export default function MessageInput() {
     const classes = useStyles();
-    const { handleSendMessage, errors } = useContext(ChatContext);
+    const { handleSendMessage, errors, handleTyping } = useContext(ChatContext);
     const [message, setMessage] = useState('');
 
     const handleNewMessagesChange = (event: any) => {
         setMessage(event.target.value);
+        handleTyping(event.target.value);
     };
 
     const sendMessage = () => {

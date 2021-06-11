@@ -22,6 +22,7 @@ interface State {
     currentRoom: string;
     allRooms: Room[];
     messages: Message[];
+    currentlyTyping: string[];
     errors: Errors;
 }
 
@@ -30,6 +31,7 @@ const defaultState = {
     currentRoom: '',
     allRooms: [],
     messages: [],
+    currentlyTyping: [],
     errors: {
         wrongPassword: '',
         noPassword: '',
@@ -41,6 +43,7 @@ const defaultState = {
 };
 
 interface Context extends State {
+    handleTyping: (message: string | undefined) => void;
     handleJoinRoom: (room: Room, password?: string) => void;
     handleSetUsername: (username: string) => void;
     handleCreateRoom: (
@@ -57,6 +60,7 @@ export const ChatContext = createContext<Context>({
     currentRoom: '',
     allRooms: [],
     messages: [],
+    currentlyTyping: [],
     errors: {
         wrongPassword: '',
         noPassword: '',
@@ -65,6 +69,7 @@ export const ChatContext = createContext<Context>({
         noRoomName: '',
         noMessage: '',
     },
+    handleTyping: () => {},
     handleJoinRoom: () => {},
     handleSetUsername: () => {},
     handleCreateRoom: () => {},
@@ -150,9 +155,31 @@ class ChatProvider extends Component<{}, State> {
         }));
     };
 
+    incomingTyping = (username: string) => {
+        const alreadyInList = this.state.currentlyTyping.find(
+            (u) => u === username
+        );
+        if (!alreadyInList) {
+            this.setState((prevState) => ({
+                ...prevState,
+                currentlyTyping: [...prevState.currentlyTyping, username],
+            }));
+        }
+    };
+
+    incomingNotTyping = (username: string) => {
+        const typing = this.state.currentlyTyping.filter((u) => u !== username);
+        this.setState((prevState) => ({
+            ...prevState,
+            currentlyTyping: typing,
+        }));
+    };
+
     componentDidMount() {
         socket.on('connect', this.incomingConnectionEstablished);
         socket.on('register-user', this.incomingRegisterUser);
+        socket.on('typing', this.incomingTyping);
+        socket.on('not-typing', this.incomingNotTyping);
         socket.on('join-room', this.incomingJoinRoom);
         socket.on('send-message', this.incomingMessage);
         socket.on('all-rooms', this.incomingRooms);
@@ -182,6 +209,11 @@ class ChatProvider extends Component<{}, State> {
             currentRoom: currentRoom,
             password: password,
         });
+    };
+
+    handleTyping = (message: string | undefined) => {
+        const { currentRoom, userName } = this.state;
+        socket.emit('typing', { currentRoom, userName, message });
     };
 
     handleLogout = () => {
@@ -214,7 +246,9 @@ class ChatProvider extends Component<{}, State> {
                     currentRoom: this.state.currentRoom,
                     allRooms: this.state.allRooms,
                     messages: this.state.messages,
+                    currentlyTyping: this.state.currentlyTyping,
                     errors: this.state.errors,
+                    handleTyping: this.handleTyping,
                     handleJoinRoom: this.handleJoinRoom,
                     handleSetUsername: this.handleSetUsername,
                     handleCreateRoom: this.handleCreateRoom,

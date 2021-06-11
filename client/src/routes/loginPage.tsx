@@ -47,6 +47,7 @@ export default function LoginPage() {
 
 const useStyles = makeStyles((theme) => ({
     main: {
+        backgroundColor: theme.palette.secondary.main,
         padding: '2rem',
         height: '100%',
         width: '100%',

@@ -16,6 +16,7 @@ const {
     handleLogout,
     handleRegisterUser,
     getRooms,
+    handleTyping,
 } = require('./roomEvents');
 
 io.on('connection', (socket) => {
@@ -27,6 +28,7 @@ io.on('connection', (socket) => {
     socket.on('register-user', (data) => handleRegisterUser(data, socket));
     socket.on('create-room', (data) => handleCreateRoom(data, socket, io));
     socket.on('send-message', (data) => handleSendMessage(data, io, socket));
+    socket.on('typing', (data) => handleTyping(data, socket));
     socket.on('logout', (data) => handleLogout(data, socket, io));
     socket.on('disconnect', (reason) => handleDisconnect(reason, io, socket));
 });

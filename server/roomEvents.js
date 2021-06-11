@@ -51,6 +51,19 @@ async function handleJoinRoom(io, data, socket) {
 
 /**
  * @param {*} data
+ * @param {io} io
+ */
+async function handleTyping(data, socket) {
+    const { currentRoom, userName, message } = data;
+    if (message) {
+        socket.to(currentRoom).emit('typing', userName);
+    } else {
+        socket.to(currentRoom).emit('not-typing', userName);
+    }
+}
+
+/**
+ * @param {*} data
  * @param {io.Socket} socket
  */
 async function handleRegisterUser(data, socket) {
@@ -194,4 +207,5 @@ module.exports = {
     handleCreateRoom,
     handleLogout,
     getRooms,
+    handleTyping,
 };

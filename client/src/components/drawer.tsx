@@ -77,6 +77,16 @@ export default function ResponsiveDrawer(props: Props) {
                     >
                         <ListItemText
                             primary={room.name}
+                            secondary={room.users?.map((user, i) => {
+                                if (
+                                    i + 1 !== room.users?.length &&
+                                    room.users?.length !== 1
+                                ) {
+                                    return user + ', ';
+                                } else {
+                                    return user;
+                                }
+                            })}
                             onClick={() => handleRoomChange(room)}
                         />
                         {room.hasPassword ? (

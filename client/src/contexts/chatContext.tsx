@@ -5,6 +5,7 @@ interface Errors {
     roomNameAlreadyInUse: string;
     noUsername: string;
     noRoomName: string;
+    noMessage: string;
 }
 export interface Message {
     userName: string;
@@ -43,6 +44,7 @@ export const ChatContext = createContext<Context>({
         roomNameAlreadyInUse: '',
         noUsername: '',
         noRoomName: '',
+        noMessage: '',
     },
     handleJoinRoom: () => {},
     handleCreateRoom: () => {},
@@ -61,6 +63,7 @@ class ChatProvider extends Component<{}, State> {
             roomNameAlreadyInUse: '',
             noUsername: '',
             noRoomName: '',
+            noMessage: '',
         },
     };
 
@@ -205,6 +208,7 @@ class ChatProvider extends Component<{}, State> {
                 roomNameAlreadyInUse: '',
                 noUsername: '',
                 noRoomName: '',
+                noMessage: '',
             },
         });
     };

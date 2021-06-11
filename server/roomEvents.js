@@ -26,8 +26,9 @@ async function handleJoinRoom(io, data, socket) {
 
     // Room has no password, or correct password was submitted
     await socket.join(room.name);
-    // Remove password error
-    await socket.emit('no-error', 'wrongPassword');
+    // Remove errors
+    socket.emit('no-error', 'wrongPassword');
+    socket.emit('no-error', 'noMessage');
     // Returns the room that has been joined to client
     io.to(socket.id).emit('join-room', room);
     // Respond to client that join was successful
@@ -48,7 +49,7 @@ async function handleJoinRoom(io, data, socket) {
 async function handleRegisterUser(data, socket) {
     const { userName } = data;
     if (!userName) {
-        return await socket.emit('error', 'noUsername');
+        return socket.emit('error', 'noUsername');
     }
     socket.emit('no-error', 'noUsername');
     socket.userName = userName;
@@ -59,8 +60,11 @@ async function handleRegisterUser(data, socket) {
  * @param {*} data
  * @param {io.Namespace} io
  */
-function handleSendMessage(data, io) {
+function handleSendMessage(data, io, socket) {
     const { room, message, userName } = data;
+    if (!message) {
+        return socket.emit('error', 'noMessage');
+    }
     const returnMessage = { message: message, userName: userName };
     // Returns message to client
     io.to(room).emit('send-message', returnMessage);

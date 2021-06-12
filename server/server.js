@@ -1,11 +1,16 @@
+const path = require('path');
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const port = process.env.PORT || 5000;
-const index = '../client/build/index.html';
+const index = 'index.html';
 
 const app = express();
 /* app.use(express.static('public')); */
+app.use(
+    '/static',
+    express.static(path.join(__dirname, '../client/build/static'))
+);
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -36,7 +41,9 @@ io.on('connection', (socket) => {
 });
 
 // NEW
-app.use((req, res) => res.sendFile(index, { root: __dirname }));
+app.use((req, res) =>
+    res.sendFile(index, { root: path.join(__dirname + '../client/build/') })
+);
 
 server.listen(port, () => {
     console.log('Server is running on port 5000');

@@ -1,8 +1,10 @@
 # Socket Chat
 
-A chat application built with React, Express, Mongoose and Socket.io.
+A chat application built with React, Express and Socket.io.
 
-Login is the landing page where the user enter username and choose if they want to create an open or private (password protected) room or if they want to connect to a room allready existing with other users. The rooms is listed in the sidebar/menu and each room also list all the active users. Rooms without active users are automatically deleted on the last client(user) disconnect.
+At the landing page the user gets to enter a username and choose whether to create a new room or join an existing one. When creating a room the user can choose to either have it be open to everyone or make it password protected. All the rooms are listed in the sidebar, if a room is password protected it also has a lock icon. Rooms without active users are automatically removed.
+
+Since the end of the project I have made some adjustments to it, such as list all the users in a room in the sidebar and add an typing indication if a user is in the middle of writing a message. I have also replaced some existing components with components from the Material UI library and restructured the landing page.
 
 ## Developer instructions
 
@@ -33,10 +35,6 @@ Installs all the required dependencies for the client application.
 ### `npm run install-server`
 
 Installs all the required dependencies for the server application.
-
-## Links
-
-[GitHub-repository](https://github.com/millifrill/Lab_3-Sockets_Chat)
 
 ## Developed by
 

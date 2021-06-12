@@ -57,12 +57,13 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '30rem',
         margin: 'auto',
         '& img': {
-            width: '3.5rem',
+            width: '4rem',
         },
         '& h1': {
             color: theme.palette.primary.main,
-            fontSize: '1.8rem',
-            margin: '0.5rem 0 2rem 0',
+            fontWeight: 600,
+            fontSize: '2.6rem',
+            margin: '0.25rem 0 1.5rem 0',
         },
         '& button': {
             marginTop: '1rem',

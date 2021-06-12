@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const port = process.env.PORT || 5000;
-const index = '/index.html';
+const index = '../client/build/index.html';
 
 const app = express();
 /* app.use(express.static('public')); */

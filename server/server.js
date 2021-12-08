@@ -4,8 +4,9 @@ const http = require('http');
 const { Server } = require('socket.io');
 const port = process.env.PORT || 4000;
 
+const router = require('./router');
+
 const app = express();
-app.use(express.static(path.join(__dirname, '../client/build')));
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -35,11 +36,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', (reason) => handleDisconnect(reason, io, socket));
 });
 
-app.get('*', function (req, res) {
-  res.sendFile('index.html', {
-    root: path.join(__dirname, '../client/build/'),
-  });
-});
+app.use(router);
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);

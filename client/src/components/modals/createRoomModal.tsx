@@ -4,14 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { AddCircle } from '@material-ui/icons';
 import { ChatContext } from '../../contexts/chatContext';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export default function CreateRoomModal() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const chatContext = useContext(ChatContext);
@@ -28,9 +28,9 @@ export default function CreateRoomModal() {
 
   useEffect(() => {
     if (currentRoom) {
-      history.push('/chatroom');
+      navigate('/chatroom');
     }
-  }, [history, currentRoom]);
+  }, [navigate, currentRoom]);
 
   const handleCreateRoomChange = (name: string) => {
     setUserSettings((prevState) => ({

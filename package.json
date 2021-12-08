@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm-run-all --parallel start-client start-server",
+    "start": "npm run start-server",
+    "dev": "npm-run-all --parallel start-server start-client",
     "start-server": "cd server && npm start",
     "start-client": "cd client && npm start",
     "postinstall": "npm-run-all --parallel install-server install-client",

@@ -1,32 +1,34 @@
 {
-    "name": "socket-chat",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "npm-run-all --parallel start-client start-server",
-        "start-server": "cd server && npm start",
-        "start-client": "cd client && npm start",
-        "postinstall": "npm-run-all --parallel install-server install-client",
-        "install-server": "cd server && npm install",
-        "install-client": "cd client && npm install"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat/issues"
-    },
-    "homepage": "https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat#readme",
-    "dependencies": {
-        "@material-ui/icons": "^4.11.2",
-        "npm-run-all": "^1.7.0"
-    },
-    "devDependencies": {
-        "prettier": "2.3.0"
-    }
+  "name": "socket-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm-run-all --parallel start-client start-server",
+    "start-server": "cd server && npm start",
+    "start-client": "cd client && npm start",
+    "postinstall": "npm-run-all --parallel install-server install-client",
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat/issues"
+  },
+  "homepage": "https://github.com/mariahelenanoren/https://github.com/millifrill/Lab_3-Sockets_Chat#readme",
+  "dependencies": {
+    "@material-ui/icons": "^4.11.2",
+    "npm-run-all": "^1.7.0",
+    "react-scripts": "^4.0.3"
+  },
+  "devDependencies": {
+    "prettier": "2.3.0"
+  }
 }

@@ -5,7 +5,10 @@ const { Server } = require('socket.io');
 const port = process.env.PORT || 4000;
 
 const app = express();
-app.use(express.static('public'));
+app.use(
+  '/static',
+  express.static(path.join(__dirname, '../client/build/static'))
+);
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -33,6 +36,12 @@ io.on('connection', (socket) => {
   socket.on('typing', (data) => handleTyping(data, socket));
   socket.on('logout', (data) => handleLogout(data, socket, io));
   socket.on('disconnect', (reason) => handleDisconnect(reason, io, socket));
+});
+
+app.get('*', function (req, res) {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, '../client/build/'),
+  });
 });
 
 server.listen(port, () => {
